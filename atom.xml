@@ -4,7 +4,7 @@
   <subtitle><![CDATA[写出我人生,coding]]></subtitle>
   <link href="//atom.xml" rel="self"/>
   <link href="http://donahue-ldz.github.io/"/>
-  <updated>2015-03-06T04:21:39.000Z</updated>
+  <updated>2015-03-06T05:04:43.000Z</updated>
   <id>http://donahue-ldz.github.io/</id>
   
   <author>
@@ -13,6 +13,69 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[个人简历]]></title>
+    <link href="http://donahue-ldz.github.io/2015/03/08/resume/"/>
+    <id>http://donahue-ldz.github.io/2015/03/08/resume/</id>
+    <published>2015-03-08T07:27:41.000Z</published>
+    <updated>2015-03-06T05:04:43.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="李德钊个人简历">李德钊个人简历</h1><blockquote>
+<p>科技引领时尚，技术成就未来</p>
+</blockquote>
+<hr>
+<h2 id="基本信息">基本信息</h2><p><table><br>    <tr><br>        <td>姓名：</td><td>李德钊</td><td>性别：</td><td>男</td><br>    </tr><br>    <tr><br>        <td>邮箱：</td><td>ldz2012yn@gmail.com</td><td>电话：</td><td>18840838495</td><br>    </tr><br>    <tr><br>    <td>生日：</td><td>1993-08-21</td><td>在读学校：</td><td>大连理工大学</td><br>    </tr><br>     <tr><br>    <td>系别：</td><td>软件工程（软件开发与测试）</td><td>期望职位：</td><td>研发工程师JAVA</td><br>    </tr><br>    <tr><br>    <td>QQ：</td><td>1285310383</td><td>微信：</td><td>donahueWX</td><br>    </tr></table></p>
+<h2 id=""></h2><h2 id="技能概述">技能概述</h2><h4 id="编程语言（平台）熟练程度排序">编程语言（平台）熟练程度排序</h4><ol>
+<li>java</li>
+<li>c/c++</li>
+<li>php,python</li>
+<li>js,html</li>
+</ol>
+<h4 id="框架熟悉程度">框架熟悉程度</h4><ol>
+<li>spring</li>
+<li>struct2,hibernate,netty</li>
+<li>extjs,TestNG,Junit</li>
+</ol>
+<h4 id="其他">其他</h4><ul>
+<li>熟练使用mysql，oracle等主流数据库</li>
+<li>熟练使用maven，git等项目管理工具</li>
+<li>熟练使用tomcat，jetty，nginx等服务器</li>
+<li>喜欢使用linux，能进行常见shell编程，能进行linux环境下相关的编程</li>
+<li>H3C网络工程师认证书，了解相关的网络知识</li>
+</ul>
+<hr>
+<h2 id="项目经历">项目经历</h2><h3 id="公司项目">公司项目</h3><p>在公司实习大约一年时间，参与公司培训，获得师兄辅导，参与相关产品的研发，团队互相帮助。</p>
+<h3 id="cmc框架设计">cmc框架设计</h3><p><code>时间：2014-6~2014-10</code></p>
+<p><strong>项目简介</strong>: 大连宏基恒信公司的一个后台通用管理框架，支持界面多模块可视化配置。<br><strong>我的主要工作</strong>：数据库的架构的设计和实现，负责代码字典和系统日志版块的。</p>
+<h3 id="极密盾平台运营管理系统">极密盾平台运营管理系统</h3><p><code>时间：2014-10~至今</code></p>
+<p><strong>项目简介</strong>:点击<a href="http://www.jimidun.com" target="_blank" rel="external">官网</a>。您可将重要的隐私信息、帐号密码存储在极密盾设备中，远离记录帐号密码、隐私秘密的烦恼。<br><strong>我的工作</strong>:需求文档编写，使用cmc框架负责后台用户管理模块和设备管理模块的编写。</p>
+<h2 id="学生项目">学生项目</h2><p>组织参与学生项目，相互学习，将在公司学到的相关知识更快转化，互相促进。</p>
+<h4 id="卖客交易市场">卖客交易市场</h4><p><code>时间：2014-10~至今</code></p>
+<p><strong>项目简介</strong>：校园二手交易市场。网站共用3个子系统：买家web端，卖家系统，网站管理系统，项目现在正在收尾测试阶段。<br><strong>我的主要工作</strong>:项目发起和组织者，需求规格说明文档的书写，项目经度安排和管理，数据库的设计和实现，卖家系统的实现，负责服务器端的安全权限设计。</p>
+<h3 id="TEDxDalian">TEDxDalian</h3><p><code>时间：2014-06~2014-08</code></p>
+<p><strong>项目简介</strong>: 由TED社团组织为大连站设计的网站，对TED的诠释，精彩片段回访，本次但会的申请和审批<br><strong>我的主要工作</strong>: 技术负责人，后端开发，封装了全新统一的数据层持久层访问操作，省略了数据持久层的开发。</p>
+<h3 id="邻家铺子">邻家铺子</h3><p><code>时间：2013-08~2014-04</code></p>
+<p><strong>项目简介</strong>：手机app，一个点餐购物系统，能最快最近购物，由于公司原因停止，项目完成几乎八成。<br><strong>我的工作</strong>: 负责服务器后台编写，负责缓存模块的代码编写。 </p>
+<hr>
+<h2 id="编程经验">编程经验</h2><p>多个项目由简到难实践，详解见<a href="https://github.com/donahue-ldz" target="_blank" rel="external">github</a></p>
+<hr>
+<h2 id="其他账号">其他账号</h2><p>github账号：<a href="https://github.com/donahue-ldz" target="_blank" rel="external">donahue-ldz</a><br>个人博客地址：<a href="http://www.donahuelives.com" target="_blank" rel="external">程序人生</a><br>github博客：<a href="https://donahue-ldz.github.io/" target="_blank" rel="external">心缘冰河</a></p>
+<hr>
+<h2 id="自我评价">自我评价</h2><p>资质一般，相信天道酬勤，相信努力会给自己以及行业带来新机遇。</p>
+<p>不希望大学期间为了刷奖刷成绩，希望学到真本事，毕业时实践能力优于专科院校，理论能力不输于计算机理论系学生。</p>
+<p>紧追前沿科技，希望未来成为行业的领军者。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="李德钊个人简历">李德钊个人简历</h1><blockquote>
+<p>科技引领时尚，技术成就未来</p>
+</blockquote>
+<hr>
+<h2 id="基本信息">基本信息</h2><p><table><br>    <tr><br>        <]]>
+    </summary>
+    
+      <category term="java" scheme="http://donahue-ldz.github.io/categories/java/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[MarkDown语法入门]]></title>
