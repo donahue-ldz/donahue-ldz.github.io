@@ -7,12 +7,16 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>心缘冰河</title>
+    <title>finalize理解 | 心缘冰河</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="donahue">
     
-    <meta name="description" content="技术 博客">
+    <meta name="description" content="Object类声明了protect finalize方法
+
+我们都知道程序初始化的重要性，但是通常会忘记清除工作的重要性，我们知道在c++中有构造函数初始化，有相应的析构函数完成收尾清楚工作
+
+在java中，有c++样构造函数却没有其相应的析构函数，但是却有一个和析构函数相似的一个finalize方">
     
     
     
@@ -69,106 +73,102 @@
 
     </header>
     <div id="container">
-      <div id="main">
-
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2015/02/15/MarkDown语法入门/" title="MarkDown语法入门" itemprop="url">
-  
-      <time datetime="2015-02-15T02:32:21.000Z" itemprop="datePublished">Feb 15 2015</time>
-    <h1 itemprop="name">MarkDown语法入门</h1>
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
     
-     
-           <p itemprop="description" >MarkDown 理念
-让文档更容易读、写和随意改。HTML 是一种发布的格式，Markdown 是一种书写的格式。就这样，Markdown 的格式语法只涵盖纯文本可以涵盖的范围.
-
-
-注意
-不在 Markdown 涵盖范围之内的标签，都可以直接在文档里面用 HTML 撰写。不需</p>
-        
+      <a href="/2014/09/28/finalize理解/" title="finalize理解" itemprop="url">finalize理解</a>
+  </h1>
+  <p class="article-author">By
     
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
+      <a href="http://www.donahuelives.com" title="donahue">donahue</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-09-28T09:30:28.000Z" itemprop="datePublished">Sep 28 2014</time>
+    更新日期:<time datetime="2015-03-06T02:16:55.000Z" itemprop="dateModified">Mar 6 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p><strong>Object类声明了protect finalize方法</strong></p>
+<blockquote>
+<p>我们都知道程序初始化的重要性，但是通常会忘记清除工作的重要性，我们知道在c++中有构造函数初始化，有相应的析构函数完成收尾清楚工作</p>
+</blockquote>
+<p>在java中，有c++样构造函数却没有其相应的析构函数，但是却有一个和析构函数相似的一个finalize方法，很多人容易混淆他们两个，下面是区别：</p>
+<ol>
+<li><p>c++中析构函数在对象声明周期结束时会被调用，数组等new出来时候，delete等函数时候析构会被调用，如果忘记调用这些函数的时候就会造成内存泄露</p>
+</li>
+<li><p>java中的finalize方法在GC进行回收之前在做<code>第二次标记</code>的时候会被调用。<br>如果对象没有覆盖finalize()或者已经被调用了一次之后，将不再调用了，如果需要调用的话会被加入一个称为F-queue队列中，然后由虚拟机去自动开一条低优先权的线程去执行，<strong>但是不一定会等待其去执行完</strong>。<br>我们知道对于GC什么时候调用，以及什么时候调用对象的finalize方法这些都是不确定的，一般情况下当内存比较充足时候GC不会去时刻调用的<br>因Gc调用也要消耗资源嘛，对于有些程序而言，有可能某些对象的没有调用GC时候程序已经结束，此时交给<strong>操作系统去回收内存</strong>。</p>
+</li>
+</ol>
+<hr>
+<p>所以finalize方法并不总是调用。但是这个方法还是比较有用的，我们知道：<br><code>java的GC之后回收new 出来的对象内存</code><br><code>对于有些时候我们使用native方法，如才c/c++时候采取malloc分配的内存此时GC就不能回收了</code><br>我们也不希望这些内存一直存在，我们可以在finalize方法中去调用native方法的free等函数去试着回收，当finalize方法被调用时候，就象的finalize方法被调用时候，我们可以在里面实现和析构函数相同的功能<br>但是如果没能呗回收了，最起码被回收的机会由原来的0变成大于0了</p>
+<p>就是当对有被调用的时候，就不能同等去看待了<br>在现实的使用中我们完全可以忘掉这个方法，她所做的事情完全可以有finally模块去完成，不要使用他吧</p>
   
-    <a href="/2015/01/15/log4j常见配置/" title="log4j常见配置" itemprop="url">
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
   
-      <time datetime="2015-01-15T07:27:41.000Z" itemprop="datePublished">Jan 15 2015</time>
-    <h1 itemprop="name">log4j常见配置</h1>
-    
-     
-           <p itemprop="description" >xml类型的配置Log4j配置文件实现了输出到控制台、文件、固定大小文件、发送日志邮件、输出到数据库日志表、自定义标签等全套功能。 
-&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&amp;gt;  
-&amp;lt;!DOCTYPE log4j:config</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2015/01/05/日志记录/" title="日志记录" itemprop="url">
-  
-      <time datetime="2015-01-05T06:42:11.000Z" itemprop="datePublished">Jan 5 2015</time>
-    <h1 itemprop="name">日志记录</h1>
-    
-     
-           <p itemprop="description" >日志服务三个目的 ：
-
-监视代码中变量的变化情况，周期性的记录到文件中供其他应用进行统计分析工作
-跟踪代码运行时轨迹，作为日后审计的依据
-担当集成开发环境中的调试器的作用，向文件或控制台打印代码的调试信息
+  <span></span> <a href="/tags/finalize/">finalize</a><a href="/tags/内存回收/">内存回收</a>
+  </div>
 
 
 
-log4j简介
-Log4j是Apache的一个开放源代码项目，通过使</p>
-        
-    
-  </a>
-</section>
 
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2014/09/28/finalize理解/" title="finalize理解" itemprop="url">
-  
-      <time datetime="2014-09-28T09:30:28.000Z" itemprop="datePublished">Sep 28 2014</time>
-    <h1 itemprop="name">finalize理解</h1>
-    
-     
-           <p itemprop="description" >Object类声明了protect finalize方法
+<div class="article-share" id="share">
 
-我们都知道程序初始化的重要性，但是通常会忘记清除工作的重要性，我们知道在c++中有构造函数初始化，有相应的析构函数完成收尾清楚工作
-
-在java中，有c++样构造函数却没有其相应的析构函数，但是却有一个和析构函数相似的一</p>
-        
-    
-  </a>
-</section>
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2014/09/15/线程等待/" title="线程等待" itemprop="url">
-  
-      <time datetime="2014-09-15T02:32:21.000Z" itemprop="datePublished">Sep 15 2014</time>
-    <h1 itemprop="name">线程等待</h1>
-    
-     
-           <p itemprop="description" >在多线程程序设计中，经常会遇到一个线程等待一个或多个线程的场景遇到这样的场景应该如何解决？
-
-
-如果是一个线程等待一个线程，则可以通过await()和notify()来实现；
-如果是一个线程等待多个线程，则就可以使用CountDownLatch和CyclicBarrier来实现比</p>
-        
-    
-  </a>
-</section>
-
+  <div data-url="http://www.donahuelives.com/2014/09/28/finalize理解/" data-title="finalize理解 | 心缘冰河" data-tsina="null" class="share clearfix">
+  </div>
 
 </div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/01/05/日志记录/" title="日志记录">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  日志记录</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/09/15/线程等待/"  title="线程等待">
+ <strong>NEXT:</strong><br/> 
+ <span>线程等待
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="finalize理解" data-thread-key="finalize理解" data-author-key="donahue" data-url="http://www.donahuelives.com/post/finalize理解"></div>
+	
+</section>
+
+
+</div>  
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
 
 <div id="asidepart">
 <div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
@@ -239,8 +239,8 @@ Log4j是Apache的一个开放源代码项目，通过使</p>
 
 </aside>
 </div>
-  </div>
-  <footer><div id="footer" >
+    </div>
+    <footer><div id="footer" >
     
             <p class="copyright"> © 2015 
 		
@@ -276,6 +276,8 @@ $(document).ready(function(){
       m.removeClass('moveMain');
       a.css('display', 'block').removeClass('fadeOut');
       o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
         
     }
   });
@@ -295,7 +297,79 @@ $(document).ready(function(){
 });
 </script>
 
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
 
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
 
 
 
@@ -384,5 +458,5 @@ ga('send', 'pageview');
 
 
   </body>
- </html>
+</html>
 
