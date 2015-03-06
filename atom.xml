@@ -282,7 +282,7 @@ log4j<span class="class">.appender</span><span class="class">.im</span><span cla
     <link href="http://donahue-ldz.github.io/2015/01/05/%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95/"/>
     <id>http://donahue-ldz.github.io/2015/01/05/日志记录/</id>
     <published>2015-01-05T06:42:11.000Z</published>
-    <updated>2015-03-06T02:16:55.000Z</updated>
+    <updated>2015-03-06T03:35:25.000Z</updated>
     <content type="html"><![CDATA[<h2 id="日志服务">日志服务</h2><p>三个目的 ：</p>
 <ul>
 <li>监视代码中变量的变化情况，周期性的记录到文件中供其他应用进行统计分析工作</li>
@@ -338,6 +338,8 @@ log4j<span class="class">.appender</span><span class="class">.im</span><span cla
     
       <category term="日志记录" scheme="http://donahue-ldz.github.io/tags/%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95/"/>
     
+      <category term="java" scheme="http://donahue-ldz.github.io/categories/java/"/>
+    
   </entry>
   
   <entry>
@@ -345,7 +347,7 @@ log4j<span class="class">.appender</span><span class="class">.im</span><span cla
     <link href="http://donahue-ldz.github.io/2014/09/28/finalize%E7%90%86%E8%A7%A3/"/>
     <id>http://donahue-ldz.github.io/2014/09/28/finalize理解/</id>
     <published>2014-09-28T09:30:28.000Z</published>
-    <updated>2015-03-06T02:16:55.000Z</updated>
+    <updated>2015-03-06T03:34:42.000Z</updated>
     <content type="html"><![CDATA[<p><strong>Object类声明了protect finalize方法</strong></p>
 <blockquote>
 <p>我们都知道程序初始化的重要性，但是通常会忘记清除工作的重要性，我们知道在c++中有构造函数初始化，有相应的析构函数完成收尾清楚工作</p>
@@ -372,6 +374,8 @@ log4j<span class="class">.appender</span><span class="class">.im</span><span cla
     
       <category term="内存回收" scheme="http://donahue-ldz.github.io/tags/%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6/"/>
     
+      <category term="java" scheme="http://donahue-ldz.github.io/categories/java/"/>
+    
   </entry>
   
   <entry>
@@ -379,7 +383,7 @@ log4j<span class="class">.appender</span><span class="class">.im</span><span cla
     <link href="http://donahue-ldz.github.io/2014/09/15/%E7%BA%BF%E7%A8%8B%E7%AD%89%E5%BE%85/"/>
     <id>http://donahue-ldz.github.io/2014/09/15/线程等待/</id>
     <published>2014-09-15T02:32:21.000Z</published>
-    <updated>2015-03-06T02:16:55.000Z</updated>
+    <updated>2015-03-06T03:35:47.000Z</updated>
     <content type="html"><![CDATA[<p><strong>在多线程程序设计中，经常会遇到一个线程等待一个或多个线程的场景<br>遇到这样的场景应该如何解决？</strong></p>
 <blockquote>
 <ul>
@@ -515,6 +519,8 @@ log4j<span class="class">.appender</span><span class="class">.im</span><span cla
       <category term="线程" scheme="http://donahue-ldz.github.io/tags/%E7%BA%BF%E7%A8%8B/"/>
     
       <category term="线程等待，CountDownLatch" scheme="http://donahue-ldz.github.io/tags/%E7%BA%BF%E7%A8%8B%E7%AD%89%E5%BE%85%EF%BC%8CCountDownLatch/"/>
+    
+      <category term="java" scheme="http://donahue-ldz.github.io/categories/java/"/>
     
   </entry>
   
