@@ -305,6 +305,52 @@ Log4j是Apache的一个开放源代码项目，通过使</p>
 
   <section class="post" itemscope itemprop="blogPost">
   
+    <a href="/2014/09/22/finalize-e7-90-86-e8-a7-a3/" title="finalize理解" itemprop="url">
+  
+      <time datetime="2014-09-22T00:05:21.000Z" itemprop="datePublished">Sep 22 2014</time>
+    <h1 itemprop="name">finalize理解</h1>
+    
+     
+           <p itemprop="description" >Object类声明了protect finalize方法
+我们都知道程序初始化的重要性，但是通常会忘记清除工作的重要性，我们知道在c++中有构造函数初始化，有相应的析构函数完成收尾清楚工作
+在java中，有c++样构造函数却没有其相应的析构函数，但是却有一个和析构函数相似的一个f</p>
+        
+    
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2014/09/21/e6-b7-b1-e5-85-a5-e6-b3-9b-e5-9e-8b/" title="深入泛型" itemprop="url">
+  
+      <time datetime="2014-09-21T02:55:56.000Z" itemprop="datePublished">Sep 21 2014</time>
+    <h1 itemprop="name">深入泛型</h1>
+    
+     
+           <p itemprop="description" >由于Java泛型的实现机制，使用了泛型的代码在运行期间相关的泛型参数的类型会被擦除(泛型擦除)，我们无法在运行期间获知泛型参数的具体类型（所有的泛型类型在运行时都是Object类型）。
+但是有的时候，我们确实需要获知泛型参数的类型，比如将使用了泛型的Java代码序列化或者反序列化</p>
+        
+    
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2014/09/21/e5-86-85-e5-ad-98-e6-b3-84-e9-9c-b2-e5-92-8c-e6-ba-a2-e5-87-ba/" title="内存泄露和溢出" itemprop="url">
+  
+      <time datetime="2014-09-21T02:12:43.000Z" itemprop="datePublished">Sep 21 2014</time>
+    <h1 itemprop="name">内存泄露和溢出</h1>
+    
+     
+           <p itemprop="description" >内存泄露是指程序中间动态分配了内存，但在程序结束时没有释放这部分内存，从而造成那部分内存不可用的情况，重启计算机可以解决，但也有可能再次发生内存泄露，内存泄露和硬件没有关系，它是由软件设计缺陷引起的。
+内存泄漏可以分为4类：1) 常发性内存泄漏。发生内存泄漏的代码会被多次执行到，</p>
+        
+    
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
     <a href="/2014/09/15/线程等待/" title="线程等待" itemprop="url">
   
       <time datetime="2014-09-15T02:32:21.000Z" itemprop="datePublished">Sep 15 2014</time>
@@ -321,6 +367,41 @@ Log4j是Apache的一个开放源代码项目，通过使</p>
   </a>
 </section>
 
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2014/09/04/swing-e6-a1-86-e6-9e-b6-e4-b9-8bswingworker-e4-ba-8c/" title="Swing框架之SwingWorker(二)" itemprop="url">
+  
+      <time datetime="2014-09-04T13:09:54.000Z" itemprop="datePublished">Sep 4 2014</time>
+    <h1 itemprop="name">Swing框架之SwingWorker(二)</h1>
+    
+     
+           <p itemprop="description" >SwingWorker基础
+SwingWorker的定义如下：
+public abstract class SwingWorker&amp;lt;T,V&amp;gt; extends Object implements RunnableFuture
+   SwingWorker是抽象类，因此必</p>
+        
+    
+  </a>
+</section>
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/2014/09/04/swing-e6-a1-86-e6-9e-b6-e4-b9-8bswingworker-e4-b8-80/" title="Swing框架之SwingWorker(一)" itemprop="url">
+  
+      <time datetime="2014-09-04T11:22:28.000Z" itemprop="datePublished">Sep 4 2014</time>
+    <h1 itemprop="name">Swing框架之SwingWorker(一)</h1>
+    
+     
+       <p itemprop="description" >桌面应用程序员常见的错误是误用Swing事件调度线程（Event Dispatch Thread, EDT)。他们要么从非UI线程访问UI组件，要么不考虑事件执行顺序，要么不使用独立任务线程而在EDT线程上执行耗时任务，结果使编写的应用程序变得响应迟钝、速度很慢。耗时计算和输入/</p>
+      
+    
+  </a>
+</section>
+
+
+  <nav id="page-nav" class="clearfix">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
 
 </div>
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
@@ -361,6 +442,8 @@ Log4j是Apache的一个开放源代码项目，通过使</p>
 		<ul>
 		
 			<li><a href="/categories/java/" title="java">java<sup>4</sup></a></li>
+		
+			<li><a href="/categories/未分类/" title="未分类">未分类<sup>1</sup></a></li>
 		
 		</ul>
 </div>

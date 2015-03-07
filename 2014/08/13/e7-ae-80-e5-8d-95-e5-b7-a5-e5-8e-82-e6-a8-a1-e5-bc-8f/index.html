@@ -1,0 +1,630 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu-site-verification" content="qig9fkyLqw" />
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>简单工厂模式 | 心缘冰河</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="donahue">
+    
+    <meta name="description" content="首先是接口,面向接口编程是java设计原则之一,面向接口编程好处我就不千篇一律的啰嗦一大堆了.一句话”接口是系统可插拔的保证“
+接口的功能是做什么:接口是用来对外提供功能调用或者提供服务,但是却是隐藏了其的实现细节给它的调用者.调用者只知道业务功能接口,调用接口提供的功能而完成自己的事务.
+接口的思">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="心缘冰河" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="心缘冰河">心缘冰河</a></h1>
+				<a class="blog-motto">写出我人生,coding</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					
+					<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+					<li>
+					
+					<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" autocomplete="off" name="q" maxlength="20" placeholder="搜索" />
+					</form>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/08/13/e7-ae-80-e5-8d-95-e5-b7-a5-e5-8e-82-e6-a8-a1-e5-bc-8f/" title="简单工厂模式" itemprop="url">简单工厂模式</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://donahue-ldz.github.io" title="donahue">donahue</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-08-13T15:42:19.000Z" itemprop="datePublished">Aug 13 2014</time>
+    更新日期:<time datetime="2015-03-07T04:42:44.000Z" itemprop="dateModified">Mar 7 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#接口的功能是做什么:"><span class="toc-number">1.</span> <span class="toc-text">接口的功能是做什么:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口的思想是:"><span class="toc-number">2.</span> <span class="toc-text">接口的思想是:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#}"><span class="toc-number">3.</span> <span class="toc-text">}</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#何时选择简单工厂建议:"><span class="toc-number">4.</span> <span class="toc-text">何时选择简单工厂建议:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式的区分:"><span class="toc-number">5.</span> <span class="toc-text">模式的区分:</span></a></li></ol>
+		</div>
+		
+		<p>首先是接口,面向接口编程是java设计原则之一,面向接口编程好处我就不千篇一律的啰嗦一大堆了.一句话”<span style="color: #ff00ff;"><strong>接口是系统可插拔的保证</strong></span>“</p>
+<h3 id="接口的功能是做什么:"><strong>接口的功能是做什么:</strong></h3><p><span style="color: #ff00ff;">接口是用来对外提供功能调用或者提供服务,但是却是隐藏了其的实现细节给它的调用者.调用者只知道业务功能接口,调用接口提供的功能而完成自己的事务.</span></p>
+<h3 id="接口的思想是:">接口的思想是:</h3><p><span style="color: #ff00ff;"><strong>“封装隔离”是接口的思想</strong></span>,这里的封装是对被隔离体行为的封装,隔离就是外部不知道内部的实现只是会调用.</p>
+<p>在java程序设计里面非常讲究层的划分和模块的划分,通常按照三层划分:<strong><span style="color: #ff00ff;">表现层+逻辑层+数据层.在这些层之间的通讯就是通过接口来实现</span></strong>.有人定义接口就直接就是”层之间通讯的工具”,在每一个层里面又有很多小的模块,每个模块对外都是一个整体,所以也应该对外提供相应的接口,模块之间也应该是接口调用  “接口是被其隔离部分的外观和代表”</p>
+<p>在一般的编程中我们一般是定义了功能的抽象来对类进行约束,然后提供实现,最后供给调用,不妨接下来的介绍中使用:</p>
+<p>Api:代表接口</p>
+<p>Impl:代表实现,ImplA代表一个A实现,类推</p>
+<p>Client:代表外部调用</p>
+<p><strong>一般模式:</strong></p>
+<p>client代码   Api api = new Impl(); api.method()…..这样存在几个问题,首先是接口是”隔离封装”的代名词,此处虽然是用了接口编程但是没有体现最重要的”隔离”,就是说,客户端(调用者)不但要知道这个接口,还要知道这个实现类,如果实现类很多的化就….总之隔离要求的是client也不能知道Impl,Impl是隔离体</p>
+<p>解决办法:简单工厂类,下文就用factory代表</p>
+<p>我们将new Impl()这个动作交个factory去处理,client只需要返回一个Api即可,这里又存在一个问题就是如何知道要选择那个实现类呢</p>
+<p>我们可以通过传入参数去告诉</p>
+<p><code>public class Factory{
+public static Api createApi(args){
+if(args == A){
+return new ImplA();
+}
+if(......)
+//选择条件
+}
+}</code><br><strong>关于Factory类的一些建议:</strong><br>1.想要获取那个接口,一般就是create+接口名或者get+接口名;<br>2.一般工厂类不希望也没有必要去实例化,所以一般就是静态方法;<br>3.工厂一般作为工具类使用;<br>4.一般一个工厂类的命名是以模块名+Factory;</p>
+<p><span style="color: #ff0000;"><strong>这样的化就可以将实现类的选择交个工厂去处理,”简单工厂类的核心就是选择接口的实现类”</strong></span></p>
+<p>大家或许发现了一个问题,就是这样的程序还有问题:<br>1.client还是必须知道参数的含义,才能选择相应的接口,还是不是很友善<br>2.要是增加了选择的条件args,或者改变或者增加实现类,这样的话还要去手动修改factory类,不方便,比如我们希望在添加实现类的时候不在修改factory类</p>
+<p>为了解决上面的问题,一个简单的方法是使用配置文件,当有了新的实现类的时候只要在配置文件上面直接配置就可以了在简单工厂里面可以通过反射或者IOC/DI去解决,以反射为例,伪代码如下:<br><code>public class Factory{
+//Factory.properties 里面提供了实现类的配置 如 ImplClass = ImplC
+public static Api createApi(){
+InputStream in = Factory.class.getResourceAsStream(&quot;Factory.properties&quot;)
+Properties prop = new Propertier();
+prop.load(in);
+//省了很多代码
+return (Api)Class.forName(p.getProperty(ImplClass)).newInstance();</code></p>
+<p>}</p>
+<h3 id="}">}</h3><p>简单工厂优点:</p>
+<p>1.帮助封装,隔离更加彻底,真正的面向接口编程,外部什么都不用知道(一般功能的化是肯定知道了,可以这样理解接口全是按照client要求做的,所以client能调用,但是其余就不应该由client操心了)<br>2.实现解耦,客户端和具体实现类的解耦</p>
+<h3 id="何时选择简单工厂建议:">何时选择简单工厂建议:</h3><p>1.完全封装,只能”傻瓜的访问自己所需的功能”,其余事情交factory去管理</p>
+<p>2.<strong>如果想要把对外创建对象的职责集中管理和控制,可以选择工厂一个简单工厂可以创建很多不相关的对象,由于是一个”中间件”</strong><br><strong> 可以在创建对象的时候做很多工作和”代理”差不多,比如创建单例,权限创建,格式化等(配合其他模式一起使用)….总之对象的集中管理,想咋做就咋做呗</strong><br><strong> 注意:一般一个工厂类的实例化类一般是在一个模块里面的类,不能太多,否则可能会职责冗余.</strong></p>
+<h3 id="模式的区分:">模式的区分:</h3><p>抽象工厂</p>
+<p>工厂方法</p>
+<p>创建对象实例模式</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://donahue-ldz.github.io/2014/08/13/e7-ae-80-e5-8d-95-e5-b7-a5-e5-8e-82-e6-a8-a1-e5-bc-8f/" data-title="简单工厂模式 | 心缘冰河" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/08/14/e5-a4-96-e8-a7-82-e6-a8-a1-e5-bc-8ffacade/" title="外观模式Facade">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  外观模式Facade</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/08/12/action-e7-b1-bb-e5-92-8c-e9-94-ae-e7-9b-98-e5-bf-ab-e6-8d-b7-e9-94-ae/"  title="Action类和键盘快捷键">
+ <strong>NEXT:</strong><br/> 
+ <span>Action类和键盘快捷键
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="简单工厂模式" data-thread-key="e7-ae-80-e5-8d-95-e5-b7-a5-e5-8e-82-e6-a8-a1-e5-bc-8f" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/e7-ae-80-e5-8d-95-e5-b7-a5-e5-8e-82-e6-a8-a1-e5-bc-8f"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#接口的功能是做什么:"><span class="toc-number">1.</span> <span class="toc-text">接口的功能是做什么:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口的思想是:"><span class="toc-number">2.</span> <span class="toc-text">接口的思想是:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#}"><span class="toc-number">3.</span> <span class="toc-text">}</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#何时选择简单工厂建议:"><span class="toc-number">4.</span> <span class="toc-text">何时选择简单工厂建议:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模式的区分:"><span class="toc-number">5.</span> <span class="toc-text">模式的区分:</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  <div class="widget intro">
+<h3 class="asidetitle">简介</h3>
+<ul class="entry">
+<li>现状：大连理工大学/本科生</li>
+<li>QQ 号：635884063</li>
+<li>github :  <a href="https://github.com/donahue-ldz">donahue-ldz</a></li>
+</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/java/" title="java">java<sup>4</sup></a></li>
+		
+			<li><a href="/categories/未分类/" title="未分类">未分类<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/CyclicBarrier/" style="font-size: NaNpx;">CyclicBarrier</a><a href="/tags/MarkDown/" style="font-size: NaNpx;">MarkDown</a><a href="/tags/finalize/" style="font-size: NaNpx;">finalize</a><a href="/tags/log4j/" style="font-size: NaNpx;">log4j</a><a href="/tags/log4j配置/" style="font-size: NaNpx;">log4j配置</a><a href="/tags/内存回收/" style="font-size: NaNpx;">内存回收</a><a href="/tags/日志记录/" style="font-size: NaNpx;">日志记录</a><a href="/tags/线程/" style="font-size: NaNpx;">线程</a><a href="/tags/线程等待，CountDownLatch/" style="font-size: NaNpx;">线程等待，CountDownLatch</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2015 
+		
+		<a href="http://donahue-ldz.github.io" target="_blank" title="donahue">donahue</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

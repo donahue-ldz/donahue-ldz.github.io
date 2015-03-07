@@ -1,0 +1,638 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu-site-verification" content="qig9fkyLqw" />
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>Play MP3 with libmpg123 and libao | 心缘冰河</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="donahue">
+    
+    <meta name="description" content="Play MP3 with libmpg123 and libaoI’m rewriting some of my python applications using C. One of them plays online mp3 audio. I used gstreamer to play mp">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="心缘冰河" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="心缘冰河">心缘冰河</a></h1>
+				<a class="blog-motto">写出我人生,coding</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					
+					<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+					<li>
+					
+					<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" autocomplete="off" name="q" maxlength="20" placeholder="搜索" />
+					</form>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/01/22/35/" title="Play MP3 with libmpg123 and libao" itemprop="url">Play MP3 with libmpg123 and libao</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://donahue-ldz.github.io" title="donahue">donahue</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-01-22T04:34:26.000Z" itemprop="datePublished">Jan 22 2014</time>
+    更新日期:<time datetime="2015-03-07T04:42:44.000Z" itemprop="dateModified">Mar 7 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#include"><span class="toc-number">1.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-1"><span class="toc-number">2.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_BITS_8"><span class="toc-number">3.</span> <span class="toc-text">define BITS 8</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-2"><span class="toc-number">4.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-3"><span class="toc-number">5.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-4"><span class="toc-number">6.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_BITS_8-1"><span class="toc-number">7.</span> <span class="toc-text">define BITS 8</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-5"><span class="toc-number">8.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-6"><span class="toc-number">9.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-7"><span class="toc-number">10.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-8"><span class="toc-number">11.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_BUF_SIZE_4096"><span class="toc-number">12.</span> <span class="toc-text">define BUF_SIZE 4096</span></a></li></ol>
+		</div>
+		
+		<p><span style="color: #ff00ff;"><strong>Play MP3 with libmpg123 and libao</strong></span><br><strong>I’m rewriting some of my python applications using C. One of them plays online mp3 audio. I used gstreamer to play mp3 and I’m considering switching to a more lightweight solution. Finally, I choose libmpg123 and libao. Libmpg123 is used to decode mp3 and libao is then used to make the sound.</strong></p>
+<p>Play local files<br>Well, the coding part is rather easy. Initialize, allocate some resources, decode some bytes, play the decoded bytes, keep decoding until all done, clean up and shut down. The following sample code shows how to play a mp3 file give in commnd line arguments with libmpg123 and libao.<br>`</p>
+<h1 id="include">include <ao ao.h=""></ao></h1><h1 id="include-1">include <mpg123.h></mpg123.h></h1><h1 id="define_BITS_8">define BITS 8</h1><p>int main(int argc, char <em>argv[])<br>{<br>mpg123_handle </em>mh;<br>unsigned char <em>buffer;<br>size_t buffer_size;<br>size_t done;<br>int err;<br>int driver;<br>ao_device </em>dev;<br>ao_sample_format format;<br>int channels, encoding;<br>long rate;<br>if(argc &lt; 2)<br>exit(0);<br>/<em> initializations </em>/<br>ao_initialize();<br>driver = ao_default_driver_id();<br>mpg123_init();<br>mh = mpg123_new(NULL, &amp;err);<br>buffer_size = mpg123_outblock(mh);<br>buffer = (unsigned char<em>) malloc(buffer_size </em> sizeof(unsigned char));<br>/<em> open the file and get the decoding format </em>/<br>mpg123_open(mh, argv[1]);<br>mpg123_getformat(mh, &amp;rate, &amp;channels, &amp;encoding);<br>/<em> set the output format and open the output device </em>/<br>format.bits = mpg123_encsize(encoding) <em> BITS;<br>format.rate = rate;<br>format.channels = channels;<br>format.byte_format = AO_FMT_NATIVE;<br>format.matrix = 0;<br>dev = ao_open_live(driver, &amp;format, NULL);<br>/</em> decode and play <em>/<br>while (mpg123_read(mh, buffer, buffer_size, &amp;done) == MPG123_OK)<br>ao_play(dev, buffer, done);<br>/</em> clean up */<br>free(buffer);<br>ao_close(dev);<br>mpg123_close(mh);<br>mpg123_delete(mh);<br>mpg123_exit();<br>ao_shutdown();<br>return 0;<br>}<br><code>Save the code as play.c and build it. Remember you must first install libmpg123 and libao.
+gcc -O2 -o play play.c -lmpg123 -lao
+Run the programm with a mp3 file path in command line.
+./play /path/to/file.mp3
+Play URLs
+It’s a little complicated to play HTTP URLs because you can’t pass a URL directly to mpg123_open. We should usempg123_open_feed instead. We also use libcurl to read HTTP URLs and feed the received data for decoding usingmpg123_feed. Then we use mpg123_decode_frame to try to decode a audio frame. Based on the return value ofmpg123_decode_frame, we are able to decide the following situations: a frame is successfuly decoded, a new decoding format is encountered or more data is required.</code></p>
+<h1 id="include-2">include <curl curl.h=""></curl></h1><h1 id="include-3">include <mpg123.h></mpg123.h></h1><h1 id="include-4">include <ao ao.h=""></ao></h1><h1 id="define_BITS_8-1">define BITS 8</h1><p>mpg123_handle <em>mh = NULL;<br>ao_device </em>dev = NULL;<br>size_t play_stream(void <em>buffer, size_t size, size_t nmemb, void </em>userp)<br>{<br>int err;<br>off_t frame_offset;<br>unsigned char <em>audio;<br>size_t done;<br>ao_sample_format format;<br>int channels, encoding;<br>long rate;<br>mpg123_feed(mh, (const unsigned char</em>) buffer, size <em> nmemb);<br>do {<br>err = mpg123_decode_frame(mh, &amp;frame_offset, &amp;audio, &amp;done);<br>switch(err) {<br>case MPG123_NEW_FORMAT:<br>mpg123_getformat(mh, &amp;rate, &amp;channels, &amp;encoding);<br>format.bits = mpg123_encsize(encoding) </em> BITS;<br>format.rate = rate;<br>format.channels = channels;<br>format.byte_format = AO_FMT_NATIVE;<br>format.matrix = 0;<br>dev = ao_open_live(ao_default_driver_id(), &amp;format, NULL);<br>break;<br>case MPG123_OK:<br>ao_play(dev, audio, done);<br>break;<br>case MPG123_NEED_MORE:<br>break;<br>default:<br>break;<br>}<br>} while(done &lt; 0);<br>return size <em> nmemb;<br>}<br>int main(int argc, char </em>argv[])<br>{<br>if(argc &lt; 2)<br>return 0;<br>ao_initialize();<br>mpg123_init();<br>mh = mpg123_new(NULL, NULL);<br>mpg123_open_feed(mh);<br>CURL *curl = curl_easy_init();<br>curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, play_stream);<br>curl_easy_setopt(curl, CURLOPT_URL, argv[1]);<br>curl_easy_perform(curl);<br>curl_easy_cleanup(curl);<br>mpg123_close(mh);<br>mpg123_delete(mh);<br>mpg123_exit();<br>ao_close(dev);<br>ao_shutdown();<br>return 0;<br>}<br>`<br>Save the code as playurl.c and build it. Remember you must first install libmpg123 libao and libcurl.<br>gcc -O2 -o playurl playurl.c -lmpg123 -lao -lcurl<br>Run the programm with a mp3 url in command line.</p>
+<p>./playurl <a href="http://url.to/file.mp3" target="_blank" rel="external">http://url.to/file.mp3</a><br>We use libcurl to open URL and play_stream is called to process the downloaded buffer. The major difference between local file version and URL version is we use different decoding interface. Notice the do…while loop in play_stream, it can’t be omitted because a piece of downloaded buffer may contains several frames to be decoded.</p>
+<p>libao Overview<br>Libao is designed to make it easy to do simple audio output using various audio devices and libraries. For this reason, complex audio control features are missing and will probably never be added. However, if you just want to be able to open whatever audio device is available and play sound, libao should be just fine.</p>
+<p>The libao API makes a distinction between drivers and devices. A driver is a set of functions that allow audio to be played on a particular platform (i.e. Solaris, ESD, etc.). A device is a particular output target that uses a driver. In addition, libao distinguishes between live output drivers, which write audio to playback devices (sound cards, etc.), and file output drivers, which write audio to disk in a particular format.</p>
+<p>To use libao in your program, you need to follow these steps:</p>
+<p>Include the &lt;ao/ao.h&gt; header into your program.</p>
+<p>Call<strong> ao_initialize()</strong> to initialize the library. This loads the plugins from disk, reads the libao configuration files, and identifies an appropriate default output driver if none is specified in the configuration files.</p>
+<p>Call<strong> ao_default_driver_id()</strong> to get the ID number of the default output driver. This may not be successful if no audio hardware is available, it is in use, or is not in the “standard” configuration. If you want to specify a particular output driver, you may call ao_driver_id() with a string corresponding to the short name of the device (i.e. “oss”, “wav”, etc.) instead.</p>
+<p>If you are using the default device, no extra options are needed. However, if you wish to to pass special options to the driver, you will need to:</p>
+<p>Create an option list pointer of type (ao_option *) and initialize it to NULL.</p>
+<p>Through successive calls to ao_append_option(), add any driver-specific options you need. Note that the options take the form of key/value pairs where supported keys are listed in the driver documentation.</p>
+<p>Call<strong> ao_open_live()</strong> and save the returned device pointer. If you are using a file output driver, you will need to call ao_open_file() instead.</p>
+<p>Call<strong> ao_play()</strong> to output each block of audio.</p>
+<p>Call<strong> ao_close()</strong> to close the device. Note that this will automatically free the memory that was allocated for the device. Do not attempt to free the device pointer yourself!</p>
+<p>`<br>Call ao_shutdown() to close the library.<br>/*</p>
+<ul>
+<li>ao_example.c</li>
+<li>Legal Terms:</li>
+<li>This source file is released into the public domain. It is</li>
+<li>distributed without any warranty; without even the implied</li>
+<li>warranty * of merchantability or fitness for a particular</li>
+<li>purpose.</li>
+<li>Function:</li>
+<li>This program opens the default driver and plays a 440 Hz tone for</li>
+<li>one second.</li>
+<li>Compilation command line (for Linux systems):</li>
+<li>gcc -o ao_example ao_example.c -lao -ldl -lm<br>*/</li>
+</ul>
+<h1 id="include-5">include <stdio.h></stdio.h></h1><h1 id="include-6">include <string.h></string.h></h1><h1 id="include-7">include <ao ao.h=""></ao></h1><h1 id="include-8">include <math.h></math.h></h1><h1 id="define_BUF_SIZE_4096">define BUF_SIZE 4096</h1><p>int main(int argc, char <em>*argv)<br>{<br>ao_device </em>device;<br>ao_sample_format format;<br>int default_driver;<br>char *buffer;<br>int buf_size;<br>int sample;<br>float freq = 440.0;<br>int i;</p>
+<p>/<em> — Initialize — </em>/</p>
+<p>fprintf(stderr, “libao example program\n”);</p>
+<p>ao_initialize();</p>
+<p>/<em> — Setup for default driver — </em>/</p>
+<p>default_driver = ao_default_driver_id();</p>
+<p>memset(&amp;format, 0, sizeof(format));<br>format.bits = 16;<br>format.channels = 2;<br>format.rate = 44100;<br>format.byte_format = AO_FMT_LITTLE;</p>
+<p>/<em> — Open driver — </em>/<br>device = ao_open_live(default_driver, &amp;format, NULL /<em> no options </em>/);<br>if (device == NULL) {<br>fprintf(stderr, “Error opening device.\n”);<br>return 1;<br>}</p>
+<p>/<em> — Play some stuff — </em>/<br>buf_size = format.bits/8 <em> format.channels </em> format.rate;<br>buffer = calloc(buf_size,<br>sizeof(char));</p>
+<p>for (i = 0; i &lt;format.rate; i++) {<br>sample = (int)(0.75 <em> 32768.0 </em><br>sin(2 <em> M_PI </em> freq * ((float) i/format.rate)));</p>
+<p>/<em> Put the same stuff in left and right channel </em>/<br>buffer[4<em>i] = buffer[4</em>i+2] = sample &amp; 0xff;<br>buffer[4<em>i+1] = buffer[4</em>i+3] = (sample &gt;&gt; 8) &amp; 0xff;<br>}<br>ao_play(device, buffer, buf_size);</p>
+<p>/<em> — Close and shutdown — </em>/<br>ao_close(device);</p>
+<p>ao_shutdown();</p>
+<p>return (0);<br>}<br>`</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://donahue-ldz.github.io/2014/01/22/35/" data-title="Play MP3 with libmpg123 and libao | 心缘冰河" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/01/22/e5-85-b3-e4-ba-8e-e6-88-91-e7-9a-84blogs/" title="关于我的blogs">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  关于我的blogs</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/01/22/e4-b8-96-e7-95-8c-e4-b8-8a-e6-9c-80-e8-bf-9c-e7-9a-84-e8-b7-9d-e7-a6-bb-ef-bc-88-e7-a8-8b-e5-ba-8f-e5-91-98-ef-bc-89/"  title="世界上最远的距离（程序员）">
+ <strong>NEXT:</strong><br/> 
+ <span>世界上最远的距离（程序员）
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Play MP3 with libmpg123 and libao" data-thread-key="35" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/35"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#include"><span class="toc-number">1.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-1"><span class="toc-number">2.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_BITS_8"><span class="toc-number">3.</span> <span class="toc-text">define BITS 8</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-2"><span class="toc-number">4.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-3"><span class="toc-number">5.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-4"><span class="toc-number">6.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_BITS_8-1"><span class="toc-number">7.</span> <span class="toc-text">define BITS 8</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-5"><span class="toc-number">8.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-6"><span class="toc-number">9.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-7"><span class="toc-number">10.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-8"><span class="toc-number">11.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define_BUF_SIZE_4096"><span class="toc-number">12.</span> <span class="toc-text">define BUF_SIZE 4096</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  <div class="widget intro">
+<h3 class="asidetitle">简介</h3>
+<ul class="entry">
+<li>现状：大连理工大学/本科生</li>
+<li>QQ 号：635884063</li>
+<li>github :  <a href="https://github.com/donahue-ldz">donahue-ldz</a></li>
+</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/java/" title="java">java<sup>4</sup></a></li>
+		
+			<li><a href="/categories/未分类/" title="未分类">未分类<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/CyclicBarrier/" style="font-size: NaNpx;">CyclicBarrier</a><a href="/tags/MarkDown/" style="font-size: NaNpx;">MarkDown</a><a href="/tags/finalize/" style="font-size: NaNpx;">finalize</a><a href="/tags/log4j/" style="font-size: NaNpx;">log4j</a><a href="/tags/log4j配置/" style="font-size: NaNpx;">log4j配置</a><a href="/tags/内存回收/" style="font-size: NaNpx;">内存回收</a><a href="/tags/日志记录/" style="font-size: NaNpx;">日志记录</a><a href="/tags/线程/" style="font-size: NaNpx;">线程</a><a href="/tags/线程等待，CountDownLatch/" style="font-size: NaNpx;">线程等待，CountDownLatch</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2015 
+		
+		<a href="http://donahue-ldz.github.io" target="_blank" title="donahue">donahue</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

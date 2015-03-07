@@ -1,0 +1,748 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu-site-verification" content="qig9fkyLqw" />
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>指针“陷阱”  | 心缘冰河</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="donahue">
+    
+    <meta name="description" content="使用指针时的“陷阱”“C语言诡异离奇，陷阱重重，却获得了巨大成功！”——C语言之父Dennis M.Ritchie。Ritchie大师的这句话体现了C语言的灵活性以及广泛的使用，但也揭示了C是一种在应用时要时刻注意自己行为的语言。C的设计哲学还是那句话：使用C的程序员应该知道自己在干什么。有时用C写">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="心缘冰河" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="心缘冰河">心缘冰河</a></h1>
+				<a class="blog-motto">写出我人生,coding</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					
+					<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+					<li>
+					
+					<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" autocomplete="off" name="q" maxlength="20" placeholder="搜索" />
+					</form>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/02/23/e6-8c-87-e9-92-88-e6-97-b6-e7-9a-84-e9-99-b7-e9-98-b1/" title="指针“陷阱” " itemprop="url">指针“陷阱” </a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://donahue-ldz.github.io" title="donahue">donahue</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-02-23T13:26:09.000Z" itemprop="datePublished">Feb 23 2014</time>
+    更新日期:<time datetime="2015-03-07T04:42:44.000Z" itemprop="dateModified">Mar 7 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用指针时的“陷阱”"><span class="toc-number">1.</span> <span class="toc-text">使用指针时的“陷阱”</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-指针与字符串常量"><span class="toc-number">1.1.</span> <span class="toc-text">1.指针与字符串常量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-strlen(_)和sizeof"><span class="toc-number">1.2.</span> <span class="toc-text">2.strlen( )和sizeof</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3．const指针与指向const的指针"><span class="toc-number">1.3.</span> <span class="toc-text">3．const指针与指向const的指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4．C语言中的值传递"><span class="toc-number">1.4.</span> <span class="toc-text">4．C语言中的值传递</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include<>"><span class="toc-number">2.</span> <span class="toc-text">include<></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include"><span class="toc-number">3.</span> <span class="toc-text">include</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-1"><span class="toc-number">4.</span> <span class="toc-text">include</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5．垂悬指针(Dangling_pointer)"><span class="toc-number">4.1.</span> <span class="toc-text">5．垂悬指针(Dangling pointer)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-2"><span class="toc-number">5.</span> <span class="toc-text">include</span></a></li></ol>
+		</div>
+		
+		<h1 id="使用指针时的“陷阱”"><span style="color: #ff0000;"><strong>使用指针时的“陷阱”</strong></span></h1><p>“C语言诡异离奇，陷阱重重，却获得了巨大成功！”——C语言之父Dennis M.Ritchie。Ritchie大师的这句话体现了C语言的灵活性以及广泛的使用，但也揭示了C是一种在应用时要时刻注意自己行为的语言。C的设计哲学还是那句话：使用C的程序员应该知道自己在干什么。有时用C写的程序会出一些莫名其妙的错误，看似根源难寻，但仔细探究会发现很多错误的原因是概念不清。在我们经常掉进去的这些“陷阱”中，围绕着指针的数量为最。这一讲将对使用指针时遇到的一些问题做出分析，以避免在日后落入此类“陷阱”之中。</p>
+<h2 id="1-指针与字符串常量">1.指针与字符串常量</h2><p>可以将一个字符串常量赋给一个字符指针。但有没有朋友想过为什么能够这样进行初始化呢？回答这个问题之前，我们先来搞清楚什么是字符串常量。字符串常量是位于一对双引号内部的字符序列(可以为空)。</p>
+<p><strong>当一个字符串常量出现于表达式中，除以下三种情况外：</strong></p>
+<ol>
+<li>不是 &amp; 操作符的操作数；</li>
+<li>不是sizeof操作符的操作数；</li>
+<li>不作为字符数组的初始化值</li>
+</ol>
+<p>字符串常量都会被转化为由一个指针所指向的字符数组。例如：char *cp = “abcdefg”; 不满足上述3个条件，所以”abcdefg”会被转换为一个没有名字的字符数组，这个数组被abcdefg和一个空字符’/0’初始化，并且会得到一个指针常量，它的值为第一个字符的地址，不过这些都是由编译器来完成的。现在可以解释用一个字符串常量初始化一个字符指针的原因了，一个字符串常量的值就是一个指针常量。那么对于下面的语句，朋友们也不该感到迷惑了：</p>
+<p>printf(“%c\n”,*”abcdefg”);</p>
+<p>printf(“%c\n”, *(“abcdefg”+ 1));</p>
+<p>printf(“%c\n”,”abcdefg”[5]);</p>
+<p>*”abcdefg”：字符串常量的值是一个指针常量，指向的是字符串的第一个字符，对它解引用即可得到a；</p>
+<p>*(“abcdefg”+ 1)：对这个指针进行算术运算则其指向下一个字符，再对它解引用，得到b；</p>
+<p>“abcdefg”[5]：既然”abcdefg”是一个指针，那么”abcdefg”[5]就可以写成*(“abcdefg” + 5)，所以得到f。</p>
+<p>回忆一下大家所学的初始化数组的方法：char ca[ ] = {‘a’, ‘b’, ‘c’, ‘d’, ‘e’, ‘f’, ‘g’, ‘/0’};这种方法实在太笨拙了，所以标准提供了一种快速方法用于初始化字符数组：char ca[ ] = “abcdefg”; 这个字符串常量满足了上面的第3条：用来初始化字符数组，所以不会被转换为由一个指针所指向的字符数组。它只是用单个字符来初始化字符数组的简便写法。再来对比以下两个声明：</p>
+<p>char ca[ ] = “abcdefg”;</p>
+<p>char *cp = “abcdefg”;</p>
+<p>它们的含义并不相同，前者是初始化一个字符数组的元素，后者才是一个真正的字符串常量，如下图所示：</p>
+<p>char ca[ ] = “abcdefg”;</p>
+<p><a href="http://www.donahueblogs.com/wp-content/uploads/2014/02/数组ca.gif" target="_blank" rel="external"><img src="http://www.donahueblogs.com/wp-content/uploads/2014/02/数组ca-300x42.gif" alt="数组ca"></a></p>
+<p>图1</p>
+<p>char *cp =”abcdefg”;</p>
+<p><a href="http://www.donahueblogs.com/wp-content/uploads/2014/02/指针cp.gif" target="_blank" rel="external"><img src="http://www.donahueblogs.com/wp-content/uploads/2014/02/指针cp-300x42.gif" alt="指针cp"></a></p>
+<p>图2</p>
+<p>要注意的是：用来初始化字符数组的字符串常量，编译器会在栈中为字符数组分配空间，然后把字符串中的所有字符复制到数组中；而用来初始化字符指针的字符串常量会被编译器安排到只读数据存储区，但也是按字符数组的形式来存储的，如图2。我们可以通过一个字符指针读取字符串常量但不能修改它，否则会发生运行时错误。正如下面的例子：</p>
+<p>`</p>
+<p>charca[ ] = “abcdefg”;</p>
+<p>char*cp = “abcdefg”;</p>
+<p>ca[0]= ‘b’;</p>
+<p>printf(“%s\n”, ca );</p>
+<p>cp[0]= ‘b’;</p>
+<p>printf(“%s\n”, cp );</p>
+<p>`</p>
+<p>此程序第3行修改的不是只读数据区中的字符串常量，而是由字符串常量复制而来的存在于栈中的字符数组ca的一个元素。但第5行却修改了用于初始化字符指针的位于只读数据区的字符串常量，所以会发生运行时错误。大家不要认为所有的字符串常量都存储在不同的地址，标准C允许编译器为两个包含相同字符的字符串常量使用相同的存储地址，而且现实中大多数厂商的编译器也都是这么做的。来看下面的程序：</p>
+<p>`</p>
+<p>charstr1[] = “abc”;</p>
+<p>charstr2[] = “abc”;</p>
+<p>char*str3 = “abc”;</p>
+<p>char*str4 = “abc”;</p>
+<p>printf(“%d\n”, str1 == str2 );</p>
+<p>printf(“%d\n”,str3 == str4 );</p>
+<p>`</p>
+<p>输出的结果是：0 1</p>
+<p>str1,str2是两个不同的字符数组，分别被初始化为”abc”，它们在栈中有各自的空间；而str3,str4是两个字符指针分别被初始化为包含相同字符的字符串常量，它们指向相同的区域。</p>
+<h2 id="2-strlen(_)和sizeof">2.strlen( )和sizeof</h2><p>请看下面程序：</p>
+<p>`</p>
+<p>char a[1000];</p>
+<p>printf(“%d\n”,sizeof(a));</p>
+<p>printf(“%d\n”,strlen(a));</p>
+<p>`</p>
+<p>这段代码的输出可不一定是1000, 0。sizeof(a)的结果一定是1000，但strlen(a)的结果就不能确定了。根本原因在于：strlen( )是一个函数，而sizeof是一个操作符，这导致了它们的种种不同：</p>
+<ul>
+<li>sizeof可以用类型(需要用括号括起来)或变量做操作数，而strlen( )只接受char*型字符指针做参数，并且该指针所指向的字符串必须是以’/0’结尾的；</li>
+<li>sizeof是操作符，对数组名使用sizeof时得到的是整个数组所占内存的大小，而把数组名作为参数传递给strlen( )后数组名会被转换为指向数组第一个元素的指针；</li>
+<li>sizeof的结果在编译期就确定了，而strlen( )是在运行时被调用。</li>
+</ul>
+<p>由于上例中的数组a[1000]没有初始化，所以数组内的元素及元素个数都是不确定的，可能是随机值，所以用strlen(a)会得到不同的值，这取决于产生的随机数，但sizeof的结果一定是1000，因为sizeof是在编译时获取char a[1000]中char和1000这两个信息来计算空间的。</p>
+<h2 id="3．const指针与指向const的指针">3．const指针与指向const的指针</h2><p>对于常量指针(const pointer)和指针常量大家应该可以分清楚了。常量指针：指针本身的值不可以改变，可以把const理解为只读的，如：int <em>const c_p；指针常量：一个指针类型的常量，如：(int </em>)0x123456ff。现在引入一个新的概念：指向const的指针，即一个指针它所指向的是一个const对象，如：const int *p_to_const; 表明p_to_const是一个指向constint型变量的指针，p_to_const自身的值是可以改变的，但是不能通过对p_to_const解引用来改变所指的对象的值，看下面的例子会更加清晰：</p>
+<p>int *p = NULL; //定义一个整型指针并初始化为NULL</p>
+<p>int i = 0; //定义一个整型变量并初始化为0</p>
+<p>const int ci = 0; //定义一个只读的整型变量并初始化，程序中不能再对它赋值</p>
+<p>const int *p_to_const = NULL; //定义一个指向只读整型变量的指针，初始化为NULL</p>
+<p>p = &amp;i; //ok，让p指向整型变量i</p>
+<p>p_to_const = &amp;ci; //ok，让p_to_const指向ci</p>
+<p>*p = 5; //ok，通过指针p修改i的值</p>
+<p><em>p_to_const = 5; /</em>error，p_to_const所指向的是一个只读变量，不能通过p_to_const对</p>
+<p>ci进行修改*/</p>
+<p>p_to_const = &amp;i; //ok，让指向const对象的指针指向普通对象</p>
+<p>p_to_const = p; //ok，将指向普通对象的指针赋给指向const对象的指针</p>
+<p>p = (int <em>) ⁣ //ok，强制转化为(int </em>)型，赋值操作符两侧操作数类型相同</p>
+<p>p = (int *) p_to_const; //ok，同上</p>
+<p>p = ⁣ // error，错误原因下述</p>
+<p>p = p_to_const; //error，同上</p>
+<p>对于最后两行的赋值，需要说明一下。C语言中对于指针的赋值操作(包括实参与形参之间的传递)应该满足：两个操作数都是指向有限定符或都是指向无限定符的类型相兼容的指针；或者左边指针所指向的类型具有右边指针所指向的类型的全部限定符。例如const int *表示“指向一个具有const限定符的int类型的指针”，即const所修饰的是指针所指向的类型，而非指针。因此，p = ⁣ 中的&amp;ic得到的是一个指向const int型变量的指针，类型和p_to_const一样。p_to_const所指向的类型为const int，而p所指向的类型为int，p在赋值操作符左边，p_to_const在赋值操作符右边，左边指针所指向的类型并不具有右边指针所指向类型的全部限定符，所以会出错。</p>
+<p>小扩展：{让我们再深入一些，如果现在有一个指针int <strong>bp和一个指针const int </strong>cbp那么这样的赋值也时错误的：cbp = bp; 因为const int <strong>表示“指向有const限定符的int类型的指针的指针”。int </strong> 和constint <strong>都是没有限定符的指针类型，它们所指向的类型是不一样的(int </strong>指向int <em>，而constint **指向const int </em>)，所以它们是不兼容的，根据指针赋值条件来判断，这两个指针之间不能相互赋值。</p>
+<p>实际上和const int <strong>相兼容的类型是const int</strong>const，所以下面代码是合法的：</p>
+<p>const int <em> </em>const const_p_to_const = &amp;p_to_const;</p>
+<p>/<em>定义一个指向有const限定符的int类型的指针的常指针，它必需在定义时初始化，程序中不能再对它赋值。由于既不能修改指针的值也不能通过指针改变所指对象的值，所以在实际中，这种指针的用途并不广</em>/</p>
+<p>const int **cpp;</p>
+<p>cpp = const_p_to_const;</p>
+<p>左操作数cpp所指向的类型是const int<em>，右操作数const_p_to_const指向类型也为const int</em>，满足指针赋值条件：左边指针所指向的类型具有右边指针所指向类型的全部限定符，只不过const_p_to_const是一个const指针，不能被再赋值，所以反过来是不能进行赋值的。还要注意被const限定的对象只能并且必需在声明时初始化。}</p>
+<h2 id="4．C语言中的值传递">4．C语言中的值传递</h2><p>在第3将中提到过C语言只提供函数参数的传值调用机制，即函数调用时，拷贝出一个实参的副本并把这个副本赋值给形参，从此实参与形参是各不相干的，形参在函数中的改变不会影响实参。我在前面说过C语言中所有非数组形式的数据实参(包括指针)均以传值形式调用，这并不与C语言只提供传值调用机制矛盾，对于数组形参会被转换为指向数组首元素的指针，当我们用数组名作为实参时，实际进行的也是值传递。请看程序：</p>
+<p>`</p>
+<h1 id="include&lt;&gt;">include&lt;&gt;</h1><p>void pass_by_value(char parameter[])</p>
+<p>{</p>
+<p>printf(“形参的值： %p\n”,parameter);</p>
+<p>printf(“形参的地址： %p\n”, ¶meter);</p>
+<p>printf(“%s\n”,parameter);</p>
+<p>}</p>
+<p>int main( )</p>
+<p>{</p>
+<p>charargument[100] = “C语言只有传值调用机制！”;</p>
+<p>printf(“实参的值： %p\n”,argument);</p>
+<p>pass_by_value(argument);</p>
+<p>return0;</p>
+<p>}</p>
+<p>`</p>
+<p>在我机器上的输出结果为：实参的值： 0022FF00</p>
+<p>形参的值： 0022FF00</p>
+<p>形参的地址： 0022FED0</p>
+<p>C语言只有传值调用机制！</p>
+<p>当执行pass_by_value(argument);时，实参数组名argument被转换为指向数组第一个元素的指针，这个指针的值为(void *)0022FF00，然后把这个值拷贝一份赋给形式参数parameter，形参parameter虽然被声明为字符数组，但是会被转换为一个指针，它是创建在栈上的一个独立对象(它有自己独立的地址)并接收实参值的那份拷贝。从而我们看到了实参与形参具有相同的值，并且形参有一个独立的地址。再来看一个简单的例子：</p>
+<p>`</p>
+<h1 id="include">include</h1><p>void pointer_plus(char *p)</p>
+<p>{</p>
+<p>p+= 3;</p>
+<p>}</p>
+<p>int main( )</p>
+<p>{</p>
+<p>char*a = “abcd”;</p>
+<p>pointer_plus(a);</p>
+<p>printf(“%c\n”, *a);</p>
+<p>return0;</p>
+<p>}</p>
+<p>`</p>
+<p>如果哪位朋友认为输出是d，那么你还是没有搞清楚值传递的概念，此程序中将a拷贝一份赋给p，从此a和p就没有关系了，在函数pointer_plus中增加p的值实际上增加的是a的那份拷贝的值，根本不会影响到a，在主函数中a仍旧指向字符串的第一个字符，因此输出为a。如果想让pointer_plus改变a所指向的对象，采用二级指针即可，程序如下：</p>
+<p>`</p>
+<h1 id="include-1">include</h1><p>void pointer_plus(char **p)</p>
+<p>{</p>
+<p>*p += 3;</p>
+<p>}</p>
+<p>int main( )</p>
+<p>{</p>
+<p>char*a = “abcd”;</p>
+<p>pointer_plus(&amp;a);</p>
+<p>printf(“%c\n”, *a);</p>
+<p>return0;</p>
+<p>}</p>
+<p>`</p>
+<h2 id="5．垂悬指针(Dangling_pointer)">5．垂悬指针(Dangling pointer)</h2><p>垂悬指针是我们在使用指针时经常出现的，所谓垂悬指针就是指向了不确定的内存区域的指针，通常对这种指针进行操作会使程序发生不可预知的错误，因此我们应该避免在程序中出现垂悬指针，一些好的编程习惯可以帮助我们减少这类事件的发生。</p>
+<p>造成垂悬指针的原因通常分为三种，对此我们一个一个地进行讨论。</p>
+<p>第一种：在声明一个指针时没有对其初始化。在C语言中不会对所声明的自动变量进行初始化，所以这个指针的默认值将是随机产生的，很可能指向受系统保护的内存，此时如果对指针进行解引用，会引发运行时错误。解决方法是在声明指针时将其初始化为NULL或零指针常量。大家应该养成习惯为每个新创建的对象进行初始化，此时所做的些许工作会为你减少很多烦恼。</p>
+<p>第二种：指向动态分配的内存的指针在被free后，没有进行重新赋值就再次使用。就像下面的代码：</p>
+<p>`</p>
+<p>int <em>p =(int </em>)malloc(4);</p>
+<p>*p = 10;</p>
+<p>printf(“%d\n”, *p);</p>
+<p>free(p);</p>
+<p>……</p>
+<p>……</p>
+<p>printf(“%d\n”,*p);</p>
+<p>`</p>
+<p>这就可能会引发错误，首先我们声明了一个p并指向动态分配的一块内存空间，然后通过p对此空间赋值，再通过free()函数把p所指向的那段内存释放掉。注意free函数的作用是通过指针p把p所指向的内存空间释放掉，并没有把p释放掉，所谓释放掉就是将这块内存中的对象销毁，并把这块内存交还给系统留作他用。指针p中的值仍是那块内存的首地址，倘若此时这块内存又被指派用于存储其他的值，那么对p进行解引用就可以访问这个当前值，但如果这块内存的状态是不确定的，也许是受保护的，也许不保存任何对象，这时如果对p解引用则可能出现运行时错误，并且这个错误检测起来非常困难。所以为了安全起见，在free一个指针后，将这个指针设置为NULL或零指针常量。虽然对空指针解引用是非法的，但如果我们不小心对空指针进行了解引用，所出现的错误在调试时比解引用一个指向未知物的指针所引发的错误要方便得多，因为这个错误是可预料的。</p>
+<p>第三种：返回了一个指向局部变量的指针。这种造成垂悬指针的原因和第二种相似，都是造成一个指向曾经存在的对象的指针，但该对象已经不再存在了。不同的是造成这个对象不复存在的原因。在第二种原因中造成这个对象不复存在的原因是内存被手动释放掉了，而在第三种原因中是因为指针指向的是一个函数中的局部变量，在函数结束后，局部变量被自动释放掉了(无需程序员去手动释放)。如下面的程序：</p>
+<p>`</p>
+<h1 id="include-2">include</h1><p>int*return_pointer()</p>
+<p>{</p>
+<p>int i=3;</p>
+<p>int *p =&amp;i;</p>
+<p>return p;</p>
+<p>}</p>
+<p>int main()</p>
+<p>{</p>
+<p>int *rp = return_pointer();</p>
+<p>printf(“%d\n”, *rp);</p>
+<p>return 0;</p>
+<p>}</p>
+<p>`</p>
+<p>在return_pointer函数中创建了一个指针p指向了函数内的变量i (在函数内创建的变量叫做局部变量)，并且将这个指针作为返回值。在主函数中有一个指针接收return_pointer的返回值，然后对其解引用并输出。此时的输出可能是3，也可能是0，也可能是其他值。本质原因就在于我们返回了一个指向局部变量的指针，这个局部变量在函数结束后会被编译器销毁，销毁的时间由编译器来决定，这样的话p就有可能指向不保存任何对象的内存，也可能这段内存中是一个随机值，总之，这块内存是不确定的，p返回的是一个无效的地址。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://donahue-ldz.github.io/2014/02/23/e6-8c-87-e9-92-88-e6-97-b6-e7-9a-84-e9-99-b7-e9-98-b1/" data-title="指针“陷阱”  | 心缘冰河" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/02/23/142/" title="Session的本质和入门">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Session的本质和入门</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/02/22/jquery-e5-8a-a8-e6-80-81-e9-85-b7-e6-95-88-e6-9e-9c-e5-ae-9e-e7-8e-b0-e6-80-bb-e7-bb-93/"  title=" 动态酷绚效果实现jQuery">
+ <strong>NEXT:</strong><br/> 
+ <span> 动态酷绚效果实现jQuery
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="指针“陷阱” " data-thread-key="e6-8c-87-e9-92-88-e6-97-b6-e7-9a-84-e9-99-b7-e9-98-b1" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/e6-8c-87-e9-92-88-e6-97-b6-e7-9a-84-e9-99-b7-e9-98-b1"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用指针时的“陷阱”"><span class="toc-number">1.</span> <span class="toc-text">使用指针时的“陷阱”</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-指针与字符串常量"><span class="toc-number">1.1.</span> <span class="toc-text">1.指针与字符串常量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-strlen(_)和sizeof"><span class="toc-number">1.2.</span> <span class="toc-text">2.strlen( )和sizeof</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3．const指针与指向const的指针"><span class="toc-number">1.3.</span> <span class="toc-text">3．const指针与指向const的指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4．C语言中的值传递"><span class="toc-number">1.4.</span> <span class="toc-text">4．C语言中的值传递</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include<>"><span class="toc-number">2.</span> <span class="toc-text">include<></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include"><span class="toc-number">3.</span> <span class="toc-text">include</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-1"><span class="toc-number">4.</span> <span class="toc-text">include</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5．垂悬指针(Dangling_pointer)"><span class="toc-number">4.1.</span> <span class="toc-text">5．垂悬指针(Dangling pointer)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-2"><span class="toc-number">5.</span> <span class="toc-text">include</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  <div class="widget intro">
+<h3 class="asidetitle">简介</h3>
+<ul class="entry">
+<li>现状：大连理工大学/本科生</li>
+<li>QQ 号：635884063</li>
+<li>github :  <a href="https://github.com/donahue-ldz">donahue-ldz</a></li>
+</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/java/" title="java">java<sup>4</sup></a></li>
+		
+			<li><a href="/categories/未分类/" title="未分类">未分类<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/CyclicBarrier/" style="font-size: NaNpx;">CyclicBarrier</a><a href="/tags/MarkDown/" style="font-size: NaNpx;">MarkDown</a><a href="/tags/finalize/" style="font-size: NaNpx;">finalize</a><a href="/tags/log4j/" style="font-size: NaNpx;">log4j</a><a href="/tags/log4j配置/" style="font-size: NaNpx;">log4j配置</a><a href="/tags/内存回收/" style="font-size: NaNpx;">内存回收</a><a href="/tags/日志记录/" style="font-size: NaNpx;">日志记录</a><a href="/tags/线程/" style="font-size: NaNpx;">线程</a><a href="/tags/线程等待，CountDownLatch/" style="font-size: NaNpx;">线程等待，CountDownLatch</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2015 
+		
+		<a href="http://donahue-ldz.github.io" target="_blank" title="donahue">donahue</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

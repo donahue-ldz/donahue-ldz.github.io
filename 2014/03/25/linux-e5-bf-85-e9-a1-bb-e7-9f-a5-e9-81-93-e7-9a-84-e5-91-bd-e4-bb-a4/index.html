@@ -1,0 +1,590 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu-site-verification" content="qig9fkyLqw" />
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>linux 必须知道的命令 | 心缘冰河</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="donahue">
+    
+    <meta name="description" content="一些常用的基本命令:uname -a    查看内核版本ls -al    显示所有文件的属性pwd         显示当前路径cd -    返回上一次目录     cd ~    返回主目录date s      设置时间、日期cal      显示日历     cal 2006bc     ">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="心缘冰河" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="心缘冰河">心缘冰河</a></h1>
+				<a class="blog-motto">写出我人生,coding</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					
+					<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+					<li>
+					
+					<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" autocomplete="off" name="q" maxlength="20" placeholder="搜索" />
+					</form>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/03/25/linux-e5-bf-85-e9-a1-bb-e7-9f-a5-e9-81-93-e7-9a-84-e5-91-bd-e4-bb-a4/" title="linux 必须知道的命令" itemprop="url">linux 必须知道的命令</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://donahue-ldz.github.io" title="donahue">donahue</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-03-25T07:30:17.000Z" itemprop="datePublished">Mar 25 2014</time>
+    更新日期:<time datetime="2015-03-07T04:42:44.000Z" itemprop="dateModified">Mar 7 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<div></div><br><div>一些常用的基本命令:<br>uname -a    查看内核版本<br>ls -al    显示所有文件的属性<br>pwd         显示当前路径<br>cd -    返回上一次目录     cd ~    返回主目录<br>date s      设置时间、日期<br>cal      显示日历     cal 2006<br>bc          计算器具<br>man  &amp; info     帮助手册<br>locale     显示当前字体     locale -a    所有可用字体     /etc/sysconfig/i18n设置文件<br>LANG=en    使用英文字体<br>sync       将数据同步写入硬盘<br>shutdonw -h now &amp; half &amp; poweroff  关机<br>reboot     重启<br>startx  &amp;  init 5   进入图形介面<br>/work  &amp; ?work    向上、下查找文档内容<br>chgrp      改变档案群组  chgrp testing install.log<br>chown     改变所属人   chown root:root install.log<br>chmod      改变属性     chmod 777 install.log     read=4  write=2  execute=1<br>cp   复制   cp filename<br>rm   删除文件  rm -rf filename   强制删除文件<br>rmdir   删除文件夹<br>mv  移动    mv 123.txt 222.txt  重命名<br>mkdir     创建文件夹<br>touch     创建文件  更新当前时间<br>cat       由第一行开始显示     cat |more  分页<br>nl        在内容前加行号<br>more  &amp;  less   一面一面翻动<br>head -n filename   显示第N行内容<br>tail -n filename  显示后N行内容<br>od        显示非纯文档<br>df -h 显示分区空间<br>du  显示目录或文件的大小<br>fdisk   分区设置    fdisk -l /dev/hda  显示硬盘分区状态<br>mkfs    建立各种文件系统  mkfs -t ext3  /dev/ram15<br>fsck    检查和修复LINUX档案<br>ln      硬链接   ln -s  软件链接<br>whereis   查找命令<br>locate    查找<br>find      查找   find / -name “<strong><em>.</em></strong>“<br>which     查看工具<br>whoami    显示当前用户<br>gcc -v    查看GCC版本<br>chattr +i filename  禁止删除   chattr -i filename  取消禁止<br>lsattr    显示隐藏档属性<br>updatedb  更新资料库<br>mke2fs    格式化   mkfs -t ext3<br>dd if=/etc/passwd of=/tmp/passwd.bak    备份<br>mount     列出系统所有的分区<br>mount -t iso9660 /dev/cdrom /mnt/cdrom   挂载光盘<br>mount -t vfat /dev/fd0 /mnt/floppy       挂载软盘<br>mount -t vfat -o iocharset=utf8,umask=000 /dev/hda2 /mnt/hda2   挂载fat32分区<br>mount -t ntfs -o nls=utf8,umask=000 /dev/hda3 /mnt/hda3         挂载ntfs分区<br>Linux-NTFS Project: <a href="http://linux-ntfs.sourceforge.net/" target="_blank" rel="external">http://linux-ntfs.sourceforge.net/</a><br>umount /mnt/hda3  缷载<br>ifconfig   显示或设置网络设备<br>service network restart   重启网卡<br>ifdown eth0  关闭网卡<br>ifup eth0    开启网卡<br>clear    清屏<br>history    历史记录       !55  执行第55个指令<br>stty   设置终端    stty -a<br>fdisk /mbr   删除GRUB<br>at     僅進行一次的工作排程<br>crontab   循環執行的例行性命令    [e]编辑,[l]显示,[r]删除任务<br>&amp;       后台运行程序    tar -zxvf 123.tar.gz &amp; ————-&gt;后台运行<br>jobs    观看后台暂停的程序   jobs -l<br>fg      将后台程序调到前台   fg n ———&gt;n是数字,可以指定进行那个程序<br>bg      让工作在后台运行<br>kill    结束进程    kill -9 PID     [9]强制结束,[15]正常结束,[l]列出可用的kill信号<br>ps aux  查看后台程序<br>top     查看后台程序   top -d 2    每两秒更新一次        top -d 2 -p10604   观看某个PID<br>top -b -n 2 &gt; /tmp/top.txt ——-&gt;將 top 的資訊進行 2 次，然後將結果輸出到 /tmp/top.txt<br>pstree   以树状图显示程序    [A]以 ASCII 來連接, [u]列出PID, [p]列出帐号<br>killall   要刪除某個服務    killall -9 httpd<br>free      显示内存状态     free -m  ————&gt;以M为单位显示<br>uptime    显示目前系统开机时间<br>netstat   显示网络状态    netstat -tulnp———&gt;找出目前系統上已在監聽的網路連線及其 PID<br>dmesg     显示开机信息    demsg | more<br>nice      设置优先权      nice -n -5 vi &amp; ——-&gt;用 root 給一個 nice 植為 -5 ，用於執行 vi<br>renice    调整已存在优先权<br>runlevel  显示目前的runlevel<br>depmod    分析可载入模块的相依性<br>lsmod     显示已载入系统的模块<br>modinfo   显示kernel模块的信息<br>insmod    载入模块<br>modprobe   自动处理可载入模块<br>rmmod     删除模块<br>chkconfig   检查，设置系统的各种服务     chkconfig —list ——-&gt;列出各项服务状态<br>ntsysv     设置系统的各种服务<br>cpio      备份文件<br></div><br><div><br>压缩命令：<br><em>.Z      compress 程式壓縮的檔案；
+</em>.bz2    bzip2 程式壓縮的檔案；<br><em>.gz     gzip 程式壓縮的檔案；
+</em>.tar    tar 程式打包的資料，並沒有壓縮過；<br><em>.tar.gz tar 程式打包的檔案，其中並且經過 gzip 的壓縮<br>compress filename  压缩文件  加[-d]解压  uncompress<br>gzip filename   压缩  加[-d]解压  zcat 123.gz 查看压缩文件内容<br>bzip2 -z filename  压缩  加[-d]解压   bzcat filename.bz2  查看压缩文件内容<br>tar -cvf /home/123.tar /etc  打包，不压缩<br>tar -xvf 123.tar   解开包<br>tar -zxvf /home/123.tar.gz  以gzip解压<br>tar -jxvf /home/123.tar.bz2  以bzip2解压<br>tar -ztvf /tmp/etc.tar.gz   查看tar内容<br>cpio -covB  &gt; [file|device]   份份<br>cpio -icduv &lt; [file|device]   还原</em></div><br><div></div><br><div>vi一般用法<br>一般模式              编辑模式                  指令模式<br>h 左               a,i,r,o,A,I,R,O             :w 保存<br>j 下                进入编辑模式                :w! 强制保存<br>k 上                dd 删除光标当前行           :q! 不保存离开<br>l 右                ndd 删除n行                 :wq! 保存后离开<br>0 移动到行首        yy 复制当前行                :e! 还原原始档<br>$ 移动到行尾        nyy 复制n行                  :w filename 另存为<br>H 屏幕最上          p,P 粘贴                     :set nu 设置行号<br>M 屏幕中央          u  撤消                      :set nonu 取消行号<br>L 屏幕最下          [Ctrl]+r 重做上一个动作       ZZ 保存离开<br>G 档案最后一行      [ctrl]+z 暂停退出            :set nohlsearch   永久地关闭高亮显示<br>/work 向下搜索                                   :sp 同时打开两个文档<br>?work 向上搜索                                   [Ctrl]+w 两个文档设换<br>gg 移动到档案第一行                              :nohlsearch    暂时关闭高亮显示</div><br><div></div><br><div>认识SHELL<br>alias    显示当前所有的命令别名      alias lm=”ls -al”   命令别名    unalias lm 取消命令别名<br>type      类似which<br>exprot    设置或显示环境变量<br>exprot PATH=”$PATH”:/sbin  添加/sbin入PATH路径<br>echo $PATH    显示PATH路径<br>bash      进入子程序<br>name=yang     设定变量<br>unset name    取消变量<br>echo $name    显示变量的内容<br>myname=”$name its me”   &amp;   myname=’$name its me’     单引号时$name失去变量内容<br>ciw=/etc/sysconfig/network-scripts/     设置路径<br>env      列出所有环境变量<br>echo $RANDOM    显示随意产生的数<br>set      设置SHELL<br>PS1=’[/u@/h /w /A #/#]/$ ‘     提示字元的設定<br>[root@linux ~]# read [-pt] variable     —————-读取键盘输入的变量<br>參數：<br>-p  ：後面可以接提示字元！<br>-t  ：後面可以接等待的『秒數！』<br>declare    声明 shell 变量<br>ulimit -a   显示所有限制资料<br>ls /tmp/yang &amp;&amp; echo “exist” || echo “not exist”<br>意思是說，當 ls /tmp/yang 執行後，若正確，就執行echo “exist” ,若有問題，就執行echo “not exist”<br>echo $PATH | cut -d ‘:’ -f 5       以:为分隔符,读取第5段内容<br>export | cut -c 10-20      读取第10到20个字节的内容<br>last | grep ‘root’    搜索有root的一行,加[-v]反向搜索<br>cat /etc/passwd | sort    排序显示<br>cat /etc/passwd | wc      显示『行、字数、字节数』</div><br><div>正规表示法<br>[root@test root]# grep [-acinv] ‘搜尋字串’ filename<br>參數說明：<br>-a ：將 binary 檔案以 text 檔案的方式搜尋資料<br>-c ：計算找到 ‘搜尋字串’ 的次數<br>-i ：忽略大小寫的不同，所以大小寫視為相同<br>-n ：順便輸出行號<br>-v ：反向選擇，亦即顯示出沒有 ‘搜尋字串’ 內容的那一行！<br>grep -n ‘the’ 123.txt     搜索the字符 —————-搜尋特定字串<br>grep -n ‘t[ea]st’ 123.txt    搜索test或taste两个字符————-利用 [] 來搜尋集合字元<br>grep -n ‘[^g]oo’ 123.txt     搜索前面不为g的oo—————-向選擇 [^]<br>grep -n ‘[0-9]’ 123.txt  搜索有0-9的数字<br>grep -n ‘^the’ 123.txt 搜索以the为行首—————-行首搜索^<br>grep -n ‘^[^a-zA-Z]’ 123.txt  搜索不以英文字母开头<br>grep -n ‘[a-z]$’ 123.txt    搜索以a-z结尾的行————— 行尾搜索$<br>grep -n ‘g..d’ 123.txt     搜索开头g结尾d字符—————任意一個字元 .<br>grep -n ‘ooo‘ 123.txt     搜索至少有两个oo的字符————-重複字元 <em><br>sed    文本流编辑器    利用脚本命令来处理文本文件<br>awd    模式扫描和处理语言<br>nl 123.txt | sed ‘2,5d’   删除第二到第五行的内容<br>diff     比较文件的差异<br>cmp      比较两个文件是否有差异<br>patch    修补文件<br>pr       要打印的文件格式化<br></em></div><br><div><br>帐号管理<br>/etc/passwd    系统帐号信息<br>/etc/shadow    帐号密码信息    经MD5 32位加密<br>在密码栏前面加『  』『 ! 』禁止使用某帐号<br>/etc/group     系统群组信息<br>/etc/gshadow<br>newgrp    改变登陆组<br>useradd  &amp;  adduser    建立新用户  ————-&gt; useradd -m test  自动建立用户的登入目录<br>useradd -m -g pgroup test ————-&gt;指定所属级<br>/etc/default/useradd   相关设定<br>/etc/login.defs       UID/GID 有關的設定<br>passwd    更改密码 —————-&gt; passwd test<br>usermod   修改用户帐号<br>userdel   删除帐号 —————-&gt;userdel -r test<br>chsh      更换登陆系统时使用的SHELL   [-l]显示可用的SHELL;[-s]修改自己的SHELL<br>chfn      改变finger指令显示的信息<br>finger    查找并显示用户信息<br>id        显示用户的ID —————-&gt;  id test<br>groupadd   添加组<br>groupmod   与usermod类似<br>groupdel   删除组<br>su test    更改用户   su -    进入root,且使用root的环境变量<br>sudo       以其他身份来执行指令<br>visudo     编辑/etc/sudoers      加入一行『 test ALL=(ALL) ALL 』<br>%wheel ALL = (ALL) ALL               系统里所有wheel群组的用户都可用sudo<br>%wheel ALL = (ALL) NOPASSWD: ALL     wheel群组所有用户都不用密码NOPASSWD<br>User_Alias ADMPW = vbird, dmtsai, vbird1, vbird3         加入ADMPW组<br>ADMPW ALL = NOPASSWD: !/usr/bin/passwd, /usr/bin/passwd [A-Za-z]<em>, /<br>!/usr/bin/passwd root      可以更改使用者密码,但不能更改root密码 (在指令前面加入 ! 代表不可)<br>PAM (Pluggable Authentication Modules, 嵌入式模組)<br>who &amp; w     看谁在线<br>last        最近登陆主机的信息<br>lastlog     最近登入的時間    读取 /var/log/lastlog<br>talk        与其他用户交谈<br>write       发送信息    write test   [ctrl]+d 发送<br>mesg        设置终端机的写入权限    mesg n 禁止接收     mesg y<br>wall        向所有用户发送信息    wall this is q test<br>mail        写mail<br>/etc/default/useradd    家目录默认设置</em></div><br><div>quota      显示磁盘已使用的空间与限制     quota -guvs ——-&gt;秀出目前 root 自己的 quota 限制值<br>quota -vu   查询<br>quotacheck   检查磁盘的使用空间与限制     quotacheck -avug  ——-&gt;將所有的在 /etc/mtab 內，含有 quota 支援的 partition 進行掃瞄<br>[-m] 强制扫描<br>quota一定要是独立的分区,要有quota.user和quota.group两件文件,在/etc/fstab添加一句:<br>/dev/hda3 /home ext3 defaults,usrquota,grpquota 1 2<br>chmod 600 quota         设置完成,重启生效<br>edquota    编辑用户或群组的quota  [u]用户,[g]群组,[p]复制,[t]设置宽限期限<br>edquota -a yang       edquota -p yang -u young ——-&gt;复制<br>quotaon    开启磁盘空间限制     quotaon -auvg ————&gt;啟動所有的具有 quota 的 filesystem<br>quotaoff   关闭磁盘空间限制     quotaoff -a  ————&gt;關閉了 quota 的限制<br>repquota -av     查閱系統內所有的具有 quota 的 filesystem 的限值狀態</div><br><div>Quota 從開始準備 filesystem 的支援到整個設定結束的主要的步驟大概是：<br>1、設定 partition 的 filesystem 支援 quota 參數：<br>由於 quota 必須要讓 partition 上面的 filesystem 支援才行，一般來說， 支援度最好的是 ext2/ext3 ，<br>其他的 filesystem 類型鳥哥我是沒有試過啦！ 啟動 filesystem 支援 quota 最簡單就是編輯 /etc/fstab ，<br>使得準備要開放的 quota 磁碟可以支援 quota 囉；<br>2、建立 quota 記錄檔：<br>剛剛前面講過，整個 quota 進行磁碟限制值記錄的檔案是 aquota.user/aquota.group，<br>要建立這兩個檔案就必須要先利用 quotacheck 掃瞄才行喔！<br>3、編輯 quota 限制值資料：<br>再來就是使用 edquota 來編輯每個使用者或群組的可使用空間囉；<br>4、重新掃瞄與啟動 quota ：<br>設定好 quota 之後，建議可以再進行一次 quotacheck ，然後再以 quotaon 來啟動吧！</div>  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://donahue-ldz.github.io/2014/03/25/linux-e5-bf-85-e9-a1-bb-e7-9f-a5-e9-81-93-e7-9a-84-e5-91-bd-e4-bb-a4/" data-title="linux 必须知道的命令 | 心缘冰河" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/03/25/composer-e7-ae-a1-e7-90-86-e4-be-9d-e8-b5-96/" title="composer管理依赖">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  composer管理依赖</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/03/25/linux-e7-9b-ae-e5-bd-95-e6-9e-b6-e6-9e-84/"  title="linux目录架构">
+ <strong>NEXT:</strong><br/> 
+ <span>linux目录架构
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="linux 必须知道的命令" data-thread-key="linux-e5-bf-85-e9-a1-bb-e7-9f-a5-e9-81-93-e7-9a-84-e5-91-bd-e4-bb-a4" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/linux-e5-bf-85-e9-a1-bb-e7-9f-a5-e9-81-93-e7-9a-84-e5-91-bd-e4-bb-a4"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  <div class="widget intro">
+<h3 class="asidetitle">简介</h3>
+<ul class="entry">
+<li>现状：大连理工大学/本科生</li>
+<li>QQ 号：635884063</li>
+<li>github :  <a href="https://github.com/donahue-ldz">donahue-ldz</a></li>
+</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/java/" title="java">java<sup>4</sup></a></li>
+		
+			<li><a href="/categories/未分类/" title="未分类">未分类<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/CyclicBarrier/" style="font-size: NaNpx;">CyclicBarrier</a><a href="/tags/MarkDown/" style="font-size: NaNpx;">MarkDown</a><a href="/tags/finalize/" style="font-size: NaNpx;">finalize</a><a href="/tags/log4j/" style="font-size: NaNpx;">log4j</a><a href="/tags/log4j配置/" style="font-size: NaNpx;">log4j配置</a><a href="/tags/内存回收/" style="font-size: NaNpx;">内存回收</a><a href="/tags/日志记录/" style="font-size: NaNpx;">日志记录</a><a href="/tags/线程/" style="font-size: NaNpx;">线程</a><a href="/tags/线程等待，CountDownLatch/" style="font-size: NaNpx;">线程等待，CountDownLatch</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2015 
+		
+		<a href="http://donahue-ldz.github.io" target="_blank" title="donahue">donahue</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

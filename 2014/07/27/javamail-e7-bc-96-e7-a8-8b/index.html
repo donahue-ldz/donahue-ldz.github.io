@@ -1,0 +1,638 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu-site-verification" content="qig9fkyLqw" />
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>javaMail编程~类详解 | 心缘冰河</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="donahue">
+    
+    <meta name="description" content="首先我们先来简单的介绍下JavaMail编程的核心类Session、Message、Address、Authenticator、Transport、Store、Folder
+我们按照javaMail编程的常用顺序依次介绍:
+1.Session类Session类定义了基本的邮件会话.我们进行收发邮件的">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="心缘冰河" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="心缘冰河">心缘冰河</a></h1>
+				<a class="blog-motto">写出我人生,coding</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					
+					<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+					<li>
+					
+					<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" autocomplete="off" name="q" maxlength="20" placeholder="搜索" />
+					</form>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/07/27/javamail-e7-bc-96-e7-a8-8b/" title="javaMail编程~类详解" itemprop="url">javaMail编程~类详解</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://donahue-ldz.github.io" title="donahue">donahue</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-07-27T12:21:49.000Z" itemprop="datePublished">Jul 27 2014</time>
+    更新日期:<time datetime="2015-03-07T04:42:44.000Z" itemprop="dateModified">Mar 7 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Session类"><span class="toc-number">1.</span> <span class="toc-text">1.Session类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Message类"><span class="toc-number">2.</span> <span class="toc-text">2.Message类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Address类"><span class="toc-number">3.</span> <span class="toc-text">3.Address类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Authenticator类"><span class="toc-number">4.</span> <span class="toc-text">4.Authenticator类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Transport类"><span class="toc-number">5.</span> <span class="toc-text"> 5.Transport类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-Store和Folder"><span class="toc-number">6.</span> <span class="toc-text">6.Store和Folder</span></a></li></ol>
+		</div>
+		
+		<p>首先我们先来简单的介绍下JavaMail编程的核心类Session、Message、Address、Authenticator、Transport、Store、Folder</p>
+<p>我们按照javaMail编程的常用顺序依次介绍:</p>
+<h3 id="1-Session类">1.Session类</h3><p>Session类定义了基本的邮件会话.我们进行收发邮件的工作都是基于这个会话的。<strong><span style="color: #ff00ff;">Session对象利用了java.util.Properties对象获得了邮件服务器、用户名、密码信息和整个应用程序都要使用到的共享信息</span></strong>。换句换就是我们在使用session的时候我们需要的是先配置properties类对象,将相关的信息先设置好!</p>
+<p>注意:Session类的构造方法是私有的，所以我们可以使用Session类提供的getDefaultInstance()这个静态工厂方法获得一个默认的Session对象或者使用getInstance(),两个函数的用法一样.</p>
+<p><span style="font-family: 宋体, SimSun;">Session session = Session.getDefaultInstance(props, null); //null代表授权对象,接下来会讲解</span></p>
+<h3 id="2-Message类">2.Message类</h3><p>Message是信息的主体.<span style="color: #ff00ff;"><span style="font-family: 宋体, SimSun;">由于</span><span style="font-family: 宋体, SimSun;">Message</span><span style="font-family: 宋体, SimSun;">是一个抽象类，大多数情况下，我们使用</span><span style="font-family: 宋体, SimSun;">javax.mail.internet.MimeMessage</span></span><span style="font-family: 宋体, SimSun;"><span style="color: #ff00ff;">这个子类</span>，该类是使用</span><span style="font-family: 宋体, SimSun;">MIME</span><span style="font-family: 宋体, SimSun;">类型、</span><span style="font-family: 宋体, SimSun;">MIME</span><span style="font-family: 宋体, SimSun;">信息头的邮箱信息。信息头只能使用</span><span style="font-family: 宋体, SimSun;">US-ASCII</span><span style="font-family: 宋体, SimSun;">字符，而非</span><span style="font-family: 宋体, SimSun;">ASCII</span><span style="font-family: 宋体, SimSun;">字符将通过编码转换为</span><span style="font-family: 宋体, SimSun;">ASCII</span><span style="font-family: 宋体, SimSun;">的方式使用。</span><span style="font-family: 宋体, SimSun;">为了建立一个</span><span style="font-family: 宋体, SimSun;">MimeMessage</span><span style="font-family: 宋体, SimSun;">对象，我们必须将</span><span style="font-family: 宋体, SimSun;">Session</span><span style="font-family: 宋体, SimSun;">对象作为</span><span style="font-family: 宋体, SimSun;">MimeMessage</span><span style="font-family: 宋体, SimSun;">构造方法的参数传入：</span></p>
+<p>Message message = new MimeMessage(session);</p>
+<p><span style="font-family: 宋体, SimSun;">在建立了</span><span style="font-family: 宋体, SimSun;">MimeMessage</span><span style="font-family: 宋体, SimSun;">对象后，我们需要设置它的各个</span><span style="font-family: 宋体, SimSun;">part</span><span style="font-family: 宋体, SimSun;">，对于</span><span style="font-family: 宋体, SimSun;">MimeMessage</span><span style="font-family: 宋体, SimSun;">类来说，这些</span><span style="font-family: 宋体, SimSun;">part</span><span style="font-family: 宋体, SimSun;">就是</span><span style="font-family: 宋体, SimSun;">MimePart</span><span style="font-family: 宋体, SimSun;">接口。<span style="color: #ff00ff;">设置信息内容的方法就是通过表示信息内容和米么类型的参数调用</span></span><span style="color: #ff00ff;"><span style="font-family: 宋体, SimSun;">setContent()</span><span style="font-family: 宋体, SimSun;">方法或者setText()：</span></span></p>
+<p><span style="font-family: 宋体, SimSun;">message.setContent(“Hello”, “text/plain”); //</span><span style="font-family: 宋体, SimSun;">对于其它的一些信息类型，比如</span><span style="font-family: 宋体, SimSun;">HTML</span><span style="font-family: 宋体, SimSun;">信息，则要使用前者</span></p>
+<p>message.setText(“Hello”); //<span style="font-family: 宋体, SimSun;">MimeMessage</span><span style="font-family: 宋体, SimSun;">中信息内容是文本的话，我们便可以直接使用</span><span style="font-family: 宋体, SimSun;">setText()</span><span style="font-family: 宋体, SimSun;">方法来方便的设置文本内容</span></p>
+<p>message.setSubject();  //设置邮件subject</p>
+<h3 id="3-Address类">3.Address类</h3><p><span style="color: #ff00ff;"><span style="font-family: 宋体, SimSun;">像</span><span style="font-family: 宋体, SimSun;">Message</span><span style="font-family: 宋体, SimSun;">一样，</span><span style="font-family: 宋体, SimSun;">Address</span><span style="font-family: 宋体, SimSun;">类也是一个抽象类，所以我们将使用</span><span style="font-family: 宋体, SimSun;">javax.mail.internet.InternetAddress</span></span><span style="font-family: 宋体, SimSun;"><span style="color: #ff00ff;">这个子类</span>。</span><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;"><span style="color: #ff00ff;">通过传入代表邮件地址的字符串，我们可以建立一个邮件地址类</span>：</span></p>
+<p><span style="font-family: 宋体, SimSun;">Address address = new InternetAddress(“donahue@domain”);</span></p>
+<p><span style="font-family: 宋体, SimSun;">如果要在邮件地址后面增加名字的话，可以通过传递两个参数：代表邮件地址和名字的字符串来建立一个具有邮件地址和名字的邮件地址类：</span></p>
+<p><span style="font-family: 宋体, SimSun;">Address address = new InternetAddress(“donahue@domain”, “donahue”);</span></p>
+<p><strong><span style="color: #ff00ff;"><span style="font-family: 宋体, SimSun;">邮件地址类是为了设置邮件信息的发信人和收信人而准备的，在建立了邮件地址类后，我们通过</span><span style="font-family: 宋体, SimSun;">message</span><span style="font-family: 宋体, SimSun;">的</span><span style="font-family: 宋体, SimSun;">setFrom()</span><span style="font-family: 宋体, SimSun;">和</span><span style="font-family: 宋体, SimSun;">setReplyTo()</span><span style="font-family: 宋体, SimSun;">两种方法设置邮件的发信人：</span></span></strong></p>
+<p>message.setFrom();</p>
+<p>message.setReply();</p>
+<p><span style="font-family: 宋体, SimSun;">Address address[] = …;<br>message.addFrom(address); //添加多个发件人</span><span style="font-family: 宋体, SimSun;"><br></span></p>
+<p><span style="color: #ff00ff;"><strong>设置收信人:</strong></span></p>
+<p><span style="font-family: 宋体, SimSun;">使用</span><span style="font-family: 宋体, SimSun;">addRecipient()</span><span style="font-family: 宋体, SimSun;">方法增加收信人，此方法需要使用</span><span style="font-family: 宋体, SimSun;">Message.RecipientType</span><span style="font-family: 宋体, SimSun;">的常量来区分收信人的类</span></p>
+<p><span style="font-family: 宋体, SimSun;">Message.RecipientType.TO<br>Message.RecipientType.CC<br>Message.RecipientType.BCC</span></p>
+<p><strong><span style="color: #ff00ff;">注意</span></strong>:<span style="font-family: 宋体, SimSun;">JavaMail API</span><span style="font-family: 宋体, SimSun;">并没有提供检查邮件地址有效性的机制。当然我们可以自己完成这个功能：验证邮件地址的字符是否按照</span><span style="font-family: 宋体, SimSun;">RFC822</span><span style="font-family: 宋体, SimSun;">规定的格式书写或者通过</span><span style="font-family: 宋体, SimSun;">DNS</span><span style="font-family: 宋体, SimSun;">服务器上的</span><span style="font-family: 宋体, SimSun;">MX</span><span style="font-family: 宋体, SimSun;">记录验证等.</span></p>
+<h3 id="4-Authenticator类"><span style="font-family: 宋体, SimSun;">4.Authenticator类</span></h3><p><span style="font-family: 宋体, SimSun;">像</span><span style="font-family: 宋体, SimSun;">java.net</span><span style="font-family: 宋体, SimSun;">类那样，</span><span style="font-family: 宋体, SimSun;">JavaMail API</span><span style="font-family: 宋体, SimSun;">通过使用授权者类（</span><span style="font-family: 宋体, SimSun;">Authenticator</span><span style="font-family: 宋体, SimSun;">）以用户名、密码的方式访问那些受到保护的资源，在这里“资源”就是指邮件服务器。在</span><span style="font-family: 宋体, SimSun;">javax.mail</span><span style="font-family: 宋体, SimSun;">包中可以找到这个</span><span style="font-family: 宋体, SimSun;">JavaMail</span><span style="font-family: 宋体, SimSun;">的授权者类（</span><span style="font-family: 宋体, SimSun;">Authenticator)</span></p>
+<p><span style="font-family: 宋体, SimSun;"><span style="color: #ff00ff;">注意:</span>在使用</span><span style="font-family: 宋体, SimSun;">Authenticator</span><span style="font-family: 宋体, SimSun;">这个抽象类时，我们必须采用继承该抽象类的方式，并且该继承类必须具有返回</span><span style="font-family: 宋体, SimSun;">PasswordAuthentication</span><span style="font-family: 宋体, SimSun;">对象（用于存储认证时要用到的用户名、密码）</span><span style="font-family: 宋体, SimSun;">getPasswordAuthentication()</span><span style="font-family: 宋体, SimSun;">方法。并且要在</span><span style="font-family: 宋体, SimSun;">Session</span><span style="font-family: 宋体, SimSun;">中进行注册，使</span><span style="font-family: 宋体, SimSun;">Session</span><span style="font-family: 宋体, SimSun;">能够了解在认证时该使用哪个类。</span></p>
+<p>//一般就采用匿名类了</p>
+<p>Authenticator auth = new Authenticator(){<br>public javax.mail.PasswordAuthentication getPasswordAuthentication(){<br>return new javax.mail.PasswordAuthentication(“XXXXX”, “xxxx”);<br>}<br>};</p>
+<p>此时创建Session对象就变成了:</p>
+<p>Session sessionMail = Session.getInstance(props,auth);</p>
+<h3 id="5-Transport类"><span style="font-family: 宋体, SimSun;"> 5.Transport类</span></h3><p><span style="font-family: 宋体, SimSun;">在发送信息时，</span><span style="color: #ff00ff;"><strong><span style="font-family: 宋体, SimSun;">Transport</span><span style="font-family: 宋体, SimSun;">类将被用到。这个类实现了发送信息的协议（通称为</span><span style="font-family: 宋体, SimSun;">SMTP</span><span style="font-family: 宋体, SimSun;">），此类是一个抽象类，我们可以使用这个类的静态方法</span><span style="font-family: 宋体, SimSun;">send()</span></strong></span><span style="font-family: 宋体, SimSun;"><span style="color: #ff00ff;"><strong>来发送消息</strong></span>：</span></p>
+<p><span style="font-family: 宋体, SimSun;">Transport.send(message);</span></p>
+<p><strong><span style="color: #ff00ff;">另外一种方法就是:</span></strong></p>
+<p><span style="font-family: 宋体, SimSun;">由</span><span style="font-family: 宋体, SimSun;">Session</span><span style="font-family: 宋体, SimSun;">获得相应协议对应的</span><span style="font-family: 宋体, SimSun;">Transport</span><span style="font-family: 宋体, SimSun;">实例。并通过传递用户名、密码、邮件服务器主机名等参数建立与邮件服务器的连接，并使用</span><span style="font-family: 宋体, SimSun;">sendMessage()</span><span style="font-family: 宋体, SimSun;">方法将信息发送，最后关闭连接</span></p>
+<p><span style="font-family: 宋体, SimSun;">message.saveChanges(); // implicit with send()<br>Transport transport = session.getTransport(“smtp”);<br>transport.connect(host, username, password);<br>transport.sendMessage(message, message.getAllRecipients());<br>transport.close();</span></p>
+<p><strong>注意:</strong>后一种<span style="font-family: 宋体, SimSun;">尤其是在我们在同一个邮件服务器上发送多个邮件时是常用的。因为这时我们将在连接邮件服务器后连续发送邮件，然后再关闭掉连接。</span><span style="font-family: 宋体, SimSun;">send()</span><span style="font-family: 宋体, SimSun;">这个基本的方法是在每次调用时进行与邮件服务器的连接的，对于在同一个邮件服务器上发送多个邮件来讲可谓低效的方式。</span></p>
+<p><span style="color: #ff00ff;"><strong>提醒:</strong><span style="font-family: 宋体, SimSun;">如果需要在发送邮件过程中监控</span><span style="font-family: 宋体, SimSun;">mail</span><span style="font-family: 宋体, SimSun;">命令的话，可以在发送前设置</span><span style="font-family: 宋体, SimSun;">debug</span><span style="font-family: 宋体, SimSun;">标志：</span><span style="font-family: 宋体, SimSun;">session.setDebug(true)</span><span style="font-family: 宋体, SimSun;">。</span></span></p>
+<h3 id="6-Store和Folder">6.Store和Folder</h3><p><span style="font-family: 宋体, SimSun;">接收邮件和发送邮件很类似都要用到</span><span style="font-family: 宋体, SimSun;">Session</span><span style="font-family: 宋体, SimSun;">。<strong><span style="color: #ff00ff;">但是在获得</span></strong></span><strong><span style="color: #ff00ff;"><span style="font-family: 宋体, SimSun;">Session</span><span style="font-family: 宋体, SimSun;">后，我们需要从</span><span style="font-family: 宋体, SimSun;">Session</span><span style="font-family: 宋体, SimSun;">中获取特定类型的</span><span style="font-family: 宋体, SimSun;">Store</span><span style="font-family: 宋体, SimSun;">，然后连接到</span><span style="font-family: 宋体, SimSun;">Store</span><span style="font-family: 宋体, SimSun;">，这里的</span><span style="font-family: 宋体, SimSun;">Store</span><span style="font-family: 宋体, SimSun;">代表了存储邮件的邮件服务器。在连接</span><span style="font-family: 宋体, SimSun;">Store</span><span style="font-family: 宋体, SimSun;">的过程中，极有可能需要用到用户名、密码或者</span><span style="font-family: 宋体, SimSun;">Authenticator</span><span style="font-family: 宋体, SimSun;">。</span></span></strong></p>
+<p><span style="font-family: 宋体, SimSun;">// Store store = session.getStore(“imap”);<br>Store store = session.getStore(“pop3”);<br>store.connect(host, username, password);</span></p>
+<p><strong><span style="font-family: 宋体, SimSun;">在连接到</span><span style="font-family: 宋体, SimSun;">Store</span><span style="font-family: 宋体, SimSun;">后，一个</span><span style="font-family: 宋体, SimSun;">Folder</span><span style="font-family: 宋体, SimSun;">对象即目录对象将通过</span><span style="font-family: 宋体, SimSun;">Store</span><span style="font-family: 宋体, SimSun;">的</span><span style="font-family: 宋体, SimSun;">getFolder()</span><span style="font-family: 宋体, SimSun;">方法被返回，我们可从这个</span><span style="font-family: 宋体, SimSun;">Folder</span><span style="font-family: 宋体, SimSun;">中读取邮件信息：</span></strong></p>
+<p><span style="font-family: 宋体, SimSun;">Folder folder = store.getFolder(“INBOX”);<br>folder.open(Folder.READ_ONLY);<br>Message message[] = folder.getMessages();</span></p>
+<p><span style="color: #ff00ff;"><strong>注意:</strong><span style="color: #000000;">对</span></span><span style="font-family: 宋体, SimSun;">于</span><span style="font-family: 宋体, SimSun;">POP3</span><span style="font-family: 宋体, SimSun;">协议只有一个名为</span><span style="font-family: 宋体, SimSun;">INBOX</span><span style="font-family: 宋体, SimSun;">的</span><span style="font-family: 宋体, SimSun;">Folder</span><span style="font-family: 宋体, SimSun;">有效，而对于</span><span style="font-family: 宋体, SimSun;">IMAP</span><span style="font-family: 宋体, SimSun;">协议，我们可以访问多个</span><span style="font-family: 宋体, SimSun;">Folder.</span></p>
+<p><strong><span style="font-family: 宋体, SimSun;">SUN</span><span style="font-family: 宋体, SimSun;">在设计</span><span style="font-family: 宋体, SimSun;">Folder</span><span style="font-family: 宋体, SimSun;">的</span><span style="font-family: 宋体, SimSun;">getMessages()</span></strong><span style="font-family: 宋体, SimSun;"><strong>方法时采取了很智能的方式：首先接收新邮件列表，然后再需要的时候（比如读取邮件内容）才从邮件服务器读取邮件内容</strong>。</span></p>
+<p><span style="color: #ff00ff;"><strong><span style="font-family: 宋体, SimSun;">在读取邮件时，我们可以用</span><span style="font-family: 宋体, SimSun;">Message</span><span style="font-family: 宋体, SimSun;">类的</span><span style="font-family: 宋体, SimSun;">getContent()</span><span style="font-family: 宋体, SimSun;">方法接收邮件或是</span><span style="font-family: 宋体, SimSun;">writeTo()</span><span style="font-family: 宋体, SimSun;">方法将邮件保存，</span><span style="font-family: 宋体, SimSun;">getContent()</span><span style="font-family: 宋体, SimSun;">方法只接收邮件内容（不包含邮件头），而</span><span style="font-family: 宋体, SimSun;">writeTo()</span><span style="font-family: 宋体, SimSun;">方法将包括邮件头。</span></strong></span></p>
+<p><strong><span style="font-family: 宋体, SimSun;">在读取邮件内容后，别忘记了关闭</span><span style="font-family: 宋体, SimSun;">Folder</span><span style="font-family: 宋体, SimSun;">和</span><span style="font-family: 宋体, SimSun;">Store</span><span style="font-family: 宋体, SimSun;">。</span></strong></p>
+<p><span style="font-family: 宋体, SimSun;">folder.close(aBoolean);<br>store.close();</span></p>
+<p><span style="font-family: 宋体, SimSun;">传递给</span><span style="font-family: 宋体, SimSun;">Folder.close()</span><span style="font-family: 宋体, SimSun;">方法的</span><span style="font-family: 宋体, SimSun;">boolean </span><span style="font-family: 宋体, SimSun;">类型参数表示是否在删除操作邮件后更新</span><span style="font-family: 宋体, SimSun;">Folder</span></p>
+<p>以上就是我们简单的JavaMail编程用的类的大致讲解,当然始终记得一个事情,学习java看Javadoc才是王道.</p>
+<p>当然接下来我会讲解如何将上面的这些类使用起来组成符合我们需要的业务逻辑!</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://donahue-ldz.github.io/2014/07/27/javamail-e7-bc-96-e7-a8-8b/" data-title="javaMail编程~类详解 | 心缘冰河" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/07/27/javamail-e7-bc-96-e7-a8-8b-e5-ae-9e-e6-88-98/" title="javaMail编程~实战">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  javaMail编程~实战</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/07/23/java-e5-ba-8f-e5-88-97-e5-8c-96/"  title="java序列化">
+ <strong>NEXT:</strong><br/> 
+ <span>java序列化
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="javaMail编程~类详解" data-thread-key="javamail-e7-bc-96-e7-a8-8b" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/javamail-e7-bc-96-e7-a8-8b"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Session类"><span class="toc-number">1.</span> <span class="toc-text">1.Session类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Message类"><span class="toc-number">2.</span> <span class="toc-text">2.Message类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Address类"><span class="toc-number">3.</span> <span class="toc-text">3.Address类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Authenticator类"><span class="toc-number">4.</span> <span class="toc-text">4.Authenticator类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Transport类"><span class="toc-number">5.</span> <span class="toc-text"> 5.Transport类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-Store和Folder"><span class="toc-number">6.</span> <span class="toc-text">6.Store和Folder</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  <div class="widget intro">
+<h3 class="asidetitle">简介</h3>
+<ul class="entry">
+<li>现状：大连理工大学/本科生</li>
+<li>QQ 号：635884063</li>
+<li>github :  <a href="https://github.com/donahue-ldz">donahue-ldz</a></li>
+</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/java/" title="java">java<sup>4</sup></a></li>
+		
+			<li><a href="/categories/未分类/" title="未分类">未分类<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/CyclicBarrier/" style="font-size: NaNpx;">CyclicBarrier</a><a href="/tags/MarkDown/" style="font-size: NaNpx;">MarkDown</a><a href="/tags/finalize/" style="font-size: NaNpx;">finalize</a><a href="/tags/log4j/" style="font-size: NaNpx;">log4j</a><a href="/tags/log4j配置/" style="font-size: NaNpx;">log4j配置</a><a href="/tags/内存回收/" style="font-size: NaNpx;">内存回收</a><a href="/tags/日志记录/" style="font-size: NaNpx;">日志记录</a><a href="/tags/线程/" style="font-size: NaNpx;">线程</a><a href="/tags/线程等待，CountDownLatch/" style="font-size: NaNpx;">线程等待，CountDownLatch</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2015 
+		
+		<a href="http://donahue-ldz.github.io" target="_blank" title="donahue">donahue</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

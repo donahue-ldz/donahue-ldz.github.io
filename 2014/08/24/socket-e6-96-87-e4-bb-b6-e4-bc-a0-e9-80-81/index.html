@@ -1,0 +1,681 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu-site-verification" content="qig9fkyLqw" />
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>socket文件传送 | 心缘冰河</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="donahue">
+    
+    <meta name="description" content="项目中有一个技术点用到了socket的文件传送功能,多线程文件传送.由于多线程文件传送在基于单线程传送的时候比较简单,本文就简单介绍基于单线程传送,顺便提下我自己实现的多线程文件传送功能涉及知识要点:1.传送协议:在传送的过程中,传送双发必须事先约定如何传送,比如先传文件名长度,传文件名,传文件长度">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="心缘冰河" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="心缘冰河">心缘冰河</a></h1>
+				<a class="blog-motto">写出我人生,coding</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					
+					<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+					<li>
+					
+					<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" autocomplete="off" name="q" maxlength="20" placeholder="搜索" />
+					</form>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/08/24/socket-e6-96-87-e4-bb-b6-e4-bc-a0-e9-80-81/" title="socket文件传送" itemprop="url">socket文件传送</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://donahue-ldz.github.io" title="donahue">donahue</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-08-24T01:39:14.000Z" itemprop="datePublished">Aug 24 2014</time>
+    更新日期:<time datetime="2015-03-07T04:42:44.000Z" itemprop="dateModified">Mar 7 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text"></span></a></li></ol>
+		</div>
+		
+		<p>项目中有一个技术点用到了<strong>socket的文件传送功能</strong>,多线程文件传送.由于多线程文件传送在基于单线程传送的时候比较简单,本文就简单介绍基于单线程传送,顺便提下我自己实现的多线程文件传送功能<br><span style="color: #ff00ff;"><strong>涉及知识要点:</strong></span><br>1.传送协议:在传送的过程中,传送双发必须事先约定如何传送,比如先传文件名长度,传文件名,传文件长度,传文件内容…<br>2.多线程的情况,考虑线程同步,每个线程传送的内容,以及如何在接收方组装<br>…<br><strong><span style="color: #ff00ff;">主要涉及类Channel,Buffer,有了这两个类,操作文件变得十分简单了!</span></strong></p>
+<p>简单设计如下:</p>
+<h2 id=""><a href="http://www.donahueblogs.com/wp-content/uploads/2014/08/Selection_001.png" target="_blank" rel="external"><img src="http://www.donahueblogs.com/wp-content/uploads/2014/08/Selection_001-300x78.png" alt="Selection_001"></a></h2><p>Client Socket先发送文件名长度,文件名,然后flush();<br>Server ServerSocket接受,然后构造相应的文件名,然后在准备存储的路径下面新建一个文件,并且打开文件和文件流的关联,方便写入;<br><strong>注意:所有发送的数据全是字节,所以客户端和服务器端都必须将相应的整数转换成字节或者将相应字节转换成整数<strong></strong></strong></p>
+<p>然后客户端通过Channel和Buffer类循环发送文件内容,<strong><span style="color: #ff00ff;">此时一定要注意服务器端如何接受文件,由于再接收文件的时候只知道了文件的饿大小,但是不能直接按照这个指标去接收文件大小,由于客户端发送文件有快有慢,所以必须考虑Socket流中可获得的实际字节</span></strong><br>贴关键代码如下:</p>
+<p>`<br>public void run() {<br>    try {<br>        // 首先获取文件名的长度,约定是四个字节,所以就直接就在流里面读取四个字节<br>        byte[] fileNameSize = new byte[4];<br>        if (bis.read(fileNameSize) == -1) {<br>              return;<br>        }<br>        // 获得文件名的长度int字节<br>        int len = BasicTypeConverter.bytesToInt(fileNameSize);<br>        // 获得文件名<br>        ByteBuffer buffer = ByteBuffer.allocate(len);<br>        int i = 0;<br>        while (buffer.hasRemaining()) {<br>            byte[] b = new byte[len - i];<br>            i+= bis.read(b);<br>            buffer.put(b);<br>        }<br>        String fileName = new String(buffer.array(), “UTF-8”);<br>        // 文件的长度<br>        byte[]fileSize = new byte[8];<br>        bis.read(fileSize);<br>        long fileLen = BasicTypeConverter.byteToLong(fileSize);<br>        // 接收文件并保存<br>        long hasRead = 0;<br>        File file = new File(SAVEPATH + fileName);<br>        if (!file.exists()) {<br>            File dir = file.getParentFile();<br>            if (!dir.exists()) {<br>                dir.mkdirs();<br>            }<br>            file.createNewFile();<br>        }<br>        //将流和文件关联<br>        FileOutputStream fos = new FileOutputStream(file);<br>        while (hasRead &lt; fileLen) {<br>            int avail = bis.available();<br>            byte[] b = new byte[Math.min((int) (fileLen - hasRead), avail)];<br>            int read = bis.read(b);<br>            hasRead += read;<br>            fos.write(b, 0, read);<br>            fos.flush();<br>        }<br>        fos.close();</p>
+<pre><code>} <span class="keyword">catch</span> (<span class="keyword">Exception</span> e) {
+    e.printStackTrace();
+} <span class="keyword">finally</span> {
+    <span class="keyword">try</span> {
+        socket.close();
+        <span class="keyword">if</span> (bis != <span class="keyword">null</span>) {
+            bis.close();
+        }
+        <span class="keyword">if</span> (bos != <span class="keyword">null</span>) {
+            bos.close();
+        }
+    } <span class="keyword">catch</span> (IOException e) {
+        e.printStackTrace();
+    }
+}
+</code></pre><p>}<br>`</p>
+<p>接下来是字节和整数的转换常用工具,我也把代码贴上分享下</p>
+<p>`<br>public class BasicTypeConverter {</p>
+<pre><code><span class="javadoc">/**
+ * Convert Integer to byte array
+ * 
+ *<span class="javadoctag"> @param</span> i
+ *<span class="javadoctag"> @return</span>
+ * 
+ * 
+ */</span>
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] intToByte(<span class="keyword">int</span> i) {
+    <span class="keyword">byte</span>[] abyte0 = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4</span>];
+    abyte0[<span class="number">0</span>] = (<span class="keyword">byte</span>) (<span class="number">0xff</span> &amp; i);
+    abyte0[<span class="number">1</span>] = (<span class="keyword">byte</span>) ((<span class="number">0xff00</span> &amp; i) &gt;&gt; <span class="number">8</span>);
+    abyte0[<span class="number">2</span>] = (<span class="keyword">byte</span>) ((<span class="number">0xff0000</span> &amp; i) &gt;&gt; <span class="number">16</span>);
+    abyte0[<span class="number">3</span>] = (<span class="keyword">byte</span>) ((<span class="number">0xff000000</span> &amp; i) &gt;&gt; <span class="number">24</span>);
+    <span class="keyword">return</span> abyte0;
+}
+
+<span class="javadoc">/**
+ * Convert byte array to Integer
+ * 
+ *<span class="javadoctag"> @param</span> i
+ *<span class="javadoctag"> @return</span>
+ * 
+ * 
+ */</span>
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">int</span> <span class="title">bytesToInt</span><span class="params">(<span class="keyword">byte</span>[] bytes)</span> </span>{
+    <span class="keyword">int</span> addr = bytes[<span class="number">0</span>] &amp; <span class="number">0xFF</span>;
+    addr |= ((bytes[<span class="number">1</span>] &lt;&lt; <span class="number">8</span>) &amp; <span class="number">0xFF00</span>);
+    addr |= ((bytes[<span class="number">2</span>] &lt;&lt; <span class="number">16</span>) &amp; <span class="number">0xFF0000</span>);
+    addr |= ((bytes[<span class="number">3</span>] &lt;&lt; <span class="number">24</span>) &amp; <span class="number">0xFF000000</span>);
+    <span class="keyword">return</span> addr;
+    }
+
+<span class="javadoc">/**
+ *  Convert long to byte arrray
+ *<span class="javadoctag"> @param</span> v
+ *<span class="javadoctag"> @return</span> 
+ *
+ *
+ */</span>
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] longToByte(<span class="keyword">long</span> v) {
+    <span class="keyword">byte</span>[] writeBuffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8</span>];
+    writeBuffer[<span class="number">0</span>] = (<span class="keyword">byte</span>) (v &gt;&gt;&gt; <span class="number">56</span>);
+    writeBuffer[<span class="number">1</span>] = (<span class="keyword">byte</span>) (v &gt;&gt;&gt; <span class="number">48</span>);
+    writeBuffer[<span class="number">2</span>] = (<span class="keyword">byte</span>) (v &gt;&gt;&gt; <span class="number">40</span>);
+    writeBuffer[<span class="number">3</span>] = (<span class="keyword">byte</span>) (v &gt;&gt;&gt; <span class="number">32</span>);
+    writeBuffer[<span class="number">4</span>] = (<span class="keyword">byte</span>) (v &gt;&gt;&gt; <span class="number">24</span>);
+    writeBuffer[<span class="number">5</span>] = (<span class="keyword">byte</span>) (v &gt;&gt;&gt; <span class="number">16</span>);
+    writeBuffer[<span class="number">6</span>] = (<span class="keyword">byte</span>) (v &gt;&gt;&gt; <span class="number">8</span>);
+    writeBuffer[<span class="number">7</span>] = (<span class="keyword">byte</span>) (v &gt;&gt;&gt; <span class="number">0</span>);
+    <span class="keyword">return</span> writeBuffer;
+}
+
+<span class="javadoc">/**
+ *<span class="javadoctag"> @param</span> readBuffer
+ *<span class="javadoctag"> @return</span> 
+ *
+ */</span>
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">long</span> <span class="title">byteToLong</span><span class="params">(<span class="keyword">byte</span>[] readBuffer)</span> </span>{
+    <span class="keyword">return</span> (((<span class="keyword">long</span>) readBuffer[<span class="number">0</span>] &lt;&lt; <span class="number">56</span>) + 
+            ((<span class="keyword">long</span>) (readBuffer[<span class="number">1</span>] &amp; <span class="number">255</span>) &lt;&lt; <span class="number">48</span>) +
+            ((<span class="keyword">long</span>) (readBuffer[<span class="number">2</span>] &amp; <span class="number">255</span>) &lt;&lt; <span class="number">40</span>) + 
+            ((<span class="keyword">long</span>) (readBuffer[<span class="number">3</span>] &amp; <span class="number">255</span>) &lt;&lt; <span class="number">32</span>)+ 
+            ((<span class="keyword">long</span>) (readBuffer[<span class="number">4</span>] &amp; <span class="number">255</span>) &lt;&lt; <span class="number">24</span>) + 
+            ((readBuffer[<span class="number">5</span>] &amp; <span class="number">255</span>) &lt;&lt; <span class="number">16</span>) +
+            ((readBuffer[<span class="number">6</span>] &amp; <span class="number">255</span>) &lt;&lt; <span class="number">8</span>) + 
+            ((readBuffer[<span class="number">7</span>] &amp; <span class="number">255</span>) &lt;&lt; <span class="number">0</span>));
+}
+</code></pre><p>}</p>
+<p>`<br><strong>我的多线程:</strong><br>我的多线程多文件传送是将每个文件存于List中,然后发送的时候,循环发送每一个文件,计算总大小,然后计算每个线程发送的大小<br>然后给每个线程发送的起始字节,发送长度,服务器端接受的时候,按照给出的起始字节组装文件.<br>每个线程负责一点字节传送…</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://donahue-ldz.github.io/2014/08/24/socket-e6-96-87-e4-bb-b6-e4-bc-a0-e9-80-81/" data-title="socket文件传送 | 心缘冰河" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/08/25/e5-b1-80-e5-9f-9f-e7-bd-91-e8-81-8a-e5-a4-a9/" title="局域网聊天">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  局域网聊天</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/08/23/e7-ae-80-e8-bf-b0/"  title="简述">
+ <strong>NEXT:</strong><br/> 
+ <span>简述
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="socket文件传送" data-thread-key="socket-e6-96-87-e4-bb-b6-e4-bc-a0-e9-80-81" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/socket-e6-96-87-e4-bb-b6-e4-bc-a0-e9-80-81"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#"><span class="toc-number">1.</span> <span class="toc-text"></span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  <div class="widget intro">
+<h3 class="asidetitle">简介</h3>
+<ul class="entry">
+<li>现状：大连理工大学/本科生</li>
+<li>QQ 号：635884063</li>
+<li>github :  <a href="https://github.com/donahue-ldz">donahue-ldz</a></li>
+</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/java/" title="java">java<sup>4</sup></a></li>
+		
+			<li><a href="/categories/未分类/" title="未分类">未分类<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/CyclicBarrier/" style="font-size: NaNpx;">CyclicBarrier</a><a href="/tags/MarkDown/" style="font-size: NaNpx;">MarkDown</a><a href="/tags/finalize/" style="font-size: NaNpx;">finalize</a><a href="/tags/log4j/" style="font-size: NaNpx;">log4j</a><a href="/tags/log4j配置/" style="font-size: NaNpx;">log4j配置</a><a href="/tags/内存回收/" style="font-size: NaNpx;">内存回收</a><a href="/tags/日志记录/" style="font-size: NaNpx;">日志记录</a><a href="/tags/线程/" style="font-size: NaNpx;">线程</a><a href="/tags/线程等待，CountDownLatch/" style="font-size: NaNpx;">线程等待，CountDownLatch</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2015 
+		
+		<a href="http://donahue-ldz.github.io" target="_blank" title="donahue">donahue</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+

@@ -1,0 +1,699 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu-site-verification" content="qig9fkyLqw" />
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>javaMail编程~实战 | 心缘冰河</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="donahue">
+    
+    <meta name="description" content="这里我将讲解一般邮件客户端常见业务实现代码是伪代码:
+1．发送邮件
+在获得了Session后，建立并填入邮件信息，然后发送它到邮件服务器。这便是使用Java Mail API发送邮件的过程，在发送邮件之前，我们需要设置SMTP服务器：通过设置Properties的mail.smtp.host属性。
+">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="心缘冰河" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="心缘冰河">心缘冰河</a></h1>
+				<a class="blog-motto">写出我人生,coding</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					
+					<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+					<li>
+					
+					<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" autocomplete="off" name="q" maxlength="20" placeholder="搜索" />
+					</form>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/07/27/javamail-e7-bc-96-e7-a8-8b-e5-ae-9e-e6-88-98/" title="javaMail编程~实战" itemprop="url">javaMail编程~实战</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://donahue-ldz.github.io" title="donahue">donahue</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-07-27T13:07:15.000Z" itemprop="datePublished">Jul 27 2014</time>
+    更新日期:<time datetime="2015-03-07T04:42:44.000Z" itemprop="dateModified">Mar 7 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p><strong>这里我将讲解一般邮件客户端常见业务实现代码是伪代码:</strong></p>
+<p><span style="color: #0000ff;"><span style="font-family: 宋体, SimSun;">1</span><span style="font-family: 宋体, SimSun;">．发送邮件</span></span></p>
+<p><span style="color: #ff00ff;"><strong><span style="font-family: 宋体, SimSun;">在获得了</span><span style="font-family: 宋体, SimSun;">Session</span></strong></span><span style="font-family: 宋体, SimSun;"><span style="color: #ff00ff;"><strong>后，建立并填入邮件信息，然后发送它到邮件服务器</strong></span>。这便是使用</span><span style="font-family: 宋体, SimSun;">Java Mail API</span><span style="font-family: 宋体, SimSun;">发送邮件的过程，在发送邮件之前，我们需要设置</span><span style="font-family: 宋体, SimSun;">SMTP</span><span style="font-family: 宋体, SimSun;">服务器：通过设置</span><span style="font-family: 宋体, SimSun;">Properties</span><span style="font-family: 宋体, SimSun;">的</span><span style="font-family: 宋体, SimSun;">mail.smtp.host</span><span style="font-family: 宋体, SimSun;">属性。</span></p>
+<p><span style="font-family: 宋体, SimSun;">String host = …;<br>String from = …;<br>String to = …;</span></p>
+<p><span style="font-family: 宋体, SimSun;">// Get system properties<br>Properties props = System.getProperties();</span></p>
+<p>// Setup mail server<br>props.put(“mail.smtp.host”, host);</p>
+<p>// Get session<br>Session session = Session.getDefaultInstance(props, null);</p>
+<p>// Define message<br>MimeMessage message = new MimeMessage(session);<br>message.setFrom(new InternetAddress(from));<br>message.addRecipient(Message.RecipientType.TO,<br>new InternetAddress(to));<br>message.setSubject(“Hello JavaMail”);<br>message.setText(“Welcome to JavaMail”);<br>// Send message<br>Transport.send(message);</p>
+<p><strong><span style="font-family: 宋体, SimSun;">由于建立邮件信息和发送邮件的过程中可能会抛出异常，所以我们需要将上面的代码放入到</span><span style="font-family: 宋体, SimSun;">try-catch</span><span style="font-family: 宋体, SimSun;">结构块中。</span></strong></p>
+<p><span style="color: #0000ff;"><span style="font-family: 宋体, SimSun;">2</span><span style="font-family: 宋体, SimSun;">．接收邮件</span></span></p>
+<p><span style="color: #ff00ff;"><span style="font-family: 宋体, SimSun;">为了在读取邮件，我们获得了</span><span style="font-family: 宋体, SimSun;">session</span><span style="font-family: 宋体, SimSun;">，并且连接到了邮箱的相应</span><span style="font-family: 宋体, SimSun;">store</span><span style="font-family: 宋体, SimSun;">，打开相应的</span><span style="font-family: 宋体, SimSun;">Folder</span><span style="font-family: 宋体, SimSun;">，然后得到我们想要的邮件，当然别忘记了在结束时关闭连接。</span></span></p>
+<p><span style="font-family: 宋体, SimSun;">String host = …;<br>String username = …;<br>String password = …;</span></p>
+<p>// Create empty properties<br>Properties props = new Properties();</p>
+<p>// Get session<br>Session session = Session.getDefaultInstance(props, null);</p>
+<p>// Get the store<br>Store store = session.getStore(“pop3”);<br>store.connect(host, username, password);</p>
+<p>// Get folder<br>Folder folder = store.getFolder(“INBOX”);<br>folder.open(Folder.READ_ONLY);</p>
+<p>// Get directory<br>Message message[] = folder.getMessages();</p>
+<p>for (int i=0, n=message.length; i&lt;n; i++) {<br>System.out.println(i + “: “ + message[i].getFrom()[0]</p>
+<ul>
+<li>“ “ + message[i].getSubject());</li>
+</ul>
+<p><span style="font-family: 宋体, SimSun;">message[i].writeTo(System.out)  //email context</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br>}</span></p>
+<p><span style="font-family: 宋体, SimSun;">// Close connection<br>folder.close(false);<br>store.close();</span></p>
+<p><span style="color: #0000ff;"><span style="font-family: 宋体, SimSun;">3</span><span style="font-family: 宋体, SimSun;">．删除邮件和标志</span></span></p>
+<p><strong><span style="font-family: 宋体, SimSun;">设置与</span><span style="font-family: 宋体, SimSun;">message</span><span style="font-family: 宋体, SimSun;">相关的</span><span style="font-family: 宋体, SimSun;">Flags</span><span style="font-family: 宋体, SimSun;">是删除邮件的常用方法。这些</span><span style="font-family: 宋体, SimSun;">Flags</span><span style="font-family: 宋体, SimSun;">表示了一些系统定义和用户定义的不同状态。在</span><span style="font-family: 宋体, SimSun;">Flags</span><span style="font-family: 宋体, SimSun;">类的内部类</span><span style="font-family: 宋体, SimSun;">Flag</span><span style="font-family: 宋体, SimSun;">中预定义了一些标志：</span></strong><span style="font-family: 宋体, SimSun;"><br>Flags.Flag.ANSWERED<br>Flags.Flag.DELETED<br>Flags.Flag.DRAFT<br>Flags.Flag.FLAGGED<br>Flags.Flag.RECENT<br>Flags.Flag.SEEN<br>Flags.Flag.USER<br></span><span style="color: #ff0000;"><strong><span style="font-family: 宋体, SimSun;">但需要在使用时注意的：标志存在并非意味着这个标志被所有的邮件服务器所支持。例如，对于删除邮件的操作，</span><span style="font-family: 宋体, SimSun;">POP</span><span style="font-family: 宋体, SimSun;">协议不支持上面的任何一个。所以要确定哪些标志是被支持的——通过访问一个已经打开的</span><span style="font-family: 宋体, SimSun;">Folder</span><span style="font-family: 宋体, SimSun;">对象的</span><span style="font-family: 宋体, SimSun;">getPermanetFlags()</span><span style="font-family: 宋体, SimSun;">方法，它将返回当前被支持的</span><span style="font-family: 宋体, SimSun;">Flags</span><span style="font-family: 宋体, SimSun;">类对象。</span></strong></span><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;">删除邮件时，我们可以设置邮件的</span><span style="font-family: 宋体, SimSun;">DELETED</span><span style="font-family: 宋体, SimSun;">标志</span></p>
+<p><span style="font-family: 宋体, SimSun;">message.setFlag(Flags.Flag.DELETED, true);</span></p>
+<p><span style="font-family: 宋体, SimSun;">但是首先要采用</span><span style="font-family: 宋体, SimSun;">READ_WRITE</span><span style="font-family: 宋体, SimSun;">的方式打开</span><span style="font-family: 宋体, SimSun;">Folder</span><span style="font-family: 宋体, SimSun;">：</span></p>
+<p><span style="font-family: 宋体, SimSun;">folder.open(Folder.READ_WRITE);</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br></span><strong><span style="font-family: 宋体, SimSun;">在对邮件进行删除操作后关闭</span><span style="font-family: 宋体, SimSun;">Folder</span><span style="font-family: 宋体, SimSun;">时，需要传递一个</span><span style="font-family: 宋体, SimSun;">true</span><span style="font-family: 宋体, SimSun;">作为对删除邮件的擦除确认。</span></strong></p>
+<p><span style="font-family: 宋体, SimSun;"><br>folder.close(true);</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br><strong>Folder</strong></span><strong><span style="font-family: 宋体, SimSun;">类中另一种用于删除邮件的方法</span><span style="font-family: 宋体, SimSun;">expunge()</span><span style="font-family: 宋体, SimSun;">也同样可删除邮件，但是它并不为</span><span style="font-family: 宋体, SimSun;">sun</span><span style="font-family: 宋体, SimSun;">提供的</span><span style="font-family: 宋体, SimSun;">POP3</span><span style="font-family: 宋体, SimSun;">实现支持，而其它第三方提供的</span><span style="font-family: 宋体, SimSun;">POP3</span><span style="font-family: 宋体, SimSun;">实现支持或者并不支持这种方法。</span><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;">另外，介绍一种检查某个标志是否被设置的方法：</span><span style="font-family: 宋体, SimSun;">Message.isSet(Flags.Flag flag)</span><span style="font-family: 宋体, SimSun;">方法，其中参数为被检查的标志。</span></strong></p>
+<p><span style="color: #0000ff;"><span style="font-family: 宋体, SimSun;">4</span><span style="font-family: 宋体, SimSun;">．邮件认证</span></span></p>
+<p><span style="font-family: 宋体, SimSun;">现在我们将了解到全面认识一下邮件认证。</span><span style="font-family: 宋体, SimSun;"><br></span><strong><span style="font-family: 宋体, SimSun;">我们在此取代了直接使用邮件服务器主机名、用户名、密码这三个字符串作为连接到</span><span style="font-family: 宋体, SimSun;">POP3 Store</span><span style="font-family: 宋体, SimSun;">的方式，使用存储了邮件服务器主机名信息的属性文件，并在获得</span><span style="font-family: 宋体, SimSun;">Session</span><span style="font-family: 宋体, SimSun;">时传入自定义的</span><span style="font-family: 宋体, SimSun;">Authenticator</span></strong><span style="font-family: 宋体, SimSun;"><strong>实例</strong>：</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br>// Setup properties<br>Properties props = System.getProperties();<br>props.put(“mail.pop3.host”, host);</span></p>
+<p>// Setup authentication, get session<br>Authenticator auth = new PopupAuthenticator();<br>Session session = Session.getDefaultInstance(props, auth);</p>
+<p>// Get the store<br>Store store = session.getStore(“pop3”);<br>store.connect();</p>
+<p>PopupAuthenticator<span style="font-family: 宋体, SimSun;">类继承了抽象类</span><span style="font-family: 宋体, SimSun;">Authenticator</span><span style="font-family: 宋体, SimSun;">，并且通过重载</span><span style="font-family: 宋体, SimSun;">Authenticator</span><span style="font-family: 宋体, SimSun;">类的</span><span style="font-family: 宋体, SimSun;">getPasswordAuthentication()</span><span style="font-family: 宋体, SimSun;">方法返回</span><span style="font-family: 宋体, SimSun;">PasswordAuthentication</span><span style="font-family: 宋体, SimSun;">类对象。而</span><span style="font-family: 宋体, SimSun;">getPasswordAuthentication()</span><span style="font-family: 宋体, SimSun;">方法的参数</span><span style="font-family: 宋体, SimSun;">param</span><span style="font-family: 宋体, SimSun;">是以逗号分割的用户名、密码组成的字符串。</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br>import javax.mail.<em>;<br>import java.util.</em>;</span></p>
+<p>public class PopupAuthenticator extends Authenticator {</p>
+<p>public PasswordAuthentication getPasswordAuthentication(String param) {<br>String username, password;</p>
+<p>StringTokenizer st = new StringTokenizer(param, “,”);<br>username = st.nextToken();<br>password = st.nextToken();</p>
+<p>return new PasswordAuthentication(username, password);<br>}</p>
+<p>}</p>
+<p><span style="color: #0000ff;"><span style="font-family: 宋体, SimSun;">5</span><span style="font-family: 宋体, SimSun;">．回复邮件</span></span></p>
+<p><span style="font-family: 宋体, SimSun;">使用</span><span style="font-family: 宋体, SimSun;">Message</span><span style="font-family: 宋体, SimSun;">类的</span><span style="font-family: 宋体, SimSun;">reply()</span><span style="font-family: 宋体, SimSun;">方法，通过配置回复邮件的收件人地址和主题（如果没有提供主题的话，系统将默认将“</span><span style="font-family: 宋体, SimSun;">Re</span><span style="font-family: 宋体, SimSun;">：”作为邮件的主体），这里不需要设置任何的邮件内容，只要复制发信人或者</span><span style="font-family: 宋体, SimSun;">reply-to</span><span style="font-family: 宋体, SimSun;">到新的收件人。而</span><span style="font-family: 宋体, SimSun;">reply()</span><span style="font-family: 宋体, SimSun;">方法中的</span><span style="font-family: 宋体, SimSun;">boolean</span><span style="font-family: 宋体, SimSun;">参数表示是否将邮件回复给发送者（参数值为</span><span style="font-family: 宋体, SimSun;">false</span><span style="font-family: 宋体, SimSun;">），或是回复给所有人（参数值为</span><span style="font-family: 宋体, SimSun;">true</span><span style="font-family: 宋体, SimSun;">）。</span><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;">补充一下，</span><span style="font-family: 宋体, SimSun;">reply-to</span><span style="font-family: 宋体, SimSun;">地址需要在发信时使用</span><span style="font-family: 宋体, SimSun;">setReplyTo()</span><span style="font-family: 宋体, SimSun;">方法设置。</span></p>
+<p><span style="font-family: 宋体, SimSun;">MimeMessage reply = (MimeMessage)message.reply(false);<br>reply.setFrom(new InternetAddress(“president@whitehouse.gov”));<br>reply.setText(“Thanks”);<br>Transport.send(reply);</span></p>
+<p><span style="color: #0000ff;"><span style="font-family: 宋体, SimSun;">6</span><span style="font-family: 宋体, SimSun;">．转发邮件</span></span></p>
+<p><span style="font-family: 宋体, SimSun;">每个邮件是由多个部分组成，每个部分称为一个邮件体部分，是一个</span><span style="font-family: 宋体, SimSun;">BodyPart</span><span style="font-family: 宋体, SimSun;">类对象，对于</span><span style="font-family: 宋体, SimSun;">MIME</span><span style="font-family: 宋体, SimSun;">类型邮件来讲就是</span><span style="font-family: 宋体, SimSun;">MimeBodyPart</span><span style="font-family: 宋体, SimSun;">类对象。这些邮件体包含在成为</span><span style="font-family: 宋体, SimSun;">Multipart</span><span style="font-family: 宋体, SimSun;">的容器中对于</span><span style="font-family: 宋体, SimSun;">MIME</span><span style="font-family: 宋体, SimSun;">类型邮件来讲就是</span><span style="font-family: 宋体, SimSun;">MimeMultiPart</span><span style="font-family: 宋体, SimSun;">类对象。在转发邮件时，我们建立一个文字邮件体部分和一个被转发的文字邮件体部分，然后将这两个邮件体放到一个</span><span style="font-family: 宋体, SimSun;">Multipart</span><span style="font-family: 宋体, SimSun;">中。说明一下，复制一个邮件内容到另一个邮件的方法是仅复制它的</span><span style="font-family: 宋体, SimSun;">DataHandler</span><span style="font-family: 宋体, SimSun;">（数据处理者）即可。这是由</span><span style="font-family: 宋体, SimSun;">JavaBeans Activation Framework</span><span style="font-family: 宋体, SimSun;">定义的一个类，它提供了对邮件内容的操作命令的访问、管理了邮件内容操作，是不同的数据源和数据格式之间的一致性接口。</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br>// Create the message to forward<br>Message forward = new MimeMessage(session);</span></p>
+<p>// Fill in header<br>forward.setSubject(“Fwd: “ + message.getSubject());<br>forward.setFrom(new InternetAddress(from));<br>forward.addRecipient(Message.RecipientType.TO,<br>new InternetAddress(to));</p>
+<p>// Create your new message part<br>BodyPart messageBodyPart = new MimeBodyPart();<br>messageBodyPart.setText(<br>“Here you go with the original message:</p>
+<p><span style="font-family: 宋体, SimSun;">“);</span></p>
+<p>// Create a multi-part to combine the parts<br>Multipart multipart = new MimeMultipart();<br>multipart.addBodyPart(messageBodyPart);</p>
+<p>// Create and fill part for the forwarded content<br>messageBodyPart = new MimeBodyPart();<br>messageBodyPart.setDataHandler(message.getDataHandler());</p>
+<p>// Add part to multi part<br>multipart.addBodyPart(messageBodyPart);</p>
+<p>// Associate multi-part with message<br>forward.setContent(multipart);</p>
+<p>// Send message<br>Transport.send(forward);</p>
+<p><span style="font-family: 宋体, SimSun;"> </span><span style="color: #0000ff;"><span style="font-family: 宋体, SimSun;">7</span><span style="font-family: 宋体, SimSun;">．使用附件</span></span></p>
+<p><span style="color: #008000;"><span style="font-family: 宋体, SimSun;">A</span><span style="font-family: 宋体, SimSun;">．</span><span style="color: #008000;">发送带有附件的邮件</span></span><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;">发送带有附件的邮件的过程有些类似转发邮件，我们需要建立一个完整邮件的各个邮件体部分，在第一个部分（即我们的邮件内容文字）后，增加一个具有</span><span style="font-family: 宋体, SimSun;">DataHandler</span><span style="font-family: 宋体, SimSun;">的附件而不是在转发邮件时那样复制第一个部分的</span><span style="font-family: 宋体, SimSun;">DataHandler</span><span style="font-family: 宋体, SimSun;">。</span></p>
+<p><span style="font-family: 宋体, SimSun;">如果我们将文件作为附件发送，那么要建立</span><span style="font-family: 宋体, SimSun;">FileDataSource</span><span style="font-family: 宋体, SimSun;">类型的对象作为附件数据源；如果从</span><span style="font-family: 宋体, SimSun;">URL</span><span style="font-family: 宋体, SimSun;">读取数据作为附件发送，那么将要建立</span><span style="font-family: 宋体, SimSun;">URLDataSource</span><span style="font-family: 宋体, SimSun;">类型的对象作为附件数据源。</span></p>
+<p><span style="font-family: 宋体, SimSun;">然后将这个数据源（</span><span style="font-family: 宋体, SimSun;">FileDataSource</span><span style="font-family: 宋体, SimSun;">或是</span><span style="font-family: 宋体, SimSun;">URLDataSource</span><span style="font-family: 宋体, SimSun;">）对象作为</span><span style="font-family: 宋体, SimSun;">DataHandler</span><span style="font-family: 宋体, SimSun;">类构造方法的参数传入，从而建立一个</span><span style="font-family: 宋体, SimSun;">DataHandler</span><span style="font-family: 宋体, SimSun;">对象作为数据源的</span><span style="font-family: 宋体, SimSun;">DataHandler</span><span style="font-family: 宋体, SimSun;">。</span></p>
+<p><span style="font-family: 宋体, SimSun;">接着将这个</span><span style="font-family: 宋体, SimSun;">DataHandler</span><span style="font-family: 宋体, SimSun;">设置为邮件体部分的</span><span style="font-family: 宋体, SimSun;">DataHandler</span><span style="font-family: 宋体, SimSun;">。这样就完成了邮件体与附件之间的关联工作，下面的工作就是</span><span style="font-family: 宋体, SimSun;">BodyPart</span><span style="font-family: 宋体, SimSun;">的</span><span style="font-family: 宋体, SimSun;">setFileName()</span><span style="font-family: 宋体, SimSun;">方法设置附件名为原文件名。</span><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;">最后将两个邮件体放入到</span><span style="font-family: 宋体, SimSun;">Multipart</span><span style="font-family: 宋体, SimSun;">中，设置邮件内容为这个容器</span><span style="font-family: 宋体, SimSun;">Multipart</span><span style="font-family: 宋体, SimSun;">，发送邮件。</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br>// Define message<br>Message message = new MimeMessage(session);<br>message.setFrom(new InternetAddress(from));<br>message.addRecipient(Message.RecipientType.TO,<br>new InternetAddress(to));<br>message.setSubject(“Hello JavaMail Attachment”);</span></p>
+<p>// Create the message part<br>BodyPart messageBodyPart = new MimeBodyPart();</p>
+<p>// Fill the message<br>messageBodyPart.setText(“Pardon Ideas”);</p>
+<p>Multipart multipart = new MimeMultipart();<br>multipart.addBodyPart(messageBodyPart);</p>
+<p>// Part two is attachment<br>messageBodyPart = new MimeBodyPart();<br>DataSource source = new FileDataSource(filename);<br>messageBodyPart.setDataHandler(new DataHandler(source));<br>messageBodyPart.setFileName(filename);<br>multipart.addBodyPart(messageBodyPart);</p>
+<p>// Put parts in message<br>message.setContent(multipart);</p>
+<p>// Send the message<br>Transport.send(message);</p>
+<p><span style="font-family: 宋体, SimSun;"><br></span><strong><span style="font-family: 宋体, SimSun;">如果我们使用</span><span style="font-family: 宋体, SimSun;">servlet</span><span style="font-family: 宋体, SimSun;">实现发送带有附件的邮件，则必须上传附件给</span><span style="font-family: 宋体, SimSun;">servlet</span><span style="font-family: 宋体, SimSun;">，这时需要注意提交页面</span><span style="font-family: 宋体, SimSun;">form</span><span style="font-family: 宋体, SimSun;">中对编码类型的设置应为</span><span style="font-family: 宋体, SimSun;">multipart/form-data</span><span style="font-family: 宋体, SimSun;">。</span></strong></p>
+<p><span style="font-family: 宋体, SimSun;"><br>&lt;FORM ENCTYPE=”multipart/form-data”<br>method=post action=”/myservlet”&gt;<br>&lt;INPUT TYPE=”file” NAME=”thefile”&gt;<br>&lt;INPUT TYPE=”submit” VALUE=”Upload”&gt;<br>&lt;/FORM&gt;</span></p>
+<p><span style="color: #008000;"><span style="font-family: 宋体, SimSun;">B</span><span style="font-family: 宋体, SimSun;">．读取邮件中的附件</span></span><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;">读取邮件中的附件的过程要比发送它的过程复杂一点。因为带有附件的邮件是多部分组成的，我们必须处理每一个部分获得邮件的内容和附件。</span><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;">但是如何辨别邮件信息内容和附件呢？</span><span style="font-family: 宋体, SimSun;">Sun</span><span style="font-family: 宋体, SimSun;">在</span><span style="font-family: 宋体, SimSun;">Part</span><span style="font-family: 宋体, SimSun;">类（</span><span style="font-family: 宋体, SimSun;">BodyPart</span><span style="font-family: 宋体, SimSun;">类实现的接口类）中提供了</span><span style="font-family: 宋体, SimSun;">getDisposition()</span><span style="font-family: 宋体, SimSun;">方法让开发者获得邮件体部分的部署类型，当该部分是附件时，其返回之将是</span><span style="font-family: 宋体, SimSun;">Part.ATTACHMENT</span><span style="font-family: 宋体, SimSun;">。但附件也可以没有部署类型的方式存在或者部署类型为</span><span style="font-family: 宋体, SimSun;">Part.INLINE</span><span style="font-family: 宋体, SimSun;">，无论部署类型为</span><span style="font-family: 宋体, SimSun;">Part.ATTACHMENT</span><span style="font-family: 宋体, SimSun;">还是</span><span style="font-family: 宋体, SimSun;">Part.INLINE</span><span style="font-family: 宋体, SimSun;">，我们都能把该邮件体部分导出保存。</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br>Multipart mp = (Multipart)message.getContent();</span></p>
+<p>for (int i=0, n=multipart.getCount(); i&lt;n; i++) {<br>Part part = multipart.getBodyPart(i));</p>
+<p>String disposition = part.getDisposition();</p>
+<p>if ((disposition != null) &amp;&amp;<br>((disposition.equals(Part.ATTACHMENT) ||<br>(disposition.equals(Part.INLINE))) {<br>saveFile(part.getFileName(), part.getInputStream());<br>}<br>}</p>
+<p><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;">下列代码中使用了</span><span style="font-family: 宋体, SimSun;">saveFile</span><span style="font-family: 宋体, SimSun;">方法是自定义的方法，它根据附件的文件名建立一个文件，如果本地磁盘上存在名为附件的文件，那么将在文件名后增加数字表示区别。然后从邮件体中读取数据写入到本地文件中（代码省略）。</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br>// from saveFile()<br>File file = new File(filename);<br>for (int i=0; file.exists(); i++) {<br>file = new File(filename+i);<br>}</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;">以上是邮件体部分被正确设置的简单例子，如果邮件体部分的部署类型为</span><span style="font-family: 宋体, SimSun;">null</span><span style="font-family: 宋体, SimSun;">，那么我们通过获得邮件体部分的</span><span style="font-family: 宋体, SimSun;">MIME</span><span style="font-family: 宋体, SimSun;">类型来判断其类型作相应的处理，代码结构框架如下：</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br>if (disposition == null) {<br>// Check if plain<br>MimeBodyPart mbp = (MimeBodyPart)part;<br>if (mbp.isMimeType(“text/plain”)) {<br>// Handle plain<br>} else {<br>// Special non-attachment cases here of<br>// image/gif, text/html, …<br>}<br>…<br>}</span></p>
+<p><strong><span style="color: #ff00ff;">总结:</span></strong></p>
+<p><strong>一份邮件在session会话基础上建立,其中一份邮件的邮件Message类,邮件有很多BodyPart部分构成</strong></p>
+<p><strong>当我们发送带有附件邮件等多BodyPart邮件时我们可以将文字等内容设置成一个BodyPart对象</strong></p>
+<p><strong>将附件设置成一个BodyPart对象,然后我们就可以采用:</strong></p>
+<p><strong>Multipart multipart = new MimeMultipart();</strong><br><strong>multipart.addBodyPart(messageBodyPart);</strong></p>
+<p><strong>当然收邮件的时候也一样,如果邮件不带附件的化我们可以就不用涉及part等概念了</strong></p>
+<p><strong>复制一个邮件内容到另一个邮件的方法是仅复制它的DataHandler（数据处理者）即可。这是由JavaBeans Activation Framework定义的一个类，它提供了对邮件内容的操作命令的访问、管理了邮件内容操作，是不同的数据源和数据格式之间的一致性接口。</strong></p>
+<p><strong>在附件的发送中我们也需要建立Datahandler并且设置datahandler(DataSource对象为参数注入)这样我们才能将附件发送成功,这个过程你可以理解我简单的copy</strong></p>
+<p><span style="color: #0000ff;"><span style="font-family: 宋体, SimSun;">8</span><span style="font-family: 宋体, SimSun;">．处理</span></span><span style="color: #0000ff;"><span style="font-family: 宋体, SimSun;">HTML</span><span style="font-family: 宋体, SimSun;">邮件</span></span><span style="font-family: 宋体, SimSun;"><br></span><span style="color: #008000;"><span style="font-family: 宋体, SimSun;">A</span><span style="font-family: 宋体, SimSun;">．发送</span></span><span style="color: #008000;"><span style="font-family: 宋体, SimSun;">HTML</span><span style="font-family: 宋体, SimSun;">邮件</span></span><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;">假<strong>如我们需要发送一个</strong></span><strong><span style="font-family: 宋体, SimSun;">HTML</span><span style="font-family: 宋体, SimSun;">文件作为邮件内容，并使邮件客户端在读取邮件时获取相关的图片或者文字的话，只要设置邮件内容为</span><span style="font-family: 宋体, SimSun;">html</span><span style="font-family: 宋体, SimSun;">代码，并设置内容类型为</span><span style="font-family: 宋体, SimSun;">text/html</span><span style="font-family: 宋体, SimSun;">即可：</span></strong></p>
+<p><span style="font-family: 宋体, SimSun;"><br>String htmlText = “&lt;H1&gt;Hello&lt;/H1&gt;” +<br>“&lt;img src=”<a href="http://www.jguru.com/images/logo.gif&quot;&amp;gt" target="_blank" rel="external">http://www.jguru.com/images/logo.gif&quot;&amp;gt</a>;”;<br>message.setContent(htmlText, “text/html”));</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br></span><strong><span style="font-family: 宋体, SimSun;">请注意：这里的图片并不是在邮件中内嵌的，而是在</span><span style="font-family: 宋体, SimSun;">URL</span><span style="font-family: 宋体, SimSun;">中定义的。邮件接收者只有在线时才能看到。</span><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;">在接收邮件时，如果我们使用</span><span style="font-family: 宋体, SimSun;">JavaMail API</span><span style="font-family: 宋体, SimSun;">接收邮件的话是无法实现以</span><span style="font-family: 宋体, SimSun;">HTML</span><span style="font-family: 宋体, SimSun;">方式显示邮件内容的。因为</span><span style="font-family: 宋体, SimSun;">JavaMail API</span><span style="font-family: 宋体, SimSun;">邮件内容视为二进制流。所以要显示</span><span style="font-family: 宋体, SimSun;">HTML</span><span style="font-family: 宋体, SimSun;">内容的邮件，我们必须使用</span><span style="font-family: 宋体, SimSun;">JEditorPane</span><span style="font-family: 宋体, SimSun;">或者第三方</span><span style="font-family: 宋体, SimSun;">HTML</span><span style="font-family: 宋体, SimSun;">展现组件。</span></strong></p>
+<p><span style="font-family: 宋体, SimSun;">以下代码显示了如何使用</span><span style="font-family: 宋体, SimSun;">JEditorPane</span><span style="font-family: 宋体, SimSun;">显示邮件内容：</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br>if (message.getContentType().equals(“text/html”)) {<br>String content = (String)message.getContent();<br>JFrame frame = new JFrame();<br>JEditorPane text = new JEditorPane(“text/html”, content);<br>text.setEditable(false);<br>JScrollPane pane = new JScrollPane(text);<br>frame.getContentPane().add(pane);<br>frame.setSize(300, 300);<br>frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);<br>frame.show();<br>}</span></p>
+<p><span style="color: #008000;"><span style="font-family: 宋体, SimSun;">B</span><span style="font-family: 宋体, SimSun;">．在邮件中包含图片</span></span><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;">如果我们在邮件中使用</span><span style="font-family: 宋体, SimSun;">HTML</span><span style="font-family: 宋体, SimSun;">作为内容，那么最好将</span><span style="font-family: 宋体, SimSun;">HTML</span><span style="font-family: 宋体, SimSun;">中使用的图片作为邮件的一部分，这样无论是否在线都会正确的显示</span><span style="font-family: 宋体, SimSun;">HTML</span><span style="font-family: 宋体, SimSun;">中的图片。处理方法就是将</span><span style="font-family: 宋体, SimSun;">HTML</span><span style="font-family: 宋体, SimSun;">中用到的图片作为邮件附件并使用特殊的</span><span style="font-family: 宋体, SimSun;">cid URL</span><span style="font-family: 宋体, SimSun;">作为图片的引用，这个</span><span style="font-family: 宋体, SimSun;">cid</span><span style="font-family: 宋体, SimSun;">就是对图片附件的</span><span style="font-family: 宋体, SimSun;">Content-ID</span><span style="font-family: 宋体, SimSun;">头的引用。</span><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;">处理内嵌图片就像向邮件中添加附件一样，不同之处在于我们必须通过设置图片附件所在的邮件体部分的</span><span style="font-family: 宋体, SimSun;">header</span><span style="font-family: 宋体, SimSun;">中</span><span style="font-family: 宋体, SimSun;">Content-ID</span><span style="font-family: 宋体, SimSun;">为一个随机字符串，并在</span><span style="font-family: 宋体, SimSun;">HTML</span><span style="font-family: 宋体, SimSun;">中</span><span style="font-family: 宋体, SimSun;">img</span><span style="font-family: 宋体, SimSun;">的</span><span style="font-family: 宋体, SimSun;">src</span><span style="font-family: 宋体, SimSun;">标记中设置为该字符串。这样就完成了图片附件与</span><span style="font-family: 宋体, SimSun;">HTML</span><span style="font-family: 宋体, SimSun;">的关联。</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br>String file = …;</span></p>
+<p>// Create the message<br>Message message = new MimeMessage(session);</p>
+<p>// Fill its headers<br>message.setSubject(“Embedded Image”);<br>message.setFrom(new InternetAddress(from));<br>message.addRecipient(Message.RecipientType.TO,<br>new InternetAddress(to));</p>
+<p>// Create your new message part<br>BodyPart messageBodyPart = new MimeBodyPart();<br>String htmlText = “&lt;H1&gt;Hello&lt;/H1&gt;” +<br>“&lt;img src=”cid:memememe”&gt;”;<br>messageBodyPart.setContent(htmlText, “text/html”);</p>
+<p>// Create a related multi-part to combine the parts<br>MimeMultipart multipart = new MimeMultipart(“related”);<br>multipart.addBodyPart(messageBodyPart);</p>
+<p>// Create part for the image<br>messageBodyPart = new MimeBodyPart();</p>
+<p>// Fetch the image and associate to part<br>DataSource fds = new FileDataSource(file);<br>messageBodyPart.setDataHandler(new DataHandler(fds));<br>messageBodyPart.setHeader(“Content-ID”,”&lt;memememe&gt;”);</p>
+<p>// Add part to multi-part<br>multipart.addBodyPart(messageBodyPart);</p>
+<p>// Associate multi-part with message<br>message.setContent(multipart);</p>
+<p><span style="color: #0000ff;"><span style="font-family: 宋体, SimSun;">9</span><span style="font-family: 宋体, SimSun;">．在邮件中搜索短语</span></span><span style="font-family: 宋体, SimSun;"><br><strong>JavaMail API</strong></span><strong><span style="font-family: 宋体, SimSun;">提供了过滤器机制，它被用来建立搜索短语。这个短语由</span><span style="font-family: 宋体, SimSun;">javax.mail.search</span><span style="font-family: 宋体, SimSun;">包中的</span><span style="font-family: 宋体, SimSun;">SearchTerm</span><span style="font-family: 宋体, SimSun;">抽象类来定义，在定义后我们便可以使用</span><span style="font-family: 宋体, SimSun;">Folder</span><span style="font-family: 宋体, SimSun;">的</span><span style="font-family: 宋体, SimSun;">Search()</span><span style="font-family: 宋体, SimSun;">方法在</span><span style="font-family: 宋体, SimSun;">Folder</span><span style="font-family: 宋体, SimSun;">中查找邮件：</span></strong></p>
+<p><span style="font-family: 宋体, SimSun;"><br>SearchTerm st = …;<br>Message[] msgs = folder.search(st);</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br></span><span style="font-family: 宋体, SimSun;">下面有</span><span style="font-family: 宋体, SimSun;">22</span><span style="font-family: 宋体, SimSun;">个不同的类（继承了</span><span style="font-family: 宋体, SimSun;">SearchTerm</span><span style="font-family: 宋体, SimSun;">类）供我们使用：</span><span style="font-family: 宋体, SimSun;"><br>AND terms (class AndTerm)<br>OR terms (class OrTerm)<br>NOT terms (class NotTerm)<br>SENT DATE terms (class SentDateTerm)<br>CONTENT terms (class BodyTerm)<br>HEADER terms (FromTerm / FromStringTerm, RecipientTerm / RecipientStringTerm, SubjectTerm, etc.)<br></span><span style="font-family: 宋体, SimSun;">使用这些类定义的断语集合，我们可以构造一个逻辑表达式，并在</span><span style="font-family: 宋体, SimSun;">Folder</span><span style="font-family: 宋体, SimSun;">中进行搜索。下面是一个实例：在</span><span style="font-family: 宋体, SimSun;">Folder</span><span style="font-family: 宋体, SimSun;">中搜索邮件主题含有“</span><span style="font-family: 宋体, SimSun;">ADV”</span><span style="font-family: 宋体, SimSun;">字符串或者发信人地址为</span><span style="font-family: 宋体, SimSun;">friend@public.com</span><span style="font-family: 宋体, SimSun;">的邮件。</span></p>
+<p><span style="font-family: 宋体, SimSun;"><br>SearchTerm st =<br>new OrTerm(<br>new SubjectTerm(“ADV:”),<br>new FromStringTerm(“friend@public.com”));<br>Message[] msgs = folder.search(st);</span></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://donahue-ldz.github.io/2014/07/27/javamail-e7-bc-96-e7-a8-8b-e5-ae-9e-e6-88-98/" data-title="javaMail编程~实战 | 心缘冰河" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2014/08/01/tomcat-e4-b8-ad-e8-ae-be-e7-bd-ae-e6-95-b0-e6-8d-ae-e6-ba-90/" title="Tomcat中设置数据源">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Tomcat中设置数据源</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2014/07/27/javamail-e7-bc-96-e7-a8-8b/"  title="javaMail编程~类详解">
+ <strong>NEXT:</strong><br/> 
+ <span>javaMail编程~类详解
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="javaMail编程~实战" data-thread-key="javamail-e7-bc-96-e7-a8-8b-e5-ae-9e-e6-88-98" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/javamail-e7-bc-96-e7-a8-8b-e5-ae-9e-e6-88-98"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  <div class="widget intro">
+<h3 class="asidetitle">简介</h3>
+<ul class="entry">
+<li>现状：大连理工大学/本科生</li>
+<li>QQ 号：635884063</li>
+<li>github :  <a href="https://github.com/donahue-ldz">donahue-ldz</a></li>
+</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/java/" title="java">java<sup>4</sup></a></li>
+		
+			<li><a href="/categories/未分类/" title="未分类">未分类<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/CyclicBarrier/" style="font-size: NaNpx;">CyclicBarrier</a><a href="/tags/MarkDown/" style="font-size: NaNpx;">MarkDown</a><a href="/tags/finalize/" style="font-size: NaNpx;">finalize</a><a href="/tags/log4j/" style="font-size: NaNpx;">log4j</a><a href="/tags/log4j配置/" style="font-size: NaNpx;">log4j配置</a><a href="/tags/内存回收/" style="font-size: NaNpx;">内存回收</a><a href="/tags/日志记录/" style="font-size: NaNpx;">日志记录</a><a href="/tags/线程/" style="font-size: NaNpx;">线程</a><a href="/tags/线程等待，CountDownLatch/" style="font-size: NaNpx;">线程等待，CountDownLatch</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2015 
+		
+		<a href="http://donahue-ldz.github.io" target="_blank" title="donahue">donahue</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+
