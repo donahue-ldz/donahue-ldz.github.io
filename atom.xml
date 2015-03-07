@@ -4,7 +4,7 @@
   <subtitle><![CDATA[写出我人生,coding]]></subtitle>
   <link href="//atom.xml" rel="self"/>
   <link href="http://donahue-ldz.github.io/"/>
-  <updated>2015-03-06T04:21:39.000Z</updated>
+  <updated>2015-03-07T05:15:56.000Z</updated>
   <id>http://donahue-ldz.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://donahue-ldz.github.io/2015/02/15/MarkDown%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/"/>
     <id>http://donahue-ldz.github.io/2015/02/15/MarkDown语法入门/</id>
     <published>2015-02-15T02:32:21.000Z</published>
-    <updated>2015-03-06T04:21:39.000Z</updated>
+    <updated>2015-03-07T05:15:56.000Z</updated>
     <content type="html"><![CDATA[<h2 id="MarkDown_理念">MarkDown 理念</h2><blockquote>
 <p>让文档更容易读、写和随意改。HTML 是一种发布的格式，Markdown 是一种书写的格式。就这样，Markdown 的格式语法只涵盖纯文本可以涵盖的范围.</p>
 </blockquote>
@@ -115,7 +115,7 @@
     <link href="http://donahue-ldz.github.io/2015/01/15/log4j%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/"/>
     <id>http://donahue-ldz.github.io/2015/01/15/log4j常见配置/</id>
     <published>2015-01-15T07:27:41.000Z</published>
-    <updated>2015-03-06T02:22:41.000Z</updated>
+    <updated>2015-03-07T05:15:56.000Z</updated>
     <content type="html"><![CDATA[<h2 id="xml类型的配置">xml类型的配置</h2><p>Log4j配置文件实现了输出到控制台、文件、固定大小文件、发送日志邮件、输出到数据库日志表、自定义标签等全套功能。 </p>
 <pre><code><span class="pi">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>  
 <span class="doctype">&lt;!DOCTYPE log4j:configuration SYSTEM "log4j.dtd"&gt;</span>  
@@ -282,7 +282,7 @@ log4j<span class="class">.appender</span><span class="class">.im</span><span cla
     <link href="http://donahue-ldz.github.io/2015/01/05/%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95/"/>
     <id>http://donahue-ldz.github.io/2015/01/05/日志记录/</id>
     <published>2015-01-05T06:42:11.000Z</published>
-    <updated>2015-03-06T03:35:25.000Z</updated>
+    <updated>2015-03-07T05:15:56.000Z</updated>
     <content type="html"><![CDATA[<h2 id="日志服务">日志服务</h2><p>三个目的 ：</p>
 <ul>
 <li>监视代码中变量的变化情况，周期性的记录到文件中供其他应用进行统计分析工作</li>
@@ -347,7 +347,7 @@ log4j<span class="class">.appender</span><span class="class">.im</span><span cla
     <link href="http://donahue-ldz.github.io/2014/09/28/finalize%E7%90%86%E8%A7%A3/"/>
     <id>http://donahue-ldz.github.io/2014/09/28/finalize理解/</id>
     <published>2014-09-28T09:30:28.000Z</published>
-    <updated>2015-03-06T03:34:42.000Z</updated>
+    <updated>2015-03-07T05:15:56.000Z</updated>
     <content type="html"><![CDATA[<p><strong>Object类声明了protect finalize方法</strong></p>
 <blockquote>
 <p>我们都知道程序初始化的重要性，但是通常会忘记清除工作的重要性，我们知道在c++中有构造函数初始化，有相应的析构函数完成收尾清楚工作</p>
@@ -383,7 +383,7 @@ log4j<span class="class">.appender</span><span class="class">.im</span><span cla
     <link href="http://donahue-ldz.github.io/2014/09/15/%E7%BA%BF%E7%A8%8B%E7%AD%89%E5%BE%85/"/>
     <id>http://donahue-ldz.github.io/2014/09/15/线程等待/</id>
     <published>2014-09-15T02:32:21.000Z</published>
-    <updated>2015-03-06T03:35:47.000Z</updated>
+    <updated>2015-03-07T05:15:56.000Z</updated>
     <content type="html"><![CDATA[<p><strong>在多线程程序设计中，经常会遇到一个线程等待一个或多个线程的场景<br>遇到这样的场景应该如何解决？</strong></p>
 <blockquote>
 <ul>
@@ -521,6 +521,73 @@ log4j<span class="class">.appender</span><span class="class">.im</span><span cla
       <category term="线程等待，CountDownLatch" scheme="http://donahue-ldz.github.io/tags/%E7%BA%BF%E7%A8%8B%E7%AD%89%E5%BE%85%EF%BC%8CCountDownLatch/"/>
     
       <category term="java" scheme="http://donahue-ldz.github.io/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[vim 配色知识]]></title>
+    <link href="http://donahue-ldz.github.io/2014/03/23/vim-%E9%85%8D%E8%89%B2/"/>
+    <id>http://donahue-ldz.github.io/2014/03/23/vim-配色/</id>
+    <published>2014-03-23T08:31:51.000Z</published>
+    <updated>2015-03-07T05:17:49.000Z</updated>
+    <content type="html"><![CDATA[<p>在vimcolorschemetest站点上，有数以千计的vim主题插件，然而每款主题或多或少都有我们不满意的地方，这就需要我们自己动手来进行扩展。</p>
+<hr>
+<h2 id="基础知识">基础知识</h2><p>在vim中，主题也是以插件形式存在的。其中系统自带的主题，存放在$VIMRUNTIME/colors文件夹下，以*.vim命名。（注：查看$VIMRUNTIME请在vim中执行 :echo $VIMRUNTIME）<br>用户自定义的主题一般不放在系统目录下，而是放在<code>~/.vim/colors</code>目录下，这样不会干扰到其他用户，同时也方便备份自己的vim配置。<br>更换vim主题的命令为：<br><code>:colorscheme 主题插件名称</code><br>但是这样只能临时改变vim主题，退出后又会恢复原样，如果想永久改变，请在~/.vimrc中添加：<br><code>colorscheme 主题插件名称</code></p>
+<p>由于我不使用Windows下的gvim，而是在linux下或远程ssh使用终端下的vim，因此首先需要在~/.vimrc中添加开启256颜色支持：<br><code>set t_Co=256</code><br>为了能在编辑程序时高亮显示关键字，还需要在~/.vimrc中开启语法高亮显示：<br><code>syntax enable</code><br><code>syntax on</code><br>做完上述的准备工作后，让我们正式开始定制主题之旅吧！</p>
+<h3 id="主题色调">主题色调</h3><p>在配置其他属性前，首先要配置主题整体的色调，只有两个选择：dark和light（暗色调和亮色调）。对于经常阅读和编写代码的程序员来说，暗色调是更好的选择：</p>
+<p><code>set background=dark</code><br><strong><span style="color: #ff00ff;">接下来，需要重新设置一下语法高亮，否则设置不会生效：</span></strong><br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">version</span> &gt; <span class="number">580</span></span><br><span class="line"><span class="keyword">hi</span> clear</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">exists</span>(<span class="string">"syntax_on"</span>)</span><br><span class="line"><span class="keyword">syntax</span> reset</span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line"><span class="keyword">endif</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="主题名称">主题名称</h3><p>主题名称是无参数调用 :colorscheme 时返回的信息，用于分辨不同主题，其设置如下：</p>
+<p><code>let g:colors_name=&quot;nslib_color256&quot;</code></p>
+<h4 id="基础属性">基础属性</h4><p>由于vim可以在黑白终端、彩色终端、GUI界面下运行，所以需要对其分贝进行配置，下面给出一个简要的文档说明：</p>
+<blockquote>
+<p>term 黑白终端的属性<br>cterm  彩色终端的属性<br>ctermfg 彩色终端前景色<br>ctermbg 彩色终端背景色<br>gui GUI属性<br>guifg GUI前景色<br>guibg GUI背景色</p>
+</blockquote>
+<p>对于黑白终端，我们没有配置的必要，因此主要的配置工作集中在彩色终端与GUI界面上，又由于彩色终端与GUI界面的配置只是关键字不同，因此这里只选取彩色终端进行说明。</p>
+<a id="more"></a>
+<p>由于不是所有终端都支持256色，因此使用一些安全色会使我们的主题更有移植性，而GUI可以支持所有颜色，不在考虑范围之内，vim文档给出的安全色如下：</p>
+<blockquote>
+<p>“0 Black<br>“1 DarkBlue<br>“2 DarkGreen<br>“3 DarkCyan<br>“4 DarkRed<br>“5 DarkMagenta<br>“6 Brown, DarkYellow<br>“7 LightGray, LightGrey, Gray, Grey<br>“8 DarkGray, DarkGrey<br>“9 Blue, LightBlue<br>“10 Green, LightGreen<br>“11 Cyan, LightCyan<br>“12 Red, LightRed<br>“13 Magenta, LightMagenta<br>“14 Yellow, LightYellow<br>“15 White</p>
+</blockquote>
+<!--more-->
+<h3 id="配色语法">配色语法</h3><p>下面举例说明配色语法：<br><code>hi Type ctermfg=LightYellow ctermbg=Black cterm=bold</code><br>其中，hi是highlight命令的缩写，用于高亮配置；Type是要配色的元素名称；参数采用的是Key=Value的形式。</p>
+<p>元素列表<br>配置颜色的语法非常简单，无需累赘，下面将分类介绍常用的元素标签：</p>
+<h4 id="状态栏提示信息">状态栏提示信息</h4><blockquote>
+<p>hi StatusLine 状态栏<br>hi StatusLineNC 非当前窗口的状态栏<br>ErrorMsg 错误信息<br>WarningMsg 警告信息<br>ModeMsg 当前模式<br>MoreMsg 其他文本<br>Question 询问用户<br>Error 错误</p>
+</blockquote>
+<h4 id="文本搜索">文本搜索</h4><blockquote>
+<p>hi IncSearch 增量搜索时匹配的文本符串<br>hi Search 匹配的文本串</p>
+</blockquote>
+<h4 id="弹出菜单">弹出菜单</h4><blockquote>
+<p>Pmenu 弹出菜单<br>PmenuSel 菜单当前选择项</p>
+</blockquote>
+<h4 id="窗体边框相关">窗体边框相关</h4><blockquote>
+<p>VertSplit 垂直分割窗口的边框<br>LineNr 行号<br>Cursor 光标所在字符<br>CursorLine 光标所在行<br>ColorColumn 光标所在列<br>ColorColumn 标尺<br>NonText 窗口尾部的~和@，以及文本里实际不显示的字符</p>
+</blockquote>
+<h4 id="diff模式">diff模式</h4><blockquote>
+<p>DiffAdd diff模式增加的行<br>DiffChange diff模式改变的行<br>DiffDelete diff模式删除的行<br>DiffText diff模式插入文本</p>
+</blockquote>
+<h4 id="C/C++语法">C/C++语法</h4><blockquote>
+<p>Comment 注释<br>PreProc 预处理<br>Type 数据类型<br>Constant 常量<br>Statement 控制语句<br>Special 字符串中的中的特殊字符<br>String 字符串<br>cCppString Cpp字符串<br>Number 数字<br>Todo TODO、HACK、FIXME等标签</p>
+</blockquote>
+<h3 id="我的主题">我的主题</h3><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">set <span class="variable">background=</span>dark</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> version &amp;gt; <span class="number">580</span></span><br><span class="line">hi clear</span><br><span class="line"><span class="keyword">if</span> exists(<span class="string">"syntax_on"</span>)</span><br><span class="line">syntax reset</span><br><span class="line">endif</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> g:<span class="variable">colors_name=</span><span class="string">"nslib_color256"</span></span><br><span class="line"></span><br><span class="line">hi Normal <span class="variable">ctermfg=</span>Grey <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi ColorColumn <span class="variable">ctermfg=</span>White <span class="variable">ctermbg=</span>Grey</span><br><span class="line">·</span><br><span class="line">hi ErrorMsg <span class="variable">term=</span>standout</span><br><span class="line">hi ErrorMsg <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>DarkBlue</span><br><span class="line">hi WarningMsg <span class="variable">term=</span>standout</span><br><span class="line">hi WarningMsg <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>DarkBlue</span><br><span class="line">hi ModeMsg <span class="variable">term=</span>bold <span class="variable">cterm=</span>bold</span><br><span class="line">hi ModeMsg <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi MoreMsg <span class="variable">term=</span>bold <span class="variable">ctermfg=</span>LightGreen</span><br><span class="line">hi MoreMsg <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi Question <span class="variable">term=</span>standout <span class="variable">gui=</span>bold</span><br><span class="line">hi Question <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi Error <span class="variable">term=</span>bold <span class="variable">cterm=</span>bold</span><br><span class="line">hi Error <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">·</span><br><span class="line">hi LineNr <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi CursorColumn <span class="variable">ctermfg=</span>White <span class="variable">ctermbg=</span>Grey</span><br><span class="line">hi CursorLine <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi ColorColumn <span class="variable">ctermfg=</span>White <span class="variable">ctermbg=</span>Grey</span><br><span class="line">·</span><br><span class="line">hi IncSearch <span class="variable">ctermfg=</span>Black <span class="variable">ctermbg=</span>DarkGrey</span><br><span class="line">hi Search <span class="variable">ctermfg=</span>Black <span class="variable">ctermbg=</span>DarkGrey</span><br><span class="line">hi StatusLine <span class="variable">term=</span>bold <span class="variable">cterm=</span>bold</span><br><span class="line">hi StatusLine <span class="variable">ctermfg=</span>Black <span class="variable">ctermbg=</span>Grey</span><br><span class="line">hi StatusLineNC <span class="variable">term=</span>bold <span class="variable">cterm=</span>bold</span><br><span class="line">hi StatusLineNC <span class="variable">ctermfg=</span>Black <span class="variable">ctermbg=</span>Grey</span><br><span class="line">·</span><br><span class="line">hi VertSplit <span class="variable">ctermfg=</span>Grey <span class="variable">ctermbg=</span>Grey</span><br><span class="line">hi Visual <span class="variable">term=</span>bold <span class="variable">cterm=</span>bold</span><br><span class="line">hi Visual <span class="variable">ctermfg=</span>Black <span class="variable">ctermbg=</span>Grey</span><br><span class="line">·</span><br><span class="line">highlight Pmenu <span class="variable">ctermfg=</span>Black <span class="variable">ctermbg=</span>Grey</span><br><span class="line">highlight PmenuSel <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>DarkBlue</span><br><span class="line">·</span><br><span class="line">hi Comment <span class="variable">ctermfg=</span>DarkCyan <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi PreProc <span class="variable">ctermfg=</span>Blue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi Type <span class="variable">ctermfg=</span>LightYellow <span class="variable">ctermbg=</span>Black <span class="variable">cterm=</span>bold</span><br><span class="line">hi Constant <span class="variable">ctermfg=</span>Blue <span class="variable">ctermbg=</span>Black <span class="variable">cterm=</span>bold</span><br><span class="line">hi Statement <span class="variable">ctermfg=</span>LightYellow <span class="variable">ctermbg=</span>Black <span class="variable">cterm=</span>bold</span><br><span class="line">hi Special <span class="variable">ctermfg=</span>Red <span class="variable">ctermbg=</span>Black <span class="variable">cterm=</span>bold</span><br><span class="line">hi SpecialKey <span class="variable">ctermfg=</span>Red <span class="variable">ctermbg=</span>Black <span class="variable">cterm=</span>bold</span><br><span class="line">hi Number <span class="variable">ctermfg=</span>Blue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi cCppString <span class="variable">ctermfg=</span>Red <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi String <span class="variable">ctermfg=</span>Red <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi Identifier <span class="variable">ctermfg=</span>Red <span class="variable">ctermbg=</span>Black <span class="variable">cterm=</span>bold</span><br><span class="line">hi Todo <span class="variable">ctermfg=</span>Black <span class="variable">ctermbg=</span>Gray <span class="variable">cterm=</span>bold</span><br><span class="line">hi NonText <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi Directory <span class="variable">ctermfg=</span>Blue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi Folded <span class="variable">ctermfg=</span>DarkBlue <span class="variable">ctermbg=</span>Black <span class="variable">cterm=</span>bold</span><br><span class="line">hi FoldColumn <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi Underlined <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black <span class="variable">cterm=</span>underline</span><br><span class="line">hi Title <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi Ignore <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line"></span><br><span class="line">hi Directory <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi browseSynopsis <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi browseCurDir <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi favoriteDirectory <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi browseDirectory <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi browseSuffixInfo <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi browseSortBy <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi browseFilter <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi browseFiletime <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi browseSuffixes <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line"></span><br><span class="line">hi TagListComment <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi TagListFileName <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi TagListTitle <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi TagListTagScope <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi TagListTagName <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br><span class="line">hi Tag <span class="variable">ctermfg=</span>LightBlue <span class="variable">ctermbg=</span>Black</span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<p>在vimcolorschemetest站点上，有数以千计的vim主题插件，然而每款主题或多或少都有我们不满意的地方，这就需要我们自己动手来进行扩展。</p>
+<hr>
+<h2 id="基础知识">基础知识</h2><p>在vim中，主题也是以插件形式存在的。其中系统自带的主题，存放在$VIMRUNTIME/colors文件夹下，以*.vim命名。（注：查看$VIMRUNTIME请在vim中执行 :echo $VIMRUNTIME）<br>用户自定义的主题一般不放在系统目录下，而是放在<code>~/.vim/colors</code>目录下，这样不会干扰到其他用户，同时也方便备份自己的vim配置。<br>更换vim主题的命令为：<br><code>:colorscheme 主题插件名称</code><br>但是这样只能临时改变vim主题，退出后又会恢复原样，如果想永久改变，请在~/.vimrc中添加：<br><code>colorscheme 主题插件名称</code></p>
+<p>由于我不使用Windows下的gvim，而是在linux下或远程ssh使用终端下的vim，因此首先需要在~/.vimrc中添加开启256颜色支持：<br><code>set t_Co=256</code><br>为了能在编辑程序时高亮显示关键字，还需要在~/.vimrc中开启语法高亮显示：<br><code>syntax enable</code><br><code>syntax on</code><br>做完上述的准备工作后，让我们正式开始定制主题之旅吧！</p>
+<h3 id="主题色调">主题色调</h3><p>在配置其他属性前，首先要配置主题整体的色调，只有两个选择：dark和light（暗色调和亮色调）。对于经常阅读和编写代码的程序员来说，暗色调是更好的选择：</p>
+<p><code>set background=dark</code><br><strong><span style="color: #ff00ff;">接下来，需要重新设置一下语法高亮，否则设置不会生效：</span></strong><br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">version</span> &gt; <span class="number">580</span></span><br><span class="line"><span class="keyword">hi</span> clear</span><br><span class="line"><span class="keyword">if</span> <span class="built_in">exists</span>(<span class="string">"syntax_on"</span>)</span><br><span class="line"><span class="keyword">syntax</span> reset</span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line"><span class="keyword">endif</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="主题名称">主题名称</h3><p>主题名称是无参数调用 :colorscheme 时返回的信息，用于分辨不同主题，其设置如下：</p>
+<p><code>let g:colors_name=&quot;nslib_color256&quot;</code></p>
+<h4 id="基础属性">基础属性</h4><p>由于vim可以在黑白终端、彩色终端、GUI界面下运行，所以需要对其分贝进行配置，下面给出一个简要的文档说明：</p>
+<blockquote>
+<p>term 黑白终端的属性<br>cterm  彩色终端的属性<br>ctermfg 彩色终端前景色<br>ctermbg 彩色终端背景色<br>gui GUI属性<br>guifg GUI前景色<br>guibg GUI背景色</p>
+</blockquote>
+<p>对于黑白终端，我们没有配置的必要，因此主要的配置工作集中在彩色终端与GUI界面上，又由于彩色终端与GUI界面的配置只是关键字不同，因此这里只选取彩色终端进行说明。</p>]]>
+    
+    </summary>
+    
+      <category term="vim" scheme="http://donahue-ldz.github.io/tags/vim/"/>
     
   </entry>
   
