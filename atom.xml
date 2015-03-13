@@ -4,7 +4,7 @@
   <subtitle><![CDATA[写出我人生,coding]]></subtitle>
   <link href="//atom.xml" rel="self"/>
   <link href="http://donahue-ldz.github.io/"/>
-  <updated>2015-03-07T05:15:56.000Z</updated>
+  <updated>2015-03-13T12:18:48.000Z</updated>
   <id>http://donahue-ldz.github.io/</id>
   
   <author>
@@ -13,6 +13,22 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[lucene开篇]]></title>
+    <link href="http://donahue-ldz.github.io/2015/03/13/lucene%E5%BC%80%E7%AF%87/"/>
+    <id>http://donahue-ldz.github.io/2015/03/13/lucene开篇/</id>
+    <published>2015-03-13T12:17:24.000Z</published>
+    <updated>2015-03-13T12:18:48.000Z</updated>
+    <content type="html"><![CDATA[<p>最近由于项目中有用lucene，由于之前时间一直很忙，所以没有将相关的技术整理出来，今天决定将项目中的lucene整理，对lucene进行整体的学习和研究，会将项目中的部分源码分享目的为了便于分析！<br>渐渐的发现很多技术由于长时间没有再次接触很快就能忘记，汗～<br>反思：再忙也不能忘记更新博客，笨～</p>
+<hr>
+<p><code>go ~ ~ ~ ~ ~ ~</code></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>最近由于项目中有用lucene，由于之前时间一直很忙，所以没有将相关的技术整理出来，今天决定将项目中的lucene整理，对lucene进行整体的学习和研究，会将项目中的部分源码分享目的为了便于分析！<br>渐渐的发现很多技术由于长时间没有再次接触很快就能忘记，汗～<br>反]]>
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[MarkDown语法入门]]></title>
