@@ -8,14 +8,14 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>lucene开篇 | 心缘冰河</title>
+    <title>lucene基础 | 心缘冰河</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="donahue">
     
-    <meta name="description" content="最近由于项目中有用lucene，由于之前时间一直很忙，所以没有将相关的技术整理出来，今天决定将项目中的lucene整理，对lucene进行整体的学习和研究，会将项目中的部分源码分享目的为了便于分析！渐渐的发现很多技术由于长时间没有再次接触很快就能忘记，汗～反思：再忙也不能忘记更新博客，笨～
+    <meta name="description" content="简介Lucene 是一个基于 Java 的全文信息检索工具包，它不是一个完整的搜索应用程序，而是为你的应用程序提供索引和搜索功能。Lucene 目前是 Apache Jakarta 家族中的一个开源项目。也是目前最为流行的基于 Java 开源全文检索工具包。
 
-go ">
+索引和搜索索引和搜索索引是现代搜索引擎">
     
     
     
@@ -231,15 +231,15 @@ go ">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/13/lucene开篇/" title="lucene开篇" itemprop="url">lucene开篇</a>
+      <a href="/2015/03/13/lucene基础/" title="lucene基础" itemprop="url">lucene基础</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://donahue-ldz.github.io" title="donahue">donahue</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-03-13T12:17:24.000Z" itemprop="datePublished">Mar 13 2015</time>
-    更新日期:<time datetime="2015-03-13T12:20:08.000Z" itemprop="dateModified">Mar 13 2015</time>
+    <time datetime="2015-03-13T12:29:02.000Z" itemprop="datePublished">Mar 13 2015</time>
+    更新日期:<time datetime="2015-03-13T12:30:05.000Z" itemprop="dateModified">Mar 13 2015</time>
     
   </p>
 </header>
@@ -248,15 +248,30 @@ go ">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引和搜索"><span class="toc-number">2.</span> <span class="toc-text">索引和搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立索引"><span class="toc-number">3.</span> <span class="toc-text">建立索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Document"><span class="toc-number">3.1.</span> <span class="toc-text">Document</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Field"><span class="toc-number">3.2.</span> <span class="toc-text">Field</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analyzer"><span class="toc-number">3.3.</span> <span class="toc-text">Analyzer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IndexWriter"><span class="toc-number">3.4.</span> <span class="toc-text">IndexWriter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Directory"><span class="toc-number">3.5.</span> <span class="toc-text">Directory</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索"><span class="toc-number">4.</span> <span class="toc-text">搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Query"><span class="toc-number">4.1.</span> <span class="toc-text">Query</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Term"><span class="toc-number">4.2.</span> <span class="toc-text">Term</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IndexSearcher"><span class="toc-number">4.3.</span> <span class="toc-text">IndexSearcher</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hits"><span class="toc-number">4.4.</span> <span class="toc-text">Hits</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>最近由于项目中有用lucene，由于之前时间一直很忙，所以没有将相关的技术整理出来，今天决定将项目中的lucene整理，对lucene进行整体的学习和研究，会将项目中的部分源码分享目的为了便于分析！<br>渐渐的发现很多技术由于长时间没有再次接触很快就能忘记，汗～<br>反思：再忙也不能忘记更新博客，笨～</p>
-<hr>
-<p><code>go ~ ~ ~ ~ ~ ~</code></p>
+		<h2 id="简介">简介</h2><p>Lucene 是一个基于 Java 的全文信息检索工具包，它不是一个完整的搜索应用程序，而是为你的应用程序提供索引和搜索功能。Lucene 目前是 Apache Jakarta 家族中的一个开源项目。也是目前最为流行的基于 Java 开源全文检索工具包。</p>
+<p><img src="https://www.ibm.com/developerworks/cn/java/j-lo-lucene1/fig001.jpg" alt="lucene结构"></p>
+<h2 id="索引和搜索">索引和搜索</h2><p>索引和搜索<br>索引是现代搜索引擎的核心，建立索引的过程就是把源数据处理成非常方便查询的索引文件的过程。为什么索引这么重要呢，试想你现在要在大量的文档中搜索含有某个关键词的文档，那么如果不建立索引的话你就需要把这些文档顺序的读入内存，然后检查这个文章中是不是含有要查找的关键词，这样的话就会耗费非常多的时间，想想搜索引擎可是在毫秒级的时间内查找出要搜索的结果的。这就是由于建立了索引的原因，你可以把索引想象成这样一种数据结构，他能够使你快速的随机访问存储在索引中的关键词，进而找到该关键词所关联的文档。Lucene采用的是一种称为<code>反向索引（inverted index）的机制</code>。反向索引就是说我们维护了一个词 / 短语表，对于这个表中的每个词 / 短语，都有一个链表描述了有哪些文档包含了这个词 / 短语。这样在用户输入查询条件的时候，就能非常快的得到搜索结果<br>对文档建立好索引后，就可以在这些索引上面进行搜索了。搜索引擎首先会对搜索的关键词进行解析，然后再在建立好的索引上面进行查找，最终返回和用户输入的关键词相关联的文档。</p>
+<h2 id="建立索引">建立索引</h2><h3 id="Document">Document</h3><p>Document 是用来描述文档的，这里的文档可以指一个 HTML 页面，一封电子邮件，或者是一个文本文件。一个 Document 对象由多个 Field 对象组成的。可以把一个 Document 对象想象成数据库中的一个记录，而每个 Field 对象就是记录的一个字段。</p>
+<h3 id="Field">Field</h3><p>Field 对象是用来描述一个文档的某个属性的，比如一封电子邮件的标题和内容可以用两个 Field 对象分别描述。</p>
+<h3 id="Analyzer">Analyzer</h3><p>在一个文档被索引之前，首先需要对文档内容进行分词处理，这部分工作就是由 Analyzer 来做的。Analyzer类是一个抽象类，它有多个实现。针对不同的语言和应用需要选择适合的 Analyzer。Analyzer 把分词后的内容交给 IndexWriter来建立索引。</p>
+<h3 id="IndexWriter">IndexWriter</h3><p>IndexWriter 是 Lucene 用来创建索引的一个核心的类，他的作用是把一个个的 Document 对象加到索引中来。</p>
+<h3 id="Directory">Directory</h3><p>这个类代表了 Lucene 的索引的存储的位置，这是一个抽象类，它目前有两个实现，第一个是 FSDirectory，它表示一个存储在文件系统中的索引的位置。第二个是 RAMDirectory，它表示一个存储在内存当中的索引的位置。</p>
+<h2 id="搜索">搜索</h2><h3 id="Query">Query</h3><p>这是一个抽象类，他有多个实现，比如 TermQuery, BooleanQuery, PrefixQuery. 这个类的目的是把用户输入的查询字符串封装成 Lucene 能够识别的 Query。</p>
+<h3 id="Term">Term</h3><p>Term 是搜索的基本单位，一个 Term 对象有两个 String 类型的域组成。生成一个 Term 对象可以有如下一条语句来完成：<br><figure class="highlight"><figcaption><span>term = new Term(“fieldName”,”queryWord”);```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#20854;&#20013;&#31532;&#19968;&#20010;&#21442;&#25968;&#20195;&#34920;&#20102;&#35201;&#22312;&#25991;&#26723;&#30340;&#21738;&#19968;&#20010; Field &#19978;&#36827;&#34892;&#26597;&#25214;&#65292;&#31532;&#20108;&#20010;&#21442;&#25968;&#20195;&#34920;&#20102;&#35201;&#26597;&#35810;&#30340;&#20851;&#38190;&#35789;&#12290;&#10;###TermQuery&#10;TermQuery &#26159;&#25277;&#35937;&#31867; Query &#30340;&#19968;&#20010;&#23376;&#31867;&#65292;&#23427;&#21516;&#26102;&#20063;&#26159; Lucene &#25903;&#25345;&#30340;&#26368;&#20026;&#22522;&#26412;&#30340;&#19968;&#20010;&#26597;&#35810;&#31867;&#12290;&#29983;&#25104;&#19968;&#20010; TermQuery &#23545;&#35937;&#30001;&#22914;&#19979;&#35821;&#21477;&#23436;&#25104;&#65306;&#10;&#10;```TermQuery termQuery = new TermQuery(new Term(&#8220;fieldName&#8221;,&#8221;queryWord&#8221;));</span><br></pre></td></tr></table></figure></p>
+<p>它的构造函数只接受一个参数，那就是一个 Term 对象。</p>
+<h3 id="IndexSearcher">IndexSearcher</h3><p>IndexSearcher 是用来在建立好的索引上进行搜索的。它只能以只读的方式打开一个索引，所以可以有多个 IndexSearcher 的实例在一个索引上进行操作,如。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">FSDirectory</span> directory = FSDirectory.getDirectory(indexDir,<span class="built_in">false</span>); </span><br><span class="line"><span class="title">IndexSearcher</span> searcher = new IndexSearcher(directory);</span><br></pre></td></tr></table></figure></p>
+<h3 id="Hits">Hits</h3><p>Hits 是用来保存搜索的结果的。<code>hits.doc()</code>获得文档<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Hits hits = searcher.search(luceneQuery); </span><br><span class="line"><span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; hits.length(); i++)&#123; </span><br><span class="line">    Document <span class="built_in">document</span> = hits.doc(i); </span><br><span class="line">    System.out.println(<span class="built_in">document</span>.<span class="literal">get</span>(<span class="string">""</span>)); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
   
 	</div>
 		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/lucene，搜索/">lucene，搜索</a>
+  </div>
 
 
 <div class="article-categories">
@@ -268,7 +283,7 @@ go ">
 
 <div class="article-share" id="share">
 
-  <div data-url="http://donahue-ldz.github.io/2015/03/13/lucene开篇/" data-title="lucene开篇 | 心缘冰河" data-tsina="null" class="share clearfix">
+  <div data-url="http://donahue-ldz.github.io/2015/03/13/lucene基础/" data-title="lucene基础 | 心缘冰河" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -277,19 +292,11 @@ go ">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/03/13/lucene基础/" title="lucene基础">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  lucene基础</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/02/15/MarkDown语法入门/"  title="MarkDown语法入门">
+<a href="/2015/03/13/lucene开篇/"  title="lucene开篇">
  <strong>NEXT:</strong><br/> 
- <span>MarkDown语法入门
+ <span>lucene开篇
 </span>
 </a>
 </div>
@@ -299,7 +306,7 @@ go ">
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="lucene开篇" data-thread-key="lucene开篇" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/lucene开篇"></div>
+	<div class="ds-thread" data-title="lucene基础" data-thread-key="lucene基础" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/lucene基础"></div>
 	
 </section>
 
@@ -309,7 +316,7 @@ go ">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引和搜索"><span class="toc-number">2.</span> <span class="toc-text">索引和搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立索引"><span class="toc-number">3.</span> <span class="toc-text">建立索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Document"><span class="toc-number">3.1.</span> <span class="toc-text">Document</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Field"><span class="toc-number">3.2.</span> <span class="toc-text">Field</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analyzer"><span class="toc-number">3.3.</span> <span class="toc-text">Analyzer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IndexWriter"><span class="toc-number">3.4.</span> <span class="toc-text">IndexWriter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Directory"><span class="toc-number">3.5.</span> <span class="toc-text">Directory</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索"><span class="toc-number">4.</span> <span class="toc-text">搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Query"><span class="toc-number">4.1.</span> <span class="toc-text">Query</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Term"><span class="toc-number">4.2.</span> <span class="toc-text">Term</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IndexSearcher"><span class="toc-number">4.3.</span> <span class="toc-text">IndexSearcher</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hits"><span class="toc-number">4.4.</span> <span class="toc-text">Hits</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
