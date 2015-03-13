@@ -4,7 +4,7 @@
   <subtitle><![CDATA[写出我人生,coding]]></subtitle>
   <link href="//atom.xml" rel="self"/>
   <link href="http://donahue-ldz.github.io/"/>
-  <updated>2015-03-13T12:35:22.000Z</updated>
+  <updated>2015-03-13T12:36:22.000Z</updated>
   <id>http://donahue-ldz.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://donahue-ldz.github.io/2015/03/13/lucene%E5%9F%BA%E7%A1%80/"/>
     <id>http://donahue-ldz.github.io/2015/03/13/lucene基础/</id>
     <published>2015-03-13T12:29:02.000Z</published>
-    <updated>2015-03-13T12:35:22.000Z</updated>
+    <updated>2015-03-13T12:36:22.000Z</updated>
     <content type="html"><![CDATA[<h2 id="简介">简介</h2><p>Lucene 是一个基于 Java 的全文信息检索工具包，它不是一个完整的搜索应用程序，而是为你的应用程序提供索引和搜索功能。Lucene 目前是 Apache Jakarta 家族中的一个开源项目。也是目前最为流行的基于 Java 开源全文检索工具包。</p>
 <p><img src="https://www.ibm.com/developerworks/cn/java/j-lo-lucene1/fig001.jpg" alt="lucene结构"></p>
 <h2 id="索引和搜索">索引和搜索</h2><p>索引和搜索<br>索引是现代搜索引擎的核心，建立索引的过程就是把源数据处理成非常方便查询的索引文件的过程。为什么索引这么重要呢，试想你现在要在大量的文档中搜索含有某个关键词的文档，那么如果不建立索引的话你就需要把这些文档顺序的读入内存，然后检查这个文章中是不是含有要查找的关键词，这样的话就会耗费非常多的时间，想想搜索引擎可是在毫秒级的时间内查找出要搜索的结果的。这就是由于建立了索引的原因，你可以把索引想象成这样一种数据结构，他能够使你快速的随机访问存储在索引中的关键词，进而找到该关键词所关联的文档。Lucene采用的是一种称为<code>反向索引（inverted index）的机制</code>。反向索引就是说我们维护了一个词 / 短语表，对于这个表中的每个词 / 短语，都有一个链表描述了有哪些文档包含了这个词 / 短语。这样在用户输入查询条件的时候，就能非常快的得到搜索结果<br>对文档建立好索引后，就可以在这些索引上面进行搜索了。搜索引擎首先会对搜索的关键词进行解析，然后再在建立好的索引上面进行查找，最终返回和用户输入的关键词相关联的文档。</p>
