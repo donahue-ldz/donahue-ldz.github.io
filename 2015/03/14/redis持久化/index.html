@@ -17,7 +17,8 @@
 
 如果你没有数据持久化的需求，也完全可以关闭RDB和AOF方式，这样的话，redis将变成一个纯内存数据库，就像memcache一样。
 
-redis持久化 –">
+
+redis持久化 ">
     
     
     
@@ -233,7 +234,7 @@ redis持久化 –">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/14/redis持久化RDB和AOF/" title="redis持久化RDB和AOF" itemprop="url">redis持久化RDB和AOF</a>
+      <a href="/2015/03/14/redis持久化/" title="redis持久化RDB和AOF" itemprop="url">redis持久化RDB和AOF</a>
   </h1>
   <p class="article-author">By
     
@@ -241,7 +242,7 @@ redis持久化 –">
     </p>
   <p class="article-time">
     <time datetime="2015-03-14T12:14:23.000Z" itemprop="datePublished">Mar 14 2015</time>
-    更新日期:<time datetime="2015-03-14T12:21:10.000Z" itemprop="dateModified">Mar 14 2015</time>
+    更新日期:<time datetime="2015-03-14T12:23:43.000Z" itemprop="dateModified">Mar 14 2015</time>
     
   </p>
 </header>
@@ -257,6 +258,7 @@ redis持久化 –">
 <blockquote>
 <p>如果你没有数据持久化的需求，也完全可以关闭RDB和AOF方式，这样的话，redis将变成一个纯内存数据库，就像memcache一样。</p>
 </blockquote>
+<hr>
 <h3 id="redis持久化_–_RDB">redis持久化 – RDB</h3><p>RDB方式，是将redis某一时刻的数据持久化到磁盘中，是一种快照式的持久化方法。</p>
 <p>redis在进行数据持久化的过程中，会先将数据写入到一个临时文件中，待持久化过程都结束了，才会用这个临时文件替换上次持久化好的文件。正是这种特性，让我们可以随时来进行备份，因为快照文件总是完整可用的。</p>
 <blockquote>
@@ -264,6 +266,7 @@ redis持久化 –">
 </blockquote>
 <p>如果需要进行大规模数据的恢复，且对于数据恢复的完整性不是非常敏感，那RDB方式要比AOF方式更加的高效。</p>
 <p>虽然RDB有不少优点，但它的缺点也是不容忽视的。如果你对数据的完整性非常敏感，那么RDB方式就不太适合你，因为即使你每5分钟都持久化一次，当redis故障时，仍然会有近5分钟的数据丢失。所以，redis还提供了另一种持久化方式，那就是AOF。</p>
+<hr>
 <h3 id="redis持久化_–_AOF">redis持久化 – AOF</h3><p>AOF，英文是Append Only File，即只允许追加不允许改写的文件。</p>
 <p>如前面介绍的，AOF方式是将执行过的写指令记录下来，在数据恢复时按照从前到后的顺序再将指令都执行一遍，就这么简单。</p>
 <p>我们通过配置redis.conf中的appendonly yes就可以打开AOF功能。如果有写操作（如SET等），redis就会被追加到AOF文件的末尾。</p>
@@ -280,10 +283,12 @@ redis持久化 –">
 <blockquote>
 <p>备份被写坏的AOF文件<br>运行redis-check-aof –fix进行修复<br>用diff -u来看下两个文件的差异，确认问题点<br>重启redis，加载修复后的AOF文件</p>
 </blockquote>
+<hr>
 <h3 id="redis持久化_–_AOF重写">redis持久化 – AOF重写</h3><p>在重写即将开始之际，redis会创建（fork）一个“重写子进程”，这个子进程会首先读取现有的AOF文件，并将其包含的指令进行分析压缩并写入到一个临时文件中。</p>
 <p>与此同时，主工作进程会将新接收到的写指令一边累积到内存缓冲区中，一边继续写入到原有的AOF文件中，这样做是保证原有的AOF文件的可用性，避免在重写过程中出现意外。</p>
 <p>当“重写子进程”完成重写工作后，它会给父进程发一个信号，父进程收到信号后就会将内存中缓存的写指令追加到新AOF文件中。</p>
 <p>当追加结束后，redis就会用新AOF文件来代替旧AOF文件，之后再有新的写指令，就都会追加到新的AOF文件中了。</p>
+<hr>
 <h3 id="如何选择RDB和AOF">如何选择RDB和AOF</h3><p>对于我们应该选择RDB还是AOF，官方的建议是两个同时使用。这样可以提供更可靠的持久化方案。</p>
   
 	</div>
@@ -304,7 +309,7 @@ redis持久化 –">
 
 <div class="article-share" id="share">
 
-  <div data-url="http://donahue-ldz.github.io/2015/03/14/redis持久化RDB和AOF/" data-title="redis持久化RDB和AOF | 心缘冰河" data-tsina="null" class="share clearfix">
+  <div data-url="http://donahue-ldz.github.io/2015/03/14/redis持久化/" data-title="redis持久化RDB和AOF | 心缘冰河" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -327,7 +332,7 @@ redis持久化 –">
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="redis持久化RDB和AOF" data-thread-key="redis持久化RDB和AOF" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/redis持久化RDB和AOF"></div>
+	<div class="ds-thread" data-title="redis持久化RDB和AOF" data-thread-key="redis持久化" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/redis持久化"></div>
 	
 </section>
 
