@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://donahue-ldz.github.io/2015/03/14/redis%E6%8C%81%E4%B9%85%E5%8C%96RDB%E5%92%8CAOF/</loc>
+    <lastmod>2015-03-14T12:21:10.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://donahue-ldz.github.io/2015/03/13/lucene%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2015-03-13T12:39:07.000Z</lastmod>
   </url>
