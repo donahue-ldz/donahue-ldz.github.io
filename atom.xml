@@ -4,7 +4,7 @@
   <subtitle><![CDATA[写出我人生,coding]]></subtitle>
   <link href="//atom.xml" rel="self"/>
   <link href="http://donahue-ldz.github.io/"/>
-  <updated>2015-03-14T12:23:43.000Z</updated>
+  <updated>2015-03-14T12:24:58.000Z</updated>
   <id>http://donahue-ldz.github.io/</id>
   
   <author>
@@ -15,11 +15,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title><![CDATA[redis持久化RDB和AOF]]></title>
+    <title><![CDATA[redis持久化]]></title>
     <link href="http://donahue-ldz.github.io/2015/03/14/redis%E6%8C%81%E4%B9%85%E5%8C%96/"/>
     <id>http://donahue-ldz.github.io/2015/03/14/redis持久化/</id>
     <published>2015-03-14T12:14:23.000Z</published>
-    <updated>2015-03-14T12:23:43.000Z</updated>
+    <updated>2015-03-14T12:24:58.000Z</updated>
     <content type="html"><![CDATA[<h2 id="redis持久化">redis持久化</h2><p>redis提供了两种持久化的方式，分别是RDB（Redis DataBase）和AOF（Append Only File）。</p>
 <blockquote>
 <p>如果你没有数据持久化的需求，也完全可以关闭RDB和AOF方式，这样的话，redis将变成一个纯内存数据库，就像memcache一样。</p>
