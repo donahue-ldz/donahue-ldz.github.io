@@ -265,11 +265,52 @@
   </entry>
   
   <entry>
+    <title><![CDATA[log4j常见日志级别的选用]]></title>
+    <link href="http://donahue-ldz.github.io/2015/01/17/log4j%E5%B8%B8%E8%A7%81%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB%E7%9A%84%E9%80%89%E7%94%A8/"/>
+    <id>http://donahue-ldz.github.io/2015/01/17/log4j常见日志级别的选用/</id>
+    <published>2015-01-17T05:24:44.000Z</published>
+    <updated>2015-03-15T05:30:12.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="RootLogger">RootLogger</h2><p><code>log4j.rootLogger = [ level ] , appenderName1, appenderName2,...</code><br><code>log4j.additivity.org.apache=false</code>表示Logger不会在父Logger的appender里输出，默认为true。<br>level ：设定日志记录的最低级别，可设的值有:<br><code>OFF、FATAL、ERROR、WARN、INFO、DEBUG、ALL</code>或者自定义的级别，Log4j建议只使用中间四个级别。<strong>通过在这里设定级别</strong>，您可以控制应用程序中相应级别的日志信息的开关，比如在这里设定了INFO级别，则应用程序中所有DEBUG级别的日志信息将不会被打印出来。<br>appenderName：就是指定日志信息要输出到哪里。可以同时指定多个输出目的地，用逗号隔开。<br>具体详见：<a href="http://donahue-ldz.github.io/2015/01/05/%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95/" target="_blank" rel="external">日志记录</a></p>
+<hr>
+<blockquote>
+<p>这里主要针对什么时候选择相关的打印级别帮助系统能很好运行做简单介绍</p>
+</blockquote>
+<hr>
+<h2 id="日志级别">日志级别</h2><h3 id="ERROR">ERROR</h3><p>系统发生了严重的错误, 必须马上进行处理, 否则系统将无法继续运行. 比如数据库不可用等</p>
+<h3 id="WARN">WARN</h3><p>系统能继续运行, 但是必须引起关注. 对于存在的问题一般可以分为两类: 一种系统存在明显的问题(比如, 数据不可用),另一种就是系统存在潜在的问题, 需要引起注意或者给出一些建议(比如,系统运行在安全模式或者访问当前系统的账号存在安全隐患). 总之就是系统仍然可用, 但是最好进行检查和调整。</p>
+<h3 id="INFO">INFO</h3><p>重要的业务逻辑处理完成。在理想情况下,INFO的日志信息要能让高级用户和系统管理员理解, 并从日志信息中能知道系统当前的运行状态。理解系统的运行状态和流程…</p>
+<h3 id="DEBUG">DEBUG</h3><p>主要用于调试、测试时使用，一般是在程序中不是非常重要的地方,这部分的日志较多，但是在线上运行时我们一般会将日志级别设置为INFO，避免DEBUG日志过多影响性。</p>
+<h3 id="TRACE">TRACE</h3><p>系统详细信息, 主要给开发人员用,一般来说,如果是线上系统的话,可以认为是临时输出, 而且随时可以通过开关将其关闭.有时候我们很难将DEBUG和TRACE区分开, 一般情况下, 如果是一个已经开发测试完成的系统,再往系统中添加日志输出, 那么应该设为TRACE级别。</p>
+<h2 id="日志的好处">日志的好处</h2><p>帮助分析了解系统运行</p>
+<h2 id="日志缺点">日志缺点</h2><p>打印日志将会降低程序的性能和响应，尤其是在高并发等实时相应的系统中</p>
+<h2 id="日志输出原则">日志输出原则</h2><p>Log4j建议只使用四个级别，优先级从高到低分别是 ERROR、WARN、INFO、DEBUG。通过在这里定义的级别，您可以控制到应用程序中相应级别的日志信息的开关。</p>
+<ul>
+<li>对程序的输入输出要以DEBUG记录下来，常包括从文件、数据库、网络、用户等输入的信息，向文件、数据库、网络输出的信息。</li>
+<li>对重要对象或程序状态的修改，要以INFO记录修改前的信息和修改后的状态。</li>
+<li>不能忽视每个调用错误，异常日志的内容要能清晰描述运行上下文，这样有助于排查错误，输出异常日志时，第一个参数一定是一个字符串,一般都是对问题的描述信息, 而不能是异常message(因为堆栈里面会有),第二个参数才是具体的异常实例. 例如：log.error(“导入数据失败，错误信息为：”, e) 。</li>
+<li>记下打印信息时所在的文件名和函数名（必须能区分开重载函数）,有行数最好。</li>
+<li>对于高并发系统，能不打印日志就不打印日志，输出的日志数量、级别、内容都要经过评估，避免日志输出影响性能,可以采用初期上线时多打印一些日志，上线运行一段时间后，通过观察方法调用次数，响应性能来决定减少那些日志的打印或者改变打印日志的级别。</li>
+<li>对于异常日志的内容要能清晰描述运行上下文，这样有助于排查错误。 </li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="RootLogger">RootLogger</h2><p><code>log4j.rootLogger = [ level ] , appenderName1, appenderName2,...</code><br><code>log4j.additivity]]>
+    </summary>
+    
+      <category term="log4j" scheme="http://donahue-ldz.github.io/tags/log4j/"/>
+    
+      <category term="日志" scheme="http://donahue-ldz.github.io/tags/%E6%97%A5%E5%BF%97/"/>
+    
+      <category term="log" scheme="http://donahue-ldz.github.io/categories/log/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[log4j常见配置]]></title>
     <link href="http://donahue-ldz.github.io/2015/01/15/log4j%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/"/>
     <id>http://donahue-ldz.github.io/2015/01/15/log4j常见配置/</id>
     <published>2015-01-15T07:27:41.000Z</published>
-    <updated>2015-03-07T05:15:56.000Z</updated>
+    <updated>2015-03-15T05:30:18.000Z</updated>
     <content type="html"><![CDATA[<h2 id="xml类型的配置">xml类型的配置</h2><p>Log4j配置文件实现了输出到控制台、文件、固定大小文件、发送日志邮件、输出到数据库日志表、自定义标签等全套功能。 </p>
 <pre><code><span class="pi">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>  
 <span class="doctype">&lt;!DOCTYPE log4j:configuration SYSTEM "log4j.dtd"&gt;</span>  
@@ -427,7 +468,7 @@ log4j<span class="class">.appender</span><span class="class">.im</span><span cla
     
       <category term="log4j配置" scheme="http://donahue-ldz.github.io/tags/log4j%E9%85%8D%E7%BD%AE/"/>
     
-      <category term="java" scheme="http://donahue-ldz.github.io/categories/java/"/>
+      <category term="log" scheme="http://donahue-ldz.github.io/categories/log/"/>
     
   </entry>
   
@@ -436,7 +477,7 @@ log4j<span class="class">.appender</span><span class="class">.im</span><span cla
     <link href="http://donahue-ldz.github.io/2015/01/05/%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95/"/>
     <id>http://donahue-ldz.github.io/2015/01/05/日志记录/</id>
     <published>2015-01-05T06:42:11.000Z</published>
-    <updated>2015-03-07T05:15:56.000Z</updated>
+    <updated>2015-03-15T05:30:37.000Z</updated>
     <content type="html"><![CDATA[<h2 id="日志服务">日志服务</h2><p>三个目的 ：</p>
 <ul>
 <li>监视代码中变量的变化情况，周期性的记录到文件中供其他应用进行统计分析工作</li>
@@ -492,7 +533,7 @@ log4j<span class="class">.appender</span><span class="class">.im</span><span cla
     
       <category term="日志记录" scheme="http://donahue-ldz.github.io/tags/%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95/"/>
     
-      <category term="java" scheme="http://donahue-ldz.github.io/categories/java/"/>
+      <category term="log" scheme="http://donahue-ldz.github.io/categories/log/"/>
     
   </entry>
   
