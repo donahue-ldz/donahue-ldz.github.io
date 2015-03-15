@@ -1,0 +1,623 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu-site-verification" content="qig9fkyLqw" />
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>spring多事务管理 | 心缘冰河</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="donahue">
+    
+    <meta name="description" content="最近在梳理项目的时候对事务控制进行了梳理，深入了解了spring的事务，结合相关资料整理如下
+
+Spring抽象的DAO体系兼容多种数据访问技术，它们各有特色，各有千秋。像Hibernate是非常优秀的ORM实现方案，但对底层SQL的控制不太方便；而iBatis则通过模板化技术让你方便地控制SQL，">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="心缘冰河" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="心缘冰河">心缘冰河</a></h1>
+				<a class="blog-motto">写出我人生,coding</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					
+					<li> <a title="把这个链接拖到你的Chrome收藏夹工具栏中" href='javascript:(function() {
+	function c() {
+		var e = document.createElement("link");
+		e.setAttribute("type", "text/css");
+		e.setAttribute("rel", "stylesheet");
+		e.setAttribute("href", f);
+		e.setAttribute("class", l);
+		document.body.appendChild(e)
+	}
+ 
+	function h() {
+		var e = document.getElementsByClassName(l);
+		for (var t = 0; t < e.length; t++) {
+			document.body.removeChild(e[t])
+		}
+	}
+ 
+	function p() {
+		var e = document.createElement("div");
+		e.setAttribute("class", a);
+		document.body.appendChild(e);
+		setTimeout(function() {
+			document.body.removeChild(e)
+		}, 100)
+	}
+ 
+	function d(e) {
+		return {
+			height : e.offsetHeight,
+			width : e.offsetWidth
+		}
+	}
+ 
+	function v(i) {
+		var s = d(i);
+		return s.height > e && s.height < n && s.width > t && s.width < r
+	}
+ 
+	function m(e) {
+		var t = e;
+		var n = 0;
+		while (!!t) {
+			n += t.offsetTop;
+			t = t.offsetParent
+		}
+		return n
+	}
+ 
+	function g() {
+		var e = document.documentElement;
+		if (!!window.innerWidth) {
+			return window.innerHeight
+		} else if (e && !isNaN(e.clientHeight)) {
+			return e.clientHeight
+		}
+		return 0
+	}
+ 
+	function y() {
+		if (window.pageYOffset) {
+			return window.pageYOffset
+		}
+		return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+	}
+ 
+	function E(e) {
+		var t = m(e);
+		return t >= w && t <= b + w
+	}
+ 
+	function S() {
+		var e = document.createElement("audio");
+		e.setAttribute("class", l);
+		e.src = i;
+		e.loop = false;
+		e.addEventListener("canplay", function() {
+			setTimeout(function() {
+				x(k)
+			}, 500);
+			setTimeout(function() {
+				N();
+				p();
+				for (var e = 0; e < O.length; e++) {
+					T(O[e])
+				}
+			}, 15500)
+		}, true);
+		e.addEventListener("ended", function() {
+			N();
+			h()
+		}, true);
+		e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+		document.body.appendChild(e);
+		e.play()
+	}
+ 
+	function x(e) {
+		e.className += " " + s + " " + o
+	}
+ 
+	function T(e) {
+		e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+	}
+ 
+	function N() {
+		var e = document.getElementsByClassName(s);
+		var t = new RegExp("\\b" + s + "\\b");
+		for (var n = 0; n < e.length; ) {
+			e[n].className = e[n].className.replace(t, "")
+		}
+	}
+ 
+	var e = 30;
+	var t = 30;
+	var n = 350;
+	var r = 350;
+	var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+	var s = "mw-harlem_shake_me";
+	var o = "im_first";
+	var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+	var a = "mw-strobe_light";
+	var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+	var l = "mw_added_css";
+	var b = g();
+	var w = y();
+	var C = document.getElementsByTagName("*");
+	var k = null;
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			if (E(A)) {
+				k = A;
+				break
+			}
+		}
+	}
+	if (A === null) {
+		console.warn("Could not find a node of the right size. Please try a different page.");
+		return
+	}
+	c();
+	S();
+	var O = [];
+	for (var L = 0; L < C.length; L++) {
+		var A = C[L];
+		if (v(A)) {
+			O.push(A)
+		}
+	}
+})()    '>High一下</a> </li>
+					<li>
+					
+					<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" autocomplete="off" name="q" maxlength="20" placeholder="搜索" />
+					</form>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/03/15/spring多事务管理/" title="spring多事务管理" itemprop="url">spring多事务管理</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://donahue-ldz.github.io" title="donahue">donahue</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-03-15T02:01:36.000Z" itemprop="datePublished">Mar 15 2015</time>
+    更新日期:<time datetime="2015-03-15T02:16:11.000Z" itemprop="dateModified">Mar 15 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>最近在梳理项目的时候对事务控制进行了梳理，深入了解了spring的事务，结合相关资料整理如下</p>
+<hr>
+<p>Spring抽象的DAO体系兼容多种数据访问技术，它们各有特色，各有千秋。像Hibernate是非常优秀的ORM实现方案，但对底层SQL的控制不太方便；而iBatis则通过模板化技术让你方便地控制SQL，但没有Hibernate那样高的开发效率；自由度最高的当然是直接使用SpringJDBC了，但它也是底层的，灵活的代价是代码的繁复。很难说哪种数据访问技术是最优秀的，只有在某种特定的场景下才能给出答案。</p>
+<blockquote>
+<p>所以在一个应用中，往往采用多个数据访问技术：一般是两种，一种采用ORM技术框架，而另一种采用偏JDBC的底层技术，两者珠联璧合，形成联合军种，共同御敌。 </p>
+</blockquote>
+<p>但是，这种联合军种如何应对事务管理的问题呢？我们知道Spring为每种数据访问技术提供了相应的事务管理器，难道需要分别为它们配置对应的事务管理器吗？它们到底是如何协作和工作的呢？这些层出不穷的问题往往压制了开发人员使用联合军种的想法。<br>其实，在这个问题上，我们低估了Spring事务管理的能力。如果你采用了一个高端ORM技术（Hibernate、JPA、JDO），同时采用一个JDBC技术（Spring JDBC、iBatis），由于前者的会话（Session）是对后者连接（Connection）的封装，Spring会“足够智能地”在同一个事务线程让前者的会话封装后者的连接。所以，我们只要直接采用前者的事务管理器就可以了。</p>
+<blockquote>
+<p>组合: Hibernate+ Spring JDBC或iBatis<br>事务管理: org.springframework.orm.hibernate3.HibernateTransactionManager</p>
+<p>组合: JPA+Spring JDBC或iBatis<br>事务管理: org.springframework.orm.jpa.JpaTransactionManager</p>
+<p>组合：JDO+Spring JDBC或iBatis<br>事务管理：org.springframework.orm.jdo.JdoTransactionManager</p>
+</blockquote>
+<hr>
+<p>举例：<br><code>Hibernate+Spring JDBC混合框架的事务管理</code>                </p>
+<p>由于一般不会出现同时使用多个ORM框架的情况（如Hibernate+JPA），我们不拟对此命题展开论述，只重点研究ORM框架+JDBC框架的情况。Hibernate+Spring JDBC可能是被使用得最多的组合，本节我们通过实例观察事务管理的运作情况。<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@Service</span>(<span class="string">"userService"</span>)  </span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">UserService</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">BaseService</span> &#123;</span>  </span><br><span class="line">    <span class="annotation">@Autowired</span>  </span><br><span class="line">    <span class="keyword">private</span> <span class="type">HibernateTemplate</span> hibernateTemplate;  </span><br><span class="line">  </span><br><span class="line">    <span class="annotation">@Autowired</span>  </span><br><span class="line">    <span class="keyword">private</span> <span class="type">ScoreService</span> scoreService;  </span><br><span class="line">  </span><br><span class="line">    public void logon(<span class="type">String</span> userName) &#123;  </span><br><span class="line">         </span><br><span class="line">        <span class="comment">//①通过Hibernate技术访问数据  </span></span><br><span class="line">        <span class="type">System</span>.out.println(<span class="string">"before updateLastLogonTime().."</span>);  </span><br><span class="line">        updateLastLogonTime(userName);  </span><br><span class="line">        <span class="type">System</span>.out.println(<span class="string">"end updateLastLogonTime().."</span>);  </span><br><span class="line">          </span><br><span class="line">        <span class="comment">//②通过JDBC技术访问数据  </span></span><br><span class="line">        <span class="type">System</span>.out.println(<span class="string">"before scoreService.addScore().."</span>);  </span><br><span class="line">        scoreService.addScore(userName, <span class="number">20</span>);  </span><br><span class="line">        <span class="type">System</span>.out.println(<span class="string">"end scoreService.addScore().."</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    public void updateLastLogonTime(<span class="type">String</span> userName) &#123;  </span><br><span class="line">        <span class="type">User</span> user = hibernateTemplate.get(<span class="type">User</span>.<span class="keyword">class</span>,userName);  </span><br><span class="line">        user.setLastLogonTime(<span class="type">System</span>.currentTimeMillis());  </span><br><span class="line">        hibernateTemplate.update(user);  </span><br><span class="line">  </span><br><span class="line">        <span class="comment">//③这句很重要，请看下文的分析  </span></span><br><span class="line">        hibernateTemplate.flush();  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>①处，使用Hibernate操作数据<br>②处调用ScoreService#addScore()，该方法内部使用Spring JDBC操作数据。<br>③处，我们显式调用了flush()方法，将Session中的缓存同步到数据库中（即马上向数据库发送一条更新记录的SQL语句）。之所以要显式执行flush()方法，原因是在默认情况下，Hibernate对数据的更改只是记录在一级缓存中，要等到事务提交或显式调用flush()方法时才会将一级缓存中的数据同步到数据库中，而提交事务的操作发生在logon()方法返回前。如果所有针对数据库的更改操作都使用Hibernate，这种数据同步的延迟机制并不会产生任何问题。但是，我们在logon()方法中同时采用了Hibernate和SpringJDBC混合数据访问技术，Spring JDBC无法自动感知Hibernate一级缓存，所以如果不及时调用flush()方法将记录数据更改的一级缓存同步到数据库中，则②处通过SpringJDBC进行数据更改的结果将被Hibernate一级缓存中的更改覆盖掉，因为Hibernate一级缓存要等到logon()方法返回前才同步到数据库！<br>ScoreService使用Spring JDBC数据访问技术，其代码如下所示：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.<span class="type">Autowired</span>;  </span><br><span class="line"><span class="keyword">import</span> org.springframework.jdbc.core.<span class="type">JdbcTemplate</span>;  </span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.<span class="type">Service</span>;  </span><br><span class="line"><span class="keyword">import</span> org.apache.commons.dbcp.<span class="type">BasicDataSource</span>;  </span><br><span class="line">  </span><br><span class="line"><span class="annotation">@Service</span>(<span class="string">"scoreService"</span>)  </span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ScoreService</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">BaseService</span>&#123;</span>  </span><br><span class="line">  </span><br><span class="line">    <span class="annotation">@Autowired</span>  </span><br><span class="line">    <span class="keyword">private</span> <span class="type">JdbcTemplate</span> jdbcTemplate;  </span><br><span class="line">  </span><br><span class="line">    public void addScore(<span class="type">String</span> userName, int toAdd) &#123;  </span><br><span class="line">        <span class="type">String</span> sql = <span class="string">"UPDATE t_user u SET u.score = u.score + ? WHERE user_name =?"</span>;  </span><br><span class="line">        jdbcTemplate.update(sql, toAdd, userName);  </span><br><span class="line">        <span class="type">BasicDataSource</span> basicDataSource = (<span class="type">BasicDataSource</span>) jdbcTemplate.getDataSource();  </span><br><span class="line">        <span class="comment">//①查看此处数据库激活的连接数量  </span></span><br><span class="line">        <span class="type">System</span>.out.println(<span class="string">"[scoreUserService.addScore]激活连接数量："</span>  </span><br><span class="line">                         +basicDataSource.getNumActive());  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Spring关键的配置文件代码如下所示：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--①使用<span class="type">Hibernate</span>事务管理器 --&gt;  </span><br><span class="line">&lt;bean id=<span class="string">"hiberManager"</span>  </span><br><span class="line">      class=<span class="string">"org.springframework.orm.hibernate3.HibernateTransactionManager"</span>  </span><br><span class="line">      p:sessionFactory-<span class="keyword">ref</span>=<span class="string">"sessionFactory"</span>/&gt;  </span><br><span class="line">  </span><br><span class="line">&lt;!--②使<span class="type">UserService</span>及<span class="type">ScoreService</span>的公用方法都拥有事务 --&gt;  </span><br><span class="line">&lt;aop:config proxy-target-class=<span class="string">"true"</span>&gt;  </span><br><span class="line">    &lt;aop:pointcut id=<span class="string">"serviceJdbcMethod"</span>  </span><br><span class="line">                  expression=<span class="string">"within(com.baobaotao.mixdao.BaseService+)"</span>/&gt;  </span><br><span class="line">    &lt;aop:advisor pointcut-<span class="keyword">ref</span>=<span class="string">"serviceJdbcMethod"</span>  </span><br><span class="line">                 advice-<span class="keyword">ref</span>=<span class="string">"hiberAdvice"</span>/&gt;  </span><br><span class="line">&lt;/aop:config&gt;  </span><br><span class="line">&lt;tx:advice id=<span class="string">"hiberAdvice"</span> transaction-manager=<span class="string">"hiberManager"</span>&gt;  </span><br><span class="line">    &lt;tx:attributes&gt;  </span><br><span class="line">        &lt;tx:<span class="keyword">method</span> name=<span class="string">"*"</span>/&gt;  </span><br><span class="line">    &lt;/tx:attributes&gt;  </span><br><span class="line">&lt;/tx:advice&gt;  </span><br><span class="line">  </span><br><span class="line">/beans&gt;</span><br></pre></td></tr></table></figure></p>
+<p>启动Spring容器，执行UserService#logon()方法，可以查看到如下的执行日志：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">before userService.logon().. </span><br><span class="line"></span><br><span class="line">①在执行userService.logon()后，Spring开启一个事务 </span><br><span class="line">Creating new transaction with name [com.baobaotao.mixdao.UserService.logon]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT </span><br><span class="line">opened session at timestamp: 13009379637 </span><br><span class="line">Opened new Session [org.hibernate.impl.SessionImpl@c5f468] for Hibernate transaction </span><br><span class="line">… </span><br><span class="line">Exposing Hibernate transaction as JDBC transaction [jdbc:mysql://localhost:3306/sampledb, UserName=root@localhost, MySQL-AB JDBC Driver] </span><br><span class="line">before userService.updateLastLogonTime().. </span><br><span class="line"></span><br><span class="line">②userService.updateLastLogonTime()执行时自动绑定到①处开启的Session中 </span><br><span class="line">Found thread-bound Session for HibernateTemplate </span><br><span class="line">loading entity: [com.baobaotao.User#tom] </span><br><span class="line">about to open PreparedStatement (open PreparedStatements: 0, globally: 0) </span><br><span class="line">… </span><br><span class="line">about to close PreparedStatement (open PreparedStatements: 1, globally: 1) </span><br><span class="line">Not closing pre-bound Hibernate Session after HibernateTemplate </span><br><span class="line"><span class="operator"><span class="keyword">end</span> updateLastLogonTime().. </span><br><span class="line"></span><br><span class="line"><span class="keyword">before</span> scoreService.addScore().. </span><br><span class="line"></span><br><span class="line">③scoreService.addScore()执行时绑定到①处开启的<span class="keyword">Session</span>中，并加入其所对应的事务中 </span><br><span class="line"><span class="keyword">Found</span> thread-bound <span class="keyword">Session</span> [org.hibernate.impl.SessionImpl@c5f468] <span class="keyword">for</span> Hibernate </span><br><span class="line"><span class="keyword">transaction</span> </span><br><span class="line">Participating <span class="keyword">in</span> existing <span class="keyword">transaction</span> </span><br><span class="line">… </span><br><span class="line"><span class="keyword">SQL</span> <span class="keyword">update</span> affected <span class="number">1</span> <span class="keyword">rows</span> </span><br><span class="line"></span><br><span class="line">④此时数据源只打开了一个连接 </span><br><span class="line">[scoreUserService.addScore]激活连接数量：<span class="number">1</span> </span><br><span class="line"><span class="keyword">end</span> scoreService.addScore().. </span><br><span class="line">Initiating <span class="keyword">transaction</span> <span class="keyword">commit</span> </span><br><span class="line"></span><br><span class="line">⑤提交Hibernate的事务，它将触发一级缓存到数据库的同步 </span><br><span class="line">Committing Hibernate <span class="keyword">transaction</span> <span class="keyword">on</span> <span class="keyword">Session</span> [org.hibernate.impl.SessionImpl@c5f468] </span><br><span class="line"><span class="keyword">commit</span> </span><br><span class="line">processing <span class="keyword">flush</span>-<span class="keyword">time</span> cascades </span><br><span class="line">dirty checking collections </span><br><span class="line">Flushed: <span class="number">0</span> insertions, <span class="number">0</span> updates, <span class="number">0</span> deletions <span class="keyword">to</span> <span class="number">1</span> objects </span><br><span class="line">Flushed: <span class="number">0</span> (re)creations, <span class="number">0</span> updates, <span class="number">0</span> removals <span class="keyword">to</span> <span class="number">0</span> collections </span><br><span class="line">listing entities: </span><br><span class="line">com.baobaotao.<span class="keyword">User</span>&#123;lastLogonTime=<span class="number">1300937963882</span>, score=<span class="number">10</span>, userName=tom, <span class="keyword">password</span>=<span class="number">123456</span>&#125; </span><br><span class="line">re-enabling autocommit </span><br><span class="line"></span><br><span class="line">⑥提效<span class="keyword">Session</span>底层所绑定的JDBC <span class="keyword">Connection</span>所对应的事务 </span><br><span class="line">committed JDBC <span class="keyword">Connection</span> </span><br><span class="line"><span class="keyword">transaction</span> completed <span class="keyword">on</span> <span class="keyword">session</span> <span class="keyword">with</span> on_close <span class="keyword">connection</span> <span class="keyword">release</span> <span class="keyword">mode</span>;</span> be sure to close the session to <span class="operator"><span class="keyword">release</span> JDBC resources! </span><br><span class="line">Closing Hibernate <span class="keyword">Session</span> [org.hibernate.impl.SessionImpl@c5f468] <span class="keyword">after</span> <span class="keyword">transaction</span> </span><br><span class="line">Closing Hibernate <span class="keyword">Session</span> </span><br><span class="line">releasing JDBC <span class="keyword">connection</span> [ (<span class="keyword">open</span> PreparedStatements: <span class="number">0</span>, globally: <span class="number">0</span>) (<span class="keyword">open</span> ResultSets: <span class="number">0</span>, globally: <span class="number">0</span>)] </span><br><span class="line"><span class="keyword">transaction</span> completed <span class="keyword">on</span> <span class="keyword">session</span> <span class="keyword">with</span> on_close <span class="keyword">connection</span> <span class="keyword">release</span> <span class="keyword">mode</span>;</span> be sure to close the session to <span class="operator"><span class="keyword">release</span> JDBC resources! </span><br><span class="line"><span class="keyword">after</span> userService.logon()..</span></span><br></pre></td></tr></table></figure></p>
+<p>仔细观察这段输出日志，<br>①处UserService#logon()开启一个新的事务。<br>②处的UserService# updateLastLogonTime()绑定到事务上下文的Session中。<br>③处ScoreService#addScore()方法加入到①处开启的事务上下文中。<br>④处的输出是ScoreService#addScore()方法内部的输出信息，汇报此时数据源激活的连接数为1，这清楚地告诉我们Hibernate和JDBC这两种数据访问技术在同一事务上下文中“共用”一个连接。<br>⑤处，提交Hibernate事务，接着在⑥处触发调用底层的Connection提交事务。 </p>
+<p>从以上的运行结果，我们可以得出这样的结论：使用Hibernate事务管理器后，可以混合使用Hibernate和SpringJDBC数据访问技术，它们将工作于同一事务上下文中。但是使用SpringJDBC访问数据时，Hibernate的一级或二级缓存得不到同步，此外，一级缓存延迟数据同步机制可能会覆盖SpringJDBC数据更改的结果。 </p>
+<p>   由于混合数据访问技术方案存在“事务同步而缓存不同步”的情况，所以最好用Hibernate进行读写操作，而只用Spring JDBC进行读操作。如用Spring JDBC进行简要列表的查询，而用Hibernate对查询出的数据进行维护。<br>   如果确实要同时使用Hibernate和SpringJDBC读写数据，则必须充分考虑到Hibernate缓存机制引发的问题：必须整体分析数据维护逻辑，根据需要及时调用Hibernate的flush()方法，以免覆盖Spring JDBC的更改，在Spring JDBC更改数据库时，维护Hibernate的缓存。由于方法调用顺序的不同都可能影响数据的同步性，因此很容易发生问题，这会极大提高数据访问程序的复杂性。所以笔者郑重建议不要同时使用Spring JDBC和Hibernate对数据进行写操作。 </p>
+<blockquote>
+<p>可以将以上结论推广到其他混合数据访问技术的方案中，如Hibernate+iBatis、JPA+Spring JDBC、JDO+Spring JDBC等。 </p>
+</blockquote>
+<p>参考资料：《Spring 3.x企业应用开发实战》</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/spring/">spring</a><a href="/tags/事务管理/">事务管理</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/spring/">spring</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://donahue-ldz.github.io/2015/03/15/spring多事务管理/" data-title="spring多事务管理 | 心缘冰河" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/03/14/redis持久化/"  title="redis持久化">
+ <strong>NEXT:</strong><br/> 
+ <span>redis持久化
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="spring多事务管理" data-thread-key="spring多事务管理" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/spring多事务管理"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		
+		
+	</div>
+</div>
+
+  <div class="widget intro">
+<h3 class="asidetitle">简介</h3>
+<ul class="entry">
+<li>现状：大连理工大学/本科生</li>
+<li>QQ 号：1285310383</li>
+<li>Email: ldz2012yn@gmail.com</li>
+<li>github :  <a href="https://github.com/donahue-ldz">donahue-ldz</a></li>
+<li>原博客：<a href="http://www.donahuelives.com">程序人生</a></li>
+</ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/java/" title="java">java<sup>4</sup></a></li>
+		
+			<li><a href="/categories/lucene/" title="lucene">lucene<sup>2</sup></a></li>
+		
+			<li><a href="/categories/redis/" title="redis">redis<sup>1</sup></a></li>
+		
+			<li><a href="/categories/spring/" title="spring">spring<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/CyclicBarrier/" style="font-size: NaNpx;">CyclicBarrier</a><a href="/tags/MarkDown/" style="font-size: NaNpx;">MarkDown</a><a href="/tags/finalize/" style="font-size: NaNpx;">finalize</a><a href="/tags/log4j/" style="font-size: NaNpx;">log4j</a><a href="/tags/log4j配置/" style="font-size: NaNpx;">log4j配置</a><a href="/tags/lucene，搜索/" style="font-size: NaNpx;">lucene，搜索</a><a href="/tags/redis/" style="font-size: NaNpx;">redis</a><a href="/tags/spring/" style="font-size: NaNpx;">spring</a><a href="/tags/vim/" style="font-size: NaNpx;">vim</a><a href="/tags/事务管理/" style="font-size: NaNpx;">事务管理</a><a href="/tags/内存回收/" style="font-size: NaNpx;">内存回收</a><a href="/tags/日志记录/" style="font-size: NaNpx;">日志记录</a><a href="/tags/线程/" style="font-size: NaNpx;">线程</a><a href="/tags/线程等待，CountDownLatch/" style="font-size: NaNpx;">线程等待，CountDownLatch</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2015 
+		
+		<a href="http://donahue-ldz.github.io" target="_blank" title="donahue">donahue</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"null"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'null', 'null');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+
