@@ -13,11 +13,12 @@
     
     <meta name="author" content="donahue">
     
-    <meta name="description" content="所有语言运行时系统提供执行I/O较高级别的工具。在java编程中，标准低版本IO使用流的方式完成I/O操作，所有的I/O都被视为单个的字节流动，称为一个Stream的对象一次移动一个字节。
+    <meta name="description" content="所有语言运行时系统提供执行I/O较高级别的工具。
+在java编程中，标准低版本IO使用流的方式完成I/O操作，所有的I/O都被视为单个的字节流动，称为一个Stream的对象一次移动一个字节。
 NIO是在JDK1.4之后出现的一种新的IO，sun官方标榜的nio有如下特性：
 
 
-为所有的原始类型提供（B">
+为所有的原始类型提供（">
     
     
     
@@ -241,7 +242,7 @@ NIO是在JDK1.4之后出现的一种新的IO，sun官方标榜的nio有如下特
     </p>
   <p class="article-time">
     <time datetime="2015-03-25T14:57:08.000Z" itemprop="datePublished">Mar 25 2015</time>
-    更新日期:<time datetime="2015-03-25T15:03:57.000Z" itemprop="dateModified">Mar 25 2015</time>
+    更新日期:<time datetime="2015-03-25T15:07:31.000Z" itemprop="dateModified">Mar 25 2015</time>
     
   </p>
 </header>
@@ -250,10 +251,11 @@ NIO是在JDK1.4之后出现的一种新的IO，sun官方标榜的nio有如下特
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer是什么？"><span class="toc-number">1.</span> <span class="toc-text">Buffer是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer的类图结构"><span class="toc-number">2.</span> <span class="toc-text">Buffer的类图结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer中的一些方法？"><span class="toc-number">3.</span> <span class="toc-text">Buffer中的一些方法？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ByteBuffer类"><span class="toc-number">4.</span> <span class="toc-text">ByteBuffer类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer的更多内容？"><span class="toc-number">5.</span> <span class="toc-text">Buffer的更多内容？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Channel是什么？"><span class="toc-number">6.</span> <span class="toc-text">Channel是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Channel的类图结构？"><span class="toc-number">7.</span> <span class="toc-text">Channel的类图结构？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FileChannel"><span class="toc-number">7.1.</span> <span class="toc-text">FileChannel</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#文件锁定"><span class="toc-number">7.1.1.</span> <span class="toc-text">文件锁定</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SocketChannel"><span class="toc-number">7.2.</span> <span class="toc-text">SocketChannel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DatagramChannel"><span class="toc-number">7.3.</span> <span class="toc-text">DatagramChannel</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer是什么？"><span class="toc-number">1.</span> <span class="toc-text">Buffer是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer的类图结构"><span class="toc-number">2.</span> <span class="toc-text">Buffer的类图结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer中的一些方法？"><span class="toc-number">3.</span> <span class="toc-text">Buffer中的一些方法？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ByteBuffer类"><span class="toc-number">4.</span> <span class="toc-text">ByteBuffer类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer的更多内容？"><span class="toc-number">5.</span> <span class="toc-text">Buffer的更多内容？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Channel是什么？"><span class="toc-number">6.</span> <span class="toc-text">Channel是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Channel的类图结构？"><span class="toc-number">7.</span> <span class="toc-text">Channel的类图结构？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FileChannel"><span class="toc-number">7.1.</span> <span class="toc-text">FileChannel</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#文件锁定"><span class="toc-number">7.1.1.</span> <span class="toc-text">文件锁定</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SocketChannel"><span class="toc-number">7.2.</span> <span class="toc-text">SocketChannel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DatagramChannel"><span class="toc-number">7.3.</span> <span class="toc-text">DatagramChannel</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料:"><span class="toc-number">8.</span> <span class="toc-text">参考资料:</span></a></li></ol>
 		</div>
 		
-		<p>所有语言运行时系统提供执行I/O较高级别的工具。在java编程中，标准低版本IO使用流的方式完成I/O操作，所有的I/O都被视为单个的字节流动，称为一个Stream的对象一次移动一个字节。</p>
+		<p>所有语言运行时系统提供执行I/O较高级别的工具。</p>
+<p>在java编程中，标准低版本IO使用流的方式完成I/O操作，所有的I/O都被视为单个的字节流动，称为一个Stream的对象一次移动一个字节。</p>
 <p>NIO是在JDK1.4之后出现的一种新的IO，sun官方标榜的nio有如下特性：</p>
 <blockquote>
 <ul>
@@ -340,8 +342,7 @@ NIO是在JDK1.4之后出现的一种新的IO，sun官方标榜的nio有如下特
 <p>//调用上面的方法，并connect(remote)<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">InetSocketAddress socketAddress = newbInetSocketAddress(“www.baidu.<span class="keyword">com</span>”,<span class="number">80</span>);</span><br><span class="line"></span><br><span class="line">SocketChannel sc = SocketChannel.<span class="keyword">open</span>(socketAddress);</span><br><span class="line"></span><br><span class="line">sc.<span class="keyword">read</span>(<span class="keyword">buffer</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">buffer</span>.flip();</span><br><span class="line"></span><br><span class="line"><span class="keyword">buffer</span>.clear();</span><br><span class="line"></span><br><span class="line">sc.<span class="keyword">write</span>(bufer);</span><br></pre></td></tr></table></figure></p>
 <h4 id="DatagramChannel">DatagramChannel</h4><p>与其它的Channel有相同或者相似的方法。</p>
 <hr>
-<p>参考资料:</p>
-<p><a href="https://www.ibm.com/developerworks/java/tutorials/j-nio/" target="_blank" rel="external">Java nio入门教程 IBM开发者园地</a></p>
+<h3 id="参考资料:">参考资料:</h3><p><a href="https://www.ibm.com/developerworks/java/tutorials/j-nio/" target="_blank" rel="external">Java nio入门教程 IBM开发者园地</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -394,7 +395,7 @@ NIO是在JDK1.4之后出现的一种新的IO，sun官方标榜的nio有如下特
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer是什么？"><span class="toc-number">1.</span> <span class="toc-text">Buffer是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer的类图结构"><span class="toc-number">2.</span> <span class="toc-text">Buffer的类图结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer中的一些方法？"><span class="toc-number">3.</span> <span class="toc-text">Buffer中的一些方法？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ByteBuffer类"><span class="toc-number">4.</span> <span class="toc-text">ByteBuffer类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer的更多内容？"><span class="toc-number">5.</span> <span class="toc-text">Buffer的更多内容？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Channel是什么？"><span class="toc-number">6.</span> <span class="toc-text">Channel是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Channel的类图结构？"><span class="toc-number">7.</span> <span class="toc-text">Channel的类图结构？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FileChannel"><span class="toc-number">7.1.</span> <span class="toc-text">FileChannel</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#文件锁定"><span class="toc-number">7.1.1.</span> <span class="toc-text">文件锁定</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SocketChannel"><span class="toc-number">7.2.</span> <span class="toc-text">SocketChannel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DatagramChannel"><span class="toc-number">7.3.</span> <span class="toc-text">DatagramChannel</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer是什么？"><span class="toc-number">1.</span> <span class="toc-text">Buffer是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer的类图结构"><span class="toc-number">2.</span> <span class="toc-text">Buffer的类图结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer中的一些方法？"><span class="toc-number">3.</span> <span class="toc-text">Buffer中的一些方法？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ByteBuffer类"><span class="toc-number">4.</span> <span class="toc-text">ByteBuffer类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer的更多内容？"><span class="toc-number">5.</span> <span class="toc-text">Buffer的更多内容？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Channel是什么？"><span class="toc-number">6.</span> <span class="toc-text">Channel是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Channel的类图结构？"><span class="toc-number">7.</span> <span class="toc-text">Channel的类图结构？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FileChannel"><span class="toc-number">7.1.</span> <span class="toc-text">FileChannel</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#文件锁定"><span class="toc-number">7.1.1.</span> <span class="toc-text">文件锁定</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SocketChannel"><span class="toc-number">7.2.</span> <span class="toc-text">SocketChannel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DatagramChannel"><span class="toc-number">7.3.</span> <span class="toc-text">DatagramChannel</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考资料:"><span class="toc-number">8.</span> <span class="toc-text">参考资料:</span></a></li></ol>
   </div>
 
 <div id="asidepart">
