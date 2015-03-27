@@ -4,7 +4,7 @@
   <subtitle><![CDATA[写出我人生,coding]]></subtitle>
   <link href="//atom.xml" rel="self"/>
   <link href="http://donahue-ldz.github.io/"/>
-  <updated>2015-03-25T15:10:41.000Z</updated>
+  <updated>2015-03-27T03:48:21.000Z</updated>
   <id>http://donahue-ldz.github.io/</id>
   
   <author>
@@ -13,6 +13,121 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[ClassLoader学习]]></title>
+    <link href="http://donahue-ldz.github.io/2015/03/27/ClassLoader%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://donahue-ldz.github.io/2015/03/27/ClassLoader学习/</id>
+    <published>2015-03-27T03:39:38.000Z</published>
+    <updated>2015-03-27T03:48:21.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="ClassLoader作用">ClassLoader作用</h3><blockquote>
+<p>ClassLoader负责载入系统的所有Resources（Class，文件，来自网络的字节流等），通过ClassLoader从而将资源载入JVM。<br>ClassLoader主要对类的请求提供服务，当JVM需要某类时，它根据名称向ClassLoader要求这个类，然后由ClassLoader返回这个类的class对象。 </p>
+</blockquote>
+<p><code>每个class都有一个reference，指向自己的ClassLoader。</code><br>array的ClassLoader就是其元素的ClassLoader，若是基本数据类型，则这个array没有ClassLoader 。 </p>
+<hr>
+<h3 id="主要方法">主要方法</h3><p>Java1.1及从前版本中，ClassLoader主要方法：<br>Class loadClass( String name, boolean resolve ) ClassLoader.loadClass() 是 ClassLoader 的入口点 。<br><code>defineClass</code> 方法是ClassLoader的主要诀窍。该方法接受由原始字节组成的数组并把它转换成 Class对象。原始数组包含如从文件系统或网络装入的数据。<br><code>findSystemClass</code> 方法从本地文件系统装入文件。它在本地文件系统中寻找类文件，如果存在，就使用 defineClass 将原始字节转换成 Class 对象，以将该文件转换成类。当运行 Java 应用程序时，这是 JVM 正常装入类的缺省机制。  </p>
+<p><code>resolveClass</code>可以不完全地（不带解析）装入类，也可以完全地（带解析）装入类。当编写我们自己的 loadClass 时，可以调用 resolveClass，这取决于 loadClass 的 resolve 参数的值 </p>
+<p><code>findLoadedClass</code> 充当一个缓存：当请求loadClass装入类时，它调用该方法来查看 ClassLoader是否已装入这个类，这样可以避免重新装入已存在类所造成的麻烦。应首先调用该方法  。</p>
+<h3 id="工作过程">工作过程</h3><p>一般load方法过程如下：</p>
+<ul>
+<li>调用 findLoadedClass 来查看是否存在已装入的类。  </li>
+<li>如果没有，那么采用某种特殊的神奇方式来获取原始字节。（通过IO从文件系统，来自网络的字节流等）  </li>
+<li><p>如果已有原始字节，调用 defineClass 将它们转换成 Class 对象。<br>如果没有原始字节，然后调用 findSystemClass从本地文件系统获取类。  </p>
+</li>
+<li><p>如果 resolve 参数是 true，那么调用 resolveClass 解析 Class 对象。<br>如果还没有类，返回 ClassNotFoundException。  </p>
+</li>
+<li>否则，将类返回给调用程序。  </li>
+</ul>
+<h3 id="委托模型">委托模型</h3><p>自从JDK1.2以后，ClassLoader做了改进，使用了委托模型，所有系统中的ClassLoader组成一棵树，<font color="red">ClassLoader在载入类库时先让Parent寻找，Parent找不到才自己找</font>。<br>JVM在运行时会产生三个<br><code>ClassLoader，Bootstrap ClassLoader、Extension ClassLoader和App ClassLoader</code>。</p>
+<blockquote>
+<ul>
+<li>Bootstrap ClassLoader是用C++编写的，在Java中看不到它，是null。它用来加载核心类库，就是在lib下的类库</li>
+<li>Extension ClassLoader加载lib/ext下的类库</li>
+<li>App ClassLoader加载Classpath里的类库</li>
+</ul>
+</blockquote>
+<font color="red">三者的关系为:App ClassLoader的Parent是Extension ClassLoader，而Extension ClassLoader的Parent为Bootstrap ClassLoader。<br>加载一个类时，首先BootStrap进行寻找，找不到再由Extension ClassLoader寻找，最后才是App ClassLoader。</font>  
+
+<h3 id="为什么要委托模型">为什么要委托模型</h3><p>将ClassLoader设计成委托模型的一个重要原因是出于<code>安全考虑</code>，比如在Applet中，如果编写了一个java.lang.String类并具有破坏性。假如不采用这种委托机制，就会将这个具有破坏性的String加载到了用户机器上，导致破坏用户安全。但采用这种委托机制则不会出现这种情况。因为要加载java.lang.String类时，系统最终会由Bootstrap进行加载，这个具有破坏性的String永远没有机会加载。  </p>
+<hr>
+<p>委托模型还带来了一些问题，在某些情况下会产生混淆，如下是Tomcat的ClassLoader结构图:  </p>
+<pre><code>    Bootstrap 
+      | 
+    System 
+      | 
+    Common 
+      |    
+Catalina  Shared 
+          |     
+       Webapp1  Webapp2 <span class="keyword">...</span> 
+</code></pre><p>由 Common 类装入器装入的类决不能（根据名称）直接访问由 Web 应用程序装入的类。使这些类联系在一起的唯一方法是通过使用这两个类集都可见的接口。在这个例子中，就是包含由 Java servlet 实现的 javax.servlet.Servlet。  </p>
+<p>如果在lib或者lib/ext等类库有与应用中同样的类，那么应用中的类将无法被载入。通常在jdk新版本出现有类库移动时会出现问题，例如最初我们使用自己的xml解析器，而在jdk1.4中xml解析器变成标准类库，load的优先级也高于我们自己的xml解析器，我们自己的xml解析器永远无法找到，将可能导致我们的应用无法运行。  </p>
+<p>相同的类，不同的ClassLoader，将导致ClassCastException异常  </p>
+<hr>
+<h3 id="线程中的ClassLoader">线程中的ClassLoader</h3><p> 每个运行中的线程都有一个成员<code>contextClassLoader</code>，用来在运行时动态地载入其它类，可以使用方法Thread.currentThread().setContextClassLoader(…);更改当前线程的contextClassLoader，来改变其载入类的行为；也可以通过方法Thread.currentThread().getContextClassLoader()来获得当前线程的ClassLoader。  </p>
+<blockquote>
+<p>实际上，在Java应用中所有程序都运行在线程里，如果在程序中没有手工设置过ClassLoader，对于一般的java类如下两种方法获得的ClassLoader通常都是同一个。</p>
+</blockquote>
+<p><code>this.getClass.getClassLoader()</code><br><code>Thread.currentThread().getContextClassLoader()</code></p>
+<p>方法一得到的Classloader是静态的，表明类的载入者是谁；<br>方法二得到的Classloader是动态的，谁执行（某个线程），就是那个执行者的Classloader。<br><strong>对于单例模式的类，静态类等，载入一次后，这个实例会被很多程序（线程）调用，对于这些类，载入的Classloader和执行线程的Classloader通常都不同。</strong></p>
+<h3 id="Web应用中的ClassLoader">Web应用中的ClassLoader</h3><p>回到上面的例子，在Tomcat里，WebApp的ClassLoader的工作原理有点不同，它先试图自己载入类（在ContextPath/WEB-INF/…中载入类），如果无法载入，再请求父ClassLoader完成。<br>由此可得：<br>对于WEB APP线程，它的contextClassLoader是WebAppClassLoader<br>对于Tomcat Server线程，它的contextClassLoader是CatalinaClassLoader  </p>
+<p>获得ClassLoader的几种方法<br>可以通过如下3种方法得到ClassLoader：<br>this.getClass.getClassLoader(); // 使用当前类的ClassLoader<br>Thread.currentThread().getContextClassLoader(); // 使用当前线程的ClassLoader<br>ClassLoader.getSystemClassLoader(); // 使用系统ClassLoader，即系统的入口点所使用的ClassLoader。</p>
+<blockquote>
+<p>注意，system ClassLoader与根ClassLoader并不一样。JVM下system ClassLoader通常为App ClassLoader  </p>
+</blockquote>
+<h3 id="自定义ClassLoader">自定义ClassLoader</h3><ul>
+<li>安全性<br>类进入JVM之前先经过ClassLoader，所以可以在这边检查是否有正确的数字签名等.  </li>
+<li>加密<br>java字节码很容易被反编译，通过定制ClassLoader使得字节码先加密防止别人下载后反编译，这里的ClassLoader相当于一个动态的解码器  </li>
+<li>归档<br>可能为了节省网络资源，对自己的代码做一些特殊的归档，然后用定制的ClassLoader来解档  </li>
+<li>自展开程序<br>把java应用程序编译成单个可执行类文件，这个文件包含压缩的和加密的类文件数据，同时有一个固定的ClassLoader，当程序运行时它在内存中完全自行解开，无需先安装.  </li>
+<li>动态生成<br>可以生成应用其他还未生成类的类，实时创建整个类并可在任何时刻引入JVM  </li>
+</ul>
+<h3 id="资源载入">资源载入</h3><p>所有资源都通过ClassLoader载入到JVM里，那么在载入资源时当然可以使用ClassLoader，只是对于不同的资源还可以使用一些别的方式载入，例如对于类可以直接new，对于文件可以直接做IO等。</p>
+<h4 id="载入类">载入类</h4><p>假设有类A和类B，A在方法method里需要实例化B，可能的方法有3种。<br>对于载入类的情况，用户需要知道B类的完整名字（包括包名，例如”com.rain.B”)</p>
+<ul>
+<li><p>使用Class静态方法 Class.forName  </p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Class <span class="keyword">cls</span> = Class.forName(<span class="string">"com.rain.B"</span>)<span class="comment">; </span></span><br><span class="line">B b = (B)<span class="keyword">cls</span>.newInstance()<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用ClassLoader  </p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Step 1. Get ClassLoader */</span> </span><br><span class="line">ClassLoader <span class="keyword">cl</span>; <span class="comment">//具体获得ClassLoader </span></span><br><span class="line"><span class="comment">/* Step 2. Load the class */</span> </span><br><span class="line"><span class="keyword">Class</span> cls = <span class="keyword">cl</span>.loadClass(<span class="string">"com.rain.B"</span>); <span class="comment">// 使用第一步得到的ClassLoader来载入B </span></span><br><span class="line"><span class="comment">/* Step 3. new instance */</span> </span><br><span class="line">B b = (B)cls.newInstance(); <span class="comment">// 有B的类得到一个B的实例</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>直接new<br>  <code>B b = new B();</code> </p>
+</li>
+</ul>
+<h4 id="文件载入">文件载入</h4><p>（例如配置文件等）假设在com.rain.A类里想读取文件夹 /com/rain/config 里的文件sys.properties，读取文件可以通过绝对路径或相对路径，绝对路径很简单，在Windows下以盘号开始，在Unix下以”/“开始<br>对于相对路径，<code>其相对值是相对于ClassLoader的</code>，<strong>因为ClassLoader是一棵树，所以这个相对路径和ClassLoader树上的任何一个ClassLoader相对比较后可以找到文件，那么文件就可以找到，</strong><font color="red">当然，读取文件也使用委托模型。</font>  </p>
+<ul>
+<li>直接IO  <figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">*</span><span class="keyword">*</span> </span><br><span class="line"> <span class="keyword">*</span> 假设当前位置是 <span class="string">"C:/test"</span>，通过执行如下命令来运行A <span class="string">"java com.rain.A"</span> </span><br><span class="line"> <span class="keyword">*</span> 1. 在程序里可以使用绝对路径，Windows下的绝对路径以盘号开始，Unix下以<span class="string">"/"</span>开始 </span><br><span class="line"> <span class="keyword">*</span> 2. 也可以使用相对路径，相对路径前面没有<span class="string">"/"</span> </span><br><span class="line"> <span class="keyword">*</span> 因为我们在 <span class="string">"C:/test"</span> 目录下执行程序，程序入口点是<span class="string">"C:/test"</span>，相对路径就 </span><br><span class="line"> <span class="keyword">*</span> 是 <span class="string">"com/rain/config/sys.properties"</span> </span><br><span class="line"> <span class="keyword">*</span> （例子中，当前程序的ClassLoader是App ClassLoader，system ClassLoader = 当前的 </span><br><span class="line"> <span class="keyword">*</span> 程序的ClassLoader，入口点是<span class="string">"C:/test"</span>） </span><br><span class="line"> <span class="keyword">*</span> 对于ClassLoader树，如果文件在jdk lib下，如果文件在jdk lib/ext下，如果文件在环境变量里， </span><br><span class="line"> <span class="keyword">*</span> 都可以通过相对路径<span class="string">"sys.properties"</span>找到，lib下的文件最先被找到 </span><br><span class="line"> <span class="keyword">*</span>/ </span><br><span class="line">File f = new File(<span class="string">"C:/test/com/rain/config/sys.properties"</span>); // 使用绝对路径 </span><br><span class="line">//File f = new File(<span class="string">"com/rain/config/sys.properties"</span>); // 使用相对路径 </span><br><span class="line">InputStream is = new FileInputStream(f);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果是配置文件，可以通过java.util.Properties.load(is)将内容读到Properties里，Properties默认认为is的编码是ISO-8859-1，如果配置文件是非英文的，可能出现乱码问题。 </p>
+<ul>
+<li>使用ClassLoader  </li>
+</ul>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** </span><br><span class="line"> * 因为有3种方法得到ClassLoader，对应有如下3种方法读取文件 </span><br><span class="line"> * 使用的路径是相对于这个ClassLoader的那个点的相对路径，此处只能使用相对路径 </span><br><span class="line"> */</span> </span><br><span class="line">InputStream <span class="keyword">is</span> = <span class="literal">null</span>; </span><br><span class="line"><span class="keyword">is</span> = <span class="keyword">this</span>.getClass().getClassLoader().getResourceAsStream( </span><br><span class="line">       <span class="string">"com/rain/config/sys.properties"</span>); <span class="comment">//方法1 </span></span><br><span class="line"><span class="comment">//is = Thread.currentThread().getContextClassLoader().getResourceAsStream( </span></span><br><span class="line">       <span class="string">"com/rain/config/sys.properties"</span>); <span class="comment">//方法2 </span></span><br><span class="line"><span class="comment">//is = ClassLoader.getSystemResourceAsStream("com/rain/config/sys.properties"); //方法3</span></span><br></pre></td></tr></table></figure>
+<p>如果是配置文件，可以通过java.util.Properties.load(is)将内容读到Properties里，这里要注意编码问题。  </p>
+<ul>
+<li>使用ResourceBundle  <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ResourceBundle</span> bundle = ResourceBundle.getBoundle(<span class="string">"com.rain.config.sys"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这种用法通常用来载入用户的配置文件，关于ResourceBunlde更详细的用法请参考其他文档<br>总结：有如下3种途径来载入文件  </p>
+<pre><code><span class="number">1.</span> 绝对路径 <span class="comment">---&gt; IO </span>
+<span class="number">2.</span> 相对路径 <span class="comment">---&gt; IO </span>
+            <span class="comment">---&gt; ClassLoader </span>
+<span class="number">3.</span> 资源文件 <span class="comment">---&gt; ResourceBundle </span>
+</code></pre><h3 id="web应用里载入资源">web应用里载入资源</h3><p>在web应用里当然也可以使用ClassLoader来载入资源，但更常用的情况是使用ServletContex<br>用户程序通常在classes目录下，如果想读取classes目录里的文件，可以使用ClassLoader，如果想读取其他的文件，一般使用ServletContext.getResource()<br>如果使用ServletContext.getResource(path)方法，路径必须以”/“开始，路径被解释成相对于<code>ContextRoot</code>(<strong>web的根路径</strong>)的路径，此处载入文件的方法和ClassLoader不同</p>
+<hr>
+<h2 id="参考资料">参考资料</h2><p>ClassLoader 详解及用途 ,感谢作者，使得我第一次如此清楚的理解了类加载器机制！<br><a href="http://blog.chinaunix.net/uid-21227800-id-65885.html" target="_blank" rel="external">参考博客</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="ClassLoader作用">ClassLoader作用</h3><blockquote>
+<p>ClassLoader负责载入系统的所有Resources（Class，文件，来自网络的字节流等），通过ClassLoader从而将资源载入JVM。<br>Class]]>
+    </summary>
+    
+      <category term="ClassLoader，类加载器" scheme="http://donahue-ldz.github.io/tags/ClassLoader%EF%BC%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/"/>
+    
+      <category term="spring源码学习" scheme="http://donahue-ldz.github.io/categories/spring%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[NIO Buffer和Channel]]></title>
