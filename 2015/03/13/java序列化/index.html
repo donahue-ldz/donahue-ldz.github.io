@@ -8,20 +8,13 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>线程等待 | 心缘冰河</title>
+    <title>java序列化 | 心缘冰河</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="donahue">
     
-    <meta name="description" content="在多线程程序设计中，经常会遇到一个线程等待一个或多个线程的场景遇到这样的场景应该如何解决？
-
-
-如果是一个线程等待一个线程，则可以通过await()和notify()来实现；
-如果是一个线程等待多个线程，则就可以使用CountDownLatch和CyclicBarrier来实现比较好的控制。
-
-
-
-">
+    <meta name="description" content="Java 提供了一种对象序列化的机制，该机制中，一个对象可以被表示为一个字节序列，该字节序列包括该对象的数据、有关对象的类型的信息和存储在对象中数据的类型。
+将序列化对象写入文件之后，可以从文件中读取出来，并且对它进行反序列化，也就是说，对象的类型信息、对象的数据，还有对象中的数据类型可以用来在内存">
     
     
     
@@ -237,15 +230,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/09/15/线程等待/" title="线程等待" itemprop="url">线程等待</a>
+      <a href="/2015/03/13/java序列化/" title="java序列化" itemprop="url">java序列化</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://donahue-ldz.github.io" title="donahue">donahue</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-09-15T02:32:21.000Z" itemprop="datePublished">Sep 15 2014</time>
-    更新日期:<time datetime="2015-03-07T05:15:56.000Z" itemprop="dateModified">Mar 7 2015</time>
+    <time datetime="2015-03-13T12:29:02.000Z" itemprop="datePublished">Mar 13 2015</time>
+    更新日期:<time datetime="2015-04-01T08:18:58.000Z" itemprop="dateModified">Apr 1 2015</time>
     
   </p>
 </header>
@@ -254,138 +247,26 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CountDownLatch应用"><span class="toc-number">1.</span> <span class="toc-text">CountDownLatch应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CyclicBarrier的应用"><span class="toc-number">2.</span> <span class="toc-text">CyclicBarrier的应用</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Serializable达到自动序列化"><span class="toc-number">1.</span> <span class="toc-text">Serializable达到自动序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Externalizable手动序列化"><span class="toc-number">2.</span> <span class="toc-text">Externalizable手动序列化</span></a></li></ol>
 		</div>
 		
-		<p><strong>在多线程程序设计中，经常会遇到一个线程等待一个或多个线程的场景<br>遇到这样的场景应该如何解决？</strong></p>
-<blockquote>
-<ul>
-<li>如果是一个线程等待一个线程，则可以通过await()和notify()来实现；</li>
-<li>如果是一个线程等待多个线程，则就可以使用CountDownLatch和CyclicBarrier来实现比较好的控制。</li>
-</ul>
-</blockquote>
+		<p>Java 提供了一种对象序列化的机制，该机制中，一个对象可以被表示为一个字节序列，该字节序列包括该对象的数据、有关对象的类型的信息和存储在对象中数据的类型。</p>
+<p>将序列化对象写入文件之后，可以从文件中读取出来，并且对它进行反序列化，也就是说，对象的类型信息、对象的数据，还有对象中的数据类型可以用来在内存中新建对象。</p>
+<p><span style="color: #ff00ff;">由于序列化都是由jvm实现 所以可以跨平台在不同的地点序列化</span></p>
+<p>java的序列化有两种方法</p>
+<h2 id="Serializable达到自动序列化">Serializable达到自动序列化</h2><p>记住有些东西是不能或者不方便实例话的（密码，银行卡等敏感信息），此时要是自动序列化的话将是不安全的表现，但是java提供了一个关键字transient，<code>`被transient修饰的变量将不会被序列话，也就不能被反序列化</code>。</p>
+<p><code>被static修饰的变量也不会被序列化</code>，但是反序列化时候，如果当前内存中存在静态变量的值的时候，反序列化的时候被修饰的类成员将还是会看见值，此时的值就是现在内存中的值</p>
 <hr>
-<h2 id="CountDownLatch应用">CountDownLatch应用</h2><p><code>场景：主要是:一个线程等待多个其他线程</code></p>
-<p>例如：百米赛跑：8名运动员同时起跑，由于速度的快慢，肯定有会出现先到终点和晚到终点的情况，而终点有个统计成绩的仪器，当所有选手到达终点时，它会统计所有人的成绩并进行排序，然后把结果发送到汇报成绩的系统。</p>
-<p>其实这就是一个CountDownLatch的应用场景：一个线程或多个线程等待其他线程运行达到某一目标后进行自己的下一步工作，而被等待的“其他线程”达到这个目标后继续自己下面的任务。</p>
-<p>这个场景中：</p>
-<p>被等待的“其他线程”——&gt;8名运动员<br>等待“其他线程”的这个线程——&gt;终点统计成绩的仪器<br>那么，如何来通过CountDownLatch来实现上述场景的线程控制和调度呢？</p>
-<blockquote>
-<p>jdk中CountDownLatch类有一个常用的构造方法：CountDownLatch(int count)<br>两个常用的方法：await()和countdown()</p>
-</blockquote>
-<p>其中count是一个计数器中的初始化数字，比如初始化的数字是2，当一个线程里调用了countdown()，则这个计数器就减一，当线程调用了await()，则这个线程就等待这个计数器变为0，当这个计数器变为0时，这个线程继续自己下面的工作。下面是上述CountDownLatch场景的实现：</p>
-<p>Work类（运动员）：</p>
-<pre><code><span class="keyword">import</span> java.util.concurrent.CountDownLatch;
-
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Work</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>{
-    <span class="keyword">private</span> <span class="keyword">int</span> id;
-    <span class="keyword">private</span> CountDownLatch beginSignal;
-    <span class="keyword">private</span> CountDownLatch endSignal;
-
-    <span class="function"><span class="keyword">public</span> <span class="title">Work</span><span class="params">(<span class="keyword">int</span> id, CountDownLatch begin, CountDownLatch end)</span> </span>{
-        <span class="keyword">this</span>.id = id;
-        <span class="keyword">this</span>.beginSignal = begin;
-        <span class="keyword">this</span>.endSignal = end;
-    }
-
-    <span class="annotation">@Override</span>
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>{
-        <span class="keyword">try</span> {
-              beginSignal.await();
-              System.out.println(<span class="string">"起跑..."</span>);
-              System.out.println(<span class="string">"work"</span> + id + <span class="string">"到达终点"</span>);
-              endSignal.countDown();
-              System.out.println(<span class="string">"work"</span> + id + <span class="string">"继续干其他事情"</span>);
-            } <span class="keyword">catch</span> (InterruptedException e) {
-                <span class="comment">// TODO Auto-generated catch block</span>
-                e.printStackTrace();
-            }
-    }
-</code></pre><p>}<br>Main类（终点统计仪器）：</p>
-<pre><code>import java.util.concurrent.CountDownLatch;
-<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Main</span> {
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-        CountDownLatch begSignal = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);
-        CountDownLatch endSignal = <span class="keyword">new</span> CountDownLatch(<span class="number">8</span>);
-        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++) {
-            <span class="keyword">new</span> Thread(<span class="keyword">new</span> Work(i, begSignal, endSignal)).start();
-        }
-
-    <span class="keyword">try</span> {
-        begSignal.countDown();  <span class="comment">//统一起跑</span>
-        endSignal.await();      <span class="comment">//等待运动员到达终点</span>
-        System.<span class="keyword">out</span>.println(<span class="string">"结果发送到汇报成绩的系统"</span>);
-        } <span class="keyword">catch</span> (InterruptedException e) {
-            e.printStackTrace();
-        }
-     }
-</code></pre><p>}</p>
-<hr>
-<h2 id="CyclicBarrier的应用">CyclicBarrier的应用</h2><p><code>场景：主要是多个线程之间相互等待，循环等待</code></p>
-<p> 例如：有四个游戏玩家玩游戏，游戏有三个关卡，每个关卡必须要所有玩家都到达后才能允许通关。</p>
-<p>其实这个场景里的玩家中如果有玩家A先到了关卡1，他必须等待其他所有玩家都到达关卡1时才能通过，也就是说：<br><code>线程之间需要互相等待，这和CountDownLatch的应用场景有区别。</code><br><code>CountDownLatch里的线程是到了运行的目标后继续干自己的其他事情</code><br><code>而这里的线程需要等待其他线程后才能继续完成下面的工作</code>。   </p>
-<blockquote>
-<p>jdk中CyclicBarrier类有两个常用的构造方法：</p>
-<ol>
-<li>CyclicBarrier(int parties)<br>这里的parties也是一个计数器，例如，初始化时parties里的计数是3，于是拥有该CyclicBarrier对象的线程当parties的计数为3时就唤醒，注：这里parties里的计数在运行时当调用CyclicBarrier:await()时,计数就加1，一直加到初始的值。</li>
-<li>CyclicBarrier(int parties, Runnable barrierAction)<br>这里的parties与上一个构造方法的解释是一样的，这里需要解释的是第二个入参（Runnable barrierAction）,这个参数是一个实现Runnable接口的类的对象，也就是说当parties加到初始值时就出发barrierAction的内容。</li>
-</ol>
-</blockquote>
-<p>下面来实现上述的应用场景：</p>
-<p>Player类（玩家类）</p>
-<pre><code><span class="keyword">import</span> java.util.concurrent.BrokenBarrierException;
-<span class="keyword">import</span> java.util.concurrent.CyclicBarrier;
-
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Player</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>{
-
-    <span class="keyword">private</span> CyclicBarrier cyclicBarrier;
-    <span class="keyword">private</span> <span class="keyword">int</span> id;
-
-    <span class="function"><span class="keyword">public</span> <span class="title">Player</span><span class="params">(<span class="keyword">int</span> id, CyclicBarrier cyclicBarrier)</span> </span>{
-        <span class="keyword">this</span>.cyclicBarrier = cyclicBarrier;
-        <span class="keyword">this</span>.id = id;
-    }
-
-    <span class="annotation">@Override</span>
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>{
-        <span class="keyword">try</span> {
-            System.out.println(<span class="string">"玩家"</span> + id + <span class="string">"正在玩第一关..."</span>);
-            cyclicBarrier.await();
-            System.out.println(<span class="string">"玩家"</span> + id + <span class="string">"进入第二关..."</span>);
-            } <span class="keyword">catch</span> (InterruptedException e) {
-              e.printStackTrace();
-        } <span class="keyword">catch</span> (BrokenBarrierException e) {
-             e.printStackTrace();
-    }
-  }
-}
-</code></pre><p>GameBarrier类（关卡类，这里控制玩家必须全部到达第一关结束的关口才能进入第二关）</p>
-<pre><code><span class="keyword">import</span> java.util.concurrent.CyclicBarrier;
-
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GameBarrier</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-    CyclicBarrier cyclicBarrier = <span class="keyword">new</span> CyclicBarrier(<span class="number">4</span>, <span class="keyword">new</span> Runnable() {
-
-        <span class="annotation">@Override</span>
-        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>{
-             System.out.println(<span class="string">"所有玩家进入第二关！"</span>);
-        }
-     });
-
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) {
-        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Player(i, cyclicBarrier)).start();
-     }
-  }
-}
-</code></pre>  
+<h2 id="Externalizable手动序列化">Externalizable手动序列化</h2><p>在里面重写相关的方法实现自定义序列化，此时不管是否被transient修饰都使可以哦～～～</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeExternal</span><span class="params">(ObjectOutput <span class="keyword">out</span>)</span> throws IOException </span>&#123;</span><br><span class="line">        <span class="keyword">out</span>.writeObject(content);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="function">Override</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readExternal</span><span class="params">(ObjectInput <span class="keyword">in</span>)</span> throws IOException,</span><br><span class="line">            ClassNotFoundException </span>&#123;</span><br><span class="line">        content = (String) <span class="keyword">in</span>.readObject();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>本文只是介绍jdk自带的序列化，还有更多更好的序列化方法将比jdk带的更加方便和效率高</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/CyclicBarrier/">CyclicBarrier</a><a href="/tags/线程/">线程</a><a href="/tags/线程等待，CountDownLatch/">线程等待，CountDownLatch</a>
+  <span></span> <a href="/tags/序列化/">序列化</a>
   </div>
 
 
@@ -398,7 +279,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://donahue-ldz.github.io/2014/09/15/线程等待/" data-title="线程等待 | 心缘冰河" data-tsina="null" class="share clearfix">
+  <div data-url="http://donahue-ldz.github.io/2015/03/13/java序列化/" data-title="java序列化 | 心缘冰河" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -408,18 +289,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2014/09/28/finalize理解/" title="finalize理解">
+ <a href="/2015/03/13/lucene基础/" title="lucene基础">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  finalize理解</span>
+  lucene基础</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2014/03/23/vim-配色/"  title="vim 配色知识">
+<a href="/2015/03/13/lucene开篇/"  title="lucene开篇">
  <strong>NEXT:</strong><br/> 
- <span>vim 配色知识
+ <span>lucene开篇
 </span>
 </a>
 </div>
@@ -429,7 +310,7 @@
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="线程等待" data-thread-key="线程等待" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/线程等待"></div>
+	<div class="ds-thread" data-title="java序列化" data-thread-key="java序列化" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/java序列化"></div>
 	
 </section>
 
@@ -439,7 +320,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CountDownLatch应用"><span class="toc-number">1.</span> <span class="toc-text">CountDownLatch应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CyclicBarrier的应用"><span class="toc-number">2.</span> <span class="toc-text">CyclicBarrier的应用</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Serializable达到自动序列化"><span class="toc-number">1.</span> <span class="toc-text">Serializable达到自动序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Externalizable手动序列化"><span class="toc-number">2.</span> <span class="toc-text">Externalizable手动序列化</span></a></li></ol>
   </div>
 
 <div id="asidepart">
