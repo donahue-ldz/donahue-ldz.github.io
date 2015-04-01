@@ -8,14 +8,15 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>lucene基础 | 心缘冰河</title>
+    <title>再看内部类 | 心缘冰河</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="donahue">
     
-    <meta name="description" content="简介Lucene 是一个基于 Java 的全文信息检索工具包，它不是一个完整的搜索应用程序，而是为你的应用程序提供索引和搜索功能。Lucene 目前是 Apache Jakarta 家族中的一个开源项目。也是目前最为流行的基于 Java 开源全文检索工具包。
-
-索引和搜索索引和搜索索引是现代搜索引擎">
+    <meta name="description" content="今天看spring源码的时候看见静态内部类，之前自己感觉关于内部类的知识掌握的还算可以的但是今天才发现，我还是需要好好的总结和梳理下内部类的相关知识了…
+  如果一个类要被声明为static的，只有一种情况，就是静态内部类。如果在外部类声明为static，程序会编译都不会过。
+总结
+静态内部类跟静态">
     
     
     
@@ -231,15 +232,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/03/13/lucene基础/" title="lucene基础" itemprop="url">lucene基础</a>
+      <a href="/2015/04/01/再看内部类/" title="再看内部类" itemprop="url">再看内部类</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://donahue-ldz.github.io" title="donahue">donahue</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-03-13T12:29:02.000Z" itemprop="datePublished">Mar 13 2015</time>
-    更新日期:<time datetime="2015-03-13T12:39:07.000Z" itemprop="dateModified">Mar 13 2015</time>
+    <time datetime="2015-04-01T07:54:03.000Z" itemprop="datePublished">Apr 1 2015</time>
+    更新日期:<time datetime="2015-04-01T07:56:49.000Z" itemprop="dateModified">Apr 1 2015</time>
     
   </p>
 </header>
@@ -248,47 +249,51 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引和搜索"><span class="toc-number">2.</span> <span class="toc-text">索引和搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立索引"><span class="toc-number">3.</span> <span class="toc-text">建立索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Document"><span class="toc-number">3.1.</span> <span class="toc-text">Document</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Field"><span class="toc-number">3.2.</span> <span class="toc-text">Field</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analyzer"><span class="toc-number">3.3.</span> <span class="toc-text">Analyzer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IndexWriter"><span class="toc-number">3.4.</span> <span class="toc-text">IndexWriter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Directory"><span class="toc-number">3.5.</span> <span class="toc-text">Directory</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索"><span class="toc-number">4.</span> <span class="toc-text">搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Query"><span class="toc-number">4.1.</span> <span class="toc-text">Query</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Term"><span class="toc-number">4.2.</span> <span class="toc-text">Term</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TermQuery"><span class="toc-number">4.3.</span> <span class="toc-text">TermQuery</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IndexSearcher"><span class="toc-number">4.4.</span> <span class="toc-text">IndexSearcher</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hits"><span class="toc-number">4.5.</span> <span class="toc-text">Hits</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用场景"><span class="toc-number">2.</span> <span class="toc-text">使用场景</span></a></li></ol>
 		</div>
 		
-		<h2 id="简介">简介</h2><p>Lucene 是一个基于 Java 的全文信息检索工具包，它不是一个完整的搜索应用程序，而是为你的应用程序提供索引和搜索功能。Lucene 目前是 Apache Jakarta 家族中的一个开源项目。也是目前最为流行的基于 Java 开源全文检索工具包。</p>
-<p><img src="https://www.ibm.com/developerworks/cn/java/j-lo-lucene1/fig001.jpg" alt="lucene结构"></p>
-<h2 id="索引和搜索">索引和搜索</h2><p>索引和搜索<br>索引是现代搜索引擎的核心，建立索引的过程就是把源数据处理成非常方便查询的索引文件的过程。为什么索引这么重要呢，试想你现在要在大量的文档中搜索含有某个关键词的文档，那么如果不建立索引的话你就需要把这些文档顺序的读入内存，然后检查这个文章中是不是含有要查找的关键词，这样的话就会耗费非常多的时间，想想搜索引擎可是在毫秒级的时间内查找出要搜索的结果的。这就是由于建立了索引的原因，你可以把索引想象成这样一种数据结构，他能够使你快速的随机访问存储在索引中的关键词，进而找到该关键词所关联的文档。Lucene采用的是一种称为<code>反向索引（inverted index）的机制</code>。反向索引就是说我们维护了一个词 / 短语表，对于这个表中的每个词 / 短语，都有一个链表描述了有哪些文档包含了这个词 / 短语。这样在用户输入查询条件的时候，就能非常快的得到搜索结果<br>对文档建立好索引后，就可以在这些索引上面进行搜索了。搜索引擎首先会对搜索的关键词进行解析，然后再在建立好的索引上面进行查找，最终返回和用户输入的关键词相关联的文档。</p>
-<h2 id="建立索引">建立索引</h2><h3 id="Document">Document</h3><p>Document 是用来描述文档的，这里的文档可以指一个 HTML 页面，一封电子邮件，或者是一个文本文件。一个 Document 对象由多个 Field 对象组成的。可以把一个 Document 对象想象成数据库中的一个记录，而每个 Field 对象就是记录的一个字段。</p>
-<h3 id="Field">Field</h3><p>Field 对象是用来描述一个文档的某个属性的，比如一封电子邮件的标题和内容可以用两个 Field 对象分别描述。</p>
-<h3 id="Analyzer">Analyzer</h3><p>在一个文档被索引之前，首先需要对文档内容进行分词处理，这部分工作就是由 Analyzer 来做的。Analyzer类是一个抽象类，它有多个实现。针对不同的语言和应用需要选择适合的 Analyzer。Analyzer 把分词后的内容交给 IndexWriter来建立索引。</p>
-<h3 id="IndexWriter">IndexWriter</h3><p>IndexWriter 是 Lucene 用来创建索引的一个核心的类，他的作用是把一个个的 Document 对象加到索引中来。<br><code>IndexWriter indexWriter = new IndexWriter(indexDir,luceneAnalyzer,true);</code></p>
-<p>true表示新建，false表示原来的索引更新</p>
-<h3 id="Directory">Directory</h3><p>这个类代表了 Lucene 的索引的存储的位置，这是一个抽象类，它目前有两个实现，第一个是 FSDirectory，它表示一个存储在文件系统中的索引的位置。第二个是 RAMDirectory，它表示一个存储在内存当中的索引的位置。</p>
-<h2 id="搜索">搜索</h2><h3 id="Query">Query</h3><p>这是一个抽象类，他有多个实现，比如 TermQuery, BooleanQuery, PrefixQuery. 这个类的目的是把用户输入的查询字符串封装成 Lucene 能够识别的 Query。</p>
-<h3 id="Term">Term</h3><p>Term 是搜索的基本单位，一个 Term 对象有两个 String 类型的域组成。生成一个 Term 对象可以有如下一条语句来完成：</p>
-<p><code>Term term = new Term(“fieldName”,”queryWord”);</code></p>
-<p>其中第一个参数代表了要在文档的哪一个Field上进行查找，第二个参数代表了要查询的关键词。</p>
-<h3 id="TermQuery">TermQuery</h3><p>TermQuery 是抽象类 Query 的一个子类，它同时也是 Lucene 支持的最为基本的一个查询类。生成一个 TermQuery 对象由如下语句完成：</p>
-<p><code>TermQuery termQuery = new TermQuery(new Term(“fieldName”,”queryWord”));</code></p>
-<p>它的构造函数只接受一个参数，那就是一个 Term 对象。</p>
-<h3 id="IndexSearcher">IndexSearcher</h3><p>IndexSearcher 是用来在建立好的索引上进行搜索的。它只能以只读的方式打开一个索引，所以可以有多个 IndexSearcher 的实例在一个索引上进行操作,如。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">FSDirectory</span> directory = FSDirectory.getDirectory(indexDir,<span class="built_in">false</span>); </span><br><span class="line"><span class="title">IndexSearcher</span> searcher = new IndexSearcher(directory);</span><br></pre></td></tr></table></figure></p>
-<h3 id="Hits">Hits</h3><p>Hits 是用来保存搜索的结果的。<code>hits.doc()</code>获得文档<br><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Hits hits = searcher.search(luceneQuery); </span><br><span class="line"><span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; hits.length(); i++)&#123; </span><br><span class="line">    Document <span class="built_in">document</span> = hits.doc(i); </span><br><span class="line">    System.out.println(<span class="built_in">document</span>.<span class="literal">get</span>(<span class="string">""</span>)); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+		<p>  今天看spring源码的时候看见静态内部类，之前自己感觉关于内部类的知识掌握的还算可以的但是今天才发现，我还是需要好好的总结和梳理下内部类的相关知识了…</p>
+<p>  如果一个类要被声明为static的，只有一种情况，就是静态内部类。如果在外部类声明为static，程序会编译都不会过。</p>
+<h2 id="总结">总结</h2><ol>
+<li>静态内部类跟静态方法一样，只能访问静态的<strong>外部</strong>成员变量和方法，不能访问非静态的方法和属性，但是普通内部类可以访问任意外部类的成员变量和方法</li>
+<li>静态内部类可以声明普通成员变量和方法，而普通内部类不能声明static成员变量和方法(<font color="red"> 除了将变量声明成<code>final static</code></font>)</li>
+<li>静态内部类可以单独初始化:<br><code>Inner i = new Outer.Inner();</code><br>备注：一定要记住静态类的实例化方法是这个样子的呢<br>普通内部类初始化：<br><code>Inner i = new Outer().Inner();</code></li>
+<li><p>静态内部类的非静态方法也不能访问/静态方法：它们仅能调用其他的static 方法，它们只能访问static数据<br>它们不能以任何方式引用this 或super(this涉及到对象，super 与继承有关）</p>
+</li>
+<li><p>外部类不能随意访问内部类的变量，内部类是能访问外部类的变量</p>
+</li>
+</ol>
+<p>总之：在分析的时候注意static是在类被classLoader加载的时候就初始化后被所有对象公用了，也就是此时即使没有对象也能访问。 但是普通成员就不是这个样子，必须要有相应的对象才能这样访问。</p>
+<hr>
+<h2 id="使用场景">使用场景</h2><p> 静态内部类使用场景一般是当外部类需要使用内部类，而内部类无需外部类资源，并且内部类可以单独创建的时候会考虑采用静态内部类的设计</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Outer</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Builder</span> &#123;</span><br><span class="line">        <span class="keyword">private</span> String name;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Builder</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.age = age;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">withName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">withAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.age = age;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Outer <span class="title">build</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Outer(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Outer</span><span class="params">(Builder b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = b.age;</span><br><span class="line">        <span class="keyword">this</span>.name = b.name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>静态内部类调用外部类的构造函数，来构造外部类，由于静态内部类可以被单独初始化说有在外部就有以下实现：</p>
+<p>public Outer getOuter()<br>{<br>    Outer outer = new Outer.Builder(2).withName(“Yang Liu”).build();<br>    return outer;<br>}</p>
+<p>对于静态类总结是：</p>
+<ol>
+<li>如果类的构造器或静态工厂中有多个参数，设计这样类时，最好使用Builder模式，特别是当大多数参数都是可选的时候。</li>
+<li>如果现在不能确定参数的个数，最好一开始就使用构建器即Builder模式。</li>
+</ol>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/lucene，搜索/">lucene，搜索</a>
+  <span></span> <a href="/tags/静态内部类/">静态内部类</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/lucene/">lucene</a>
+  <a class="article-category-link" href="/categories/java/">java</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://donahue-ldz.github.io/2015/03/13/lucene基础/" data-title="lucene基础 | 心缘冰河" data-tsina="null" class="share clearfix">
+  <div data-url="http://donahue-ldz.github.io/2015/04/01/再看内部类/" data-title="再看内部类 | 心缘冰河" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -297,19 +302,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/03/14/redis持久化/" title="redis持久化">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  redis持久化</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/03/13/lucene开篇/"  title="lucene开篇">
+<a href="/2015/03/27/ClassLoader学习/"  title="ClassLoader学习">
  <strong>NEXT:</strong><br/> 
- <span>lucene开篇
+ <span>ClassLoader学习
 </span>
 </a>
 </div>
@@ -319,7 +316,7 @@
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="lucene基础" data-thread-key="lucene基础" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/lucene基础"></div>
+	<div class="ds-thread" data-title="再看内部类" data-thread-key="再看内部类" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/再看内部类"></div>
 	
 </section>
 
@@ -329,7 +326,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#索引和搜索"><span class="toc-number">2.</span> <span class="toc-text">索引和搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建立索引"><span class="toc-number">3.</span> <span class="toc-text">建立索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Document"><span class="toc-number">3.1.</span> <span class="toc-text">Document</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Field"><span class="toc-number">3.2.</span> <span class="toc-text">Field</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analyzer"><span class="toc-number">3.3.</span> <span class="toc-text">Analyzer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IndexWriter"><span class="toc-number">3.4.</span> <span class="toc-text">IndexWriter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Directory"><span class="toc-number">3.5.</span> <span class="toc-text">Directory</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索"><span class="toc-number">4.</span> <span class="toc-text">搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Query"><span class="toc-number">4.1.</span> <span class="toc-text">Query</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Term"><span class="toc-number">4.2.</span> <span class="toc-text">Term</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TermQuery"><span class="toc-number">4.3.</span> <span class="toc-text">TermQuery</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IndexSearcher"><span class="toc-number">4.4.</span> <span class="toc-text">IndexSearcher</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hits"><span class="toc-number">4.5.</span> <span class="toc-text">Hits</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用场景"><span class="toc-number">2.</span> <span class="toc-text">使用场景</span></a></li></ol>
   </div>
 
 <div id="asidepart">

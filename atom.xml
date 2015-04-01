@@ -4,7 +4,7 @@
   <subtitle><![CDATA[写出我人生,coding]]></subtitle>
   <link href="//atom.xml" rel="self"/>
   <link href="http://donahue-ldz.github.io/"/>
-  <updated>2015-03-27T03:48:21.000Z</updated>
+  <updated>2015-04-01T07:56:49.000Z</updated>
   <id>http://donahue-ldz.github.io/</id>
   
   <author>
@@ -13,6 +13,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[再看内部类]]></title>
+    <link href="http://donahue-ldz.github.io/2015/04/01/%E5%86%8D%E7%9C%8B%E5%86%85%E9%83%A8%E7%B1%BB/"/>
+    <id>http://donahue-ldz.github.io/2015/04/01/再看内部类/</id>
+    <published>2015-04-01T07:54:03.000Z</published>
+    <updated>2015-04-01T07:56:49.000Z</updated>
+    <content type="html"><![CDATA[<p>  今天看spring源码的时候看见静态内部类，之前自己感觉关于内部类的知识掌握的还算可以的但是今天才发现，我还是需要好好的总结和梳理下内部类的相关知识了…</p>
+<p>  如果一个类要被声明为static的，只有一种情况，就是静态内部类。如果在外部类声明为static，程序会编译都不会过。</p>
+<h2 id="总结">总结</h2><ol>
+<li>静态内部类跟静态方法一样，只能访问静态的<strong>外部</strong>成员变量和方法，不能访问非静态的方法和属性，但是普通内部类可以访问任意外部类的成员变量和方法</li>
+<li>静态内部类可以声明普通成员变量和方法，而普通内部类不能声明static成员变量和方法(<font color="red"> 除了将变量声明成<code>final static</code></font>)</li>
+<li>静态内部类可以单独初始化:<br><code>Inner i = new Outer.Inner();</code><br>备注：一定要记住静态类的实例化方法是这个样子的呢<br>普通内部类初始化：<br><code>Inner i = new Outer().Inner();</code></li>
+<li><p>静态内部类的非静态方法也不能访问/静态方法：它们仅能调用其他的static 方法，它们只能访问static数据<br>它们不能以任何方式引用this 或super(this涉及到对象，super 与继承有关）</p>
+</li>
+<li><p>外部类不能随意访问内部类的变量，内部类是能访问外部类的变量</p>
+</li>
+</ol>
+<p>总之：在分析的时候注意static是在类被classLoader加载的时候就初始化后被所有对象公用了，也就是此时即使没有对象也能访问。 但是普通成员就不是这个样子，必须要有相应的对象才能这样访问。</p>
+<hr>
+<h2 id="使用场景">使用场景</h2><p> 静态内部类使用场景一般是当外部类需要使用内部类，而内部类无需外部类资源，并且内部类可以单独创建的时候会考虑采用静态内部类的设计</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Outer</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Builder</span> &#123;</span><br><span class="line">        <span class="keyword">private</span> String name;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Builder</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.age = age;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">withName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">withAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.age = age;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Outer <span class="title">build</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Outer(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Outer</span><span class="params">(Builder b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = b.age;</span><br><span class="line">        <span class="keyword">this</span>.name = b.name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>静态内部类调用外部类的构造函数，来构造外部类，由于静态内部类可以被单独初始化说有在外部就有以下实现：</p>
+<p>public Outer getOuter()<br>{<br>    Outer outer = new Outer.Builder(2).withName(“Yang Liu”).build();<br>    return outer;<br>}</p>
+<p>对于静态类总结是：</p>
+<ol>
+<li>如果类的构造器或静态工厂中有多个参数，设计这样类时，最好使用Builder模式，特别是当大多数参数都是可选的时候。</li>
+<li>如果现在不能确定参数的个数，最好一开始就使用构建器即Builder模式。</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>  今天看spring源码的时候看见静态内部类，之前自己感觉关于内部类的知识掌握的还算可以的但是今天才发现，我还是需要好好的总结和梳理下内部类的相关知识了…</p>
+<p>  如果一个类要被声明为static的，只有一种情况，就是静态内部类。如果在外部类声明为static，]]>
+    </summary>
+    
+      <category term="静态内部类" scheme="http://donahue-ldz.github.io/tags/%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB/"/>
+    
+      <category term="java" scheme="http://donahue-ldz.github.io/categories/java/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[ClassLoader学习]]></title>
