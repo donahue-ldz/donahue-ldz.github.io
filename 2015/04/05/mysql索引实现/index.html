@@ -8,21 +8,15 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>日志记录 | 心缘冰河</title>
+    <title>mysql索引实现 | 心缘冰河</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="donahue">
     
-    <meta name="description" content="日志服务三个目的 ：
+    <meta name="description" content="在MySQL中，索引属于存储引擎级别的概念，不同存储引擎对索引的实现方式是不同的，本文主要讨论MyISAM和InnoDB两个存储引擎的索引实现方式。
+MyISAM索引实现MyISAM引擎使用B+Tree作为索引结构，叶节点的data域存放的是数据记录的地址。下图是MyISAM索引的原理图：
 
-监视代码中变量的变化情况，周期性的记录到文件中供其他应用进行统计分析工作
-跟踪代码运行时轨迹，作为日后审计的依据
-担当集成开发环境中的调试器的作用，向文件或控制台打印代码的调试信息
-
-
-
-log4j简介
-Log4j是Apache的一个开放源代码项目，通过使用Log4j，我们可">
+这里设">
     
     
     
@@ -238,15 +232,15 @@ Log4j是Apache的一个开放源代码项目，通过使用Log4j，我们可">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/05/日志记录/" title="日志记录" itemprop="url">日志记录</a>
+      <a href="/2015/04/05/mysql索引实现/" title="mysql索引实现" itemprop="url">mysql索引实现</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://donahue-ldz.github.io" title="donahue">donahue</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-01-05T06:42:11.000Z" itemprop="datePublished">Jan 5 2015</time>
-    更新日期:<time datetime="2015-03-15T05:30:37.000Z" itemprop="dateModified">Mar 15 2015</time>
+    <time datetime="2015-04-05T15:15:41.000Z" itemprop="datePublished">Apr 5 2015</time>
+    更新日期:<time datetime="2015-04-05T12:19:24.000Z" itemprop="dateModified">Apr 5 2015</time>
     
   </p>
 </header>
@@ -255,71 +249,59 @@ Log4j是Apache的一个开放源代码项目，通过使用Log4j，我们可">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#日志服务"><span class="toc-number">1.</span> <span class="toc-text">日志服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#log4j简介"><span class="toc-number">2.</span> <span class="toc-text">log4j简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Log4j三大类构成"><span class="toc-number">3.</span> <span class="toc-text">Log4j三大类构成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Logger"><span class="toc-number">3.1.</span> <span class="toc-text">Logger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Appender"><span class="toc-number">3.2.</span> <span class="toc-text">Appender</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layout"><span class="toc-number">3.3.</span> <span class="toc-text">Layout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见优秀配置配置"><span class="toc-number">4.</span> <span class="toc-text">常见优秀配置配置</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#MyISAM索引实现"><span class="toc-number">1.</span> <span class="toc-text">MyISAM索引实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InnoDB索引实现"><span class="toc-number">2.</span> <span class="toc-text">InnoDB索引实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MyISAM_和_InnoDB区别"><span class="toc-number">3.</span> <span class="toc-text">MyISAM 和 InnoDB区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number"></span> <span class="toc-text">参考资料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#鸣谢"><span class="toc-number"></span> <span class="toc-text">鸣谢</span></a>
 		</div>
 		
-		<h2 id="日志服务">日志服务</h2><p>三个目的 ：</p>
-<ul>
-<li>监视代码中变量的变化情况，周期性的记录到文件中供其他应用进行统计分析工作</li>
-<li>跟踪代码运行时轨迹，作为日后审计的依据</li>
-<li><p>担当集成开发环境中的调试器的作用，向文件或控制台打印代码的调试信息</p>
-<hr>
+		<p>在MySQL中，索引属于存储引擎级别的概念，不同存储引擎对索引的实现方式是不同的，本文主要讨论MyISAM和InnoDB两个存储引擎的索引实现方式。</p>
+<h3 id="MyISAM索引实现">MyISAM索引实现</h3><p>MyISAM引擎使用B+Tree作为索引结构，叶节点的data域存放的是数据记录的地址。下图是MyISAM索引的原理图：</p>
+<p><img src="/img/MyISAM.png" alt=""></p>
+<p>这里设表一共有三列，假设我们以Col1为主键，则图是一个MyISAM表的主索引（Primary key）示意。可以看出MyISAM的索引文件仅仅保存数据记录的地址。在MyISAM中，主索引和辅助索引（Secondary key）在结构上没有任何区别，只是主索引要求key是唯一的，而辅助索引的key可以重复。如果我们在Col2上建立一个辅助索引，则此索引的结构如下图所示：<br><img src="/img/MyISAM2.png" alt=""></p>
+<p>同样也是一颗B+Tree，data域保存数据记录的地址。因此，MyISAM中索引检索的算法为首先按照B+Tree搜索算法搜索索引，如果指定的Key存在，则取出其data域的值，然后以data域的值为地址，读取相应数据记录。</p>
+<p>MyISAM的索引方式也叫做<code>非聚集</code>的，之所以这么称呼是为了与InnoDB的聚集索引区分。</p>
+<blockquote>
+<p>只是存储地址，这样就能将数据和存储分开了，这样的话就算update数据（不是索引部分），索引可能就没有必要改变了，加快了速度呀</p>
+</blockquote>
+<h3 id="InnoDB索引实现">InnoDB索引实现</h3><p>虽然InnoDB也使用B+Tree作为索引结构，但具体实现方式却与MyISAM截然不同。</p>
+<p>第一个重大区别是InnoDB的数据文件本身就是索引文件。从上文知道，MyISAM索引文件和数据文件是分离的，索引文件仅保存数据记录的地址。而在InnoDB中，表数据文件本身就是按B+Tree组织的一个索引结构，这棵树的叶节点data域保存了完整的数据记录。这个索引的key是数据表的主键，因此InnoDB表数据文件本身就是主索引。</p>
+<p><img src="/img/InnoDB.png" alt=""></p>
+<p>图是InnoDB主索引（同时也是数据文件）的示意图，可以看到叶节点包含了完整的数据记录。这种索引叫做<code>聚集索引</code>。</p>
+<h3 id="MyISAM_和_InnoDB区别">MyISAM 和 InnoDB区别</h3><ol>
+<li><p>因为InnoDB的数据文件本身要按主键聚集，所以InnoDB要求表必须有主键（MyISAM可以没有），如果没有显式指定，则MySQL系统会自动选择一个可以唯一标识数据记录的列作为主键，如果不存在这种列，则MySQL自动为InnoDB表生成一个隐含字段作为主键，这个字段长度为6个字节，类型为长整形。</p>
 </li>
-</ul>
-<h2 id="log4j简介">log4j简介</h2><blockquote>
-<p>Log4j是Apache的一个开放源代码项目，通过使用Log4j，我们可以控制日志信息输送的目的地为控制台、文件、GUI组件、甚至可以为套接口服务器、NT的事件记录器、UNIX Syslog守护进程等；我们也可以控制每一条日志的输出格式；通过定义每一条日志信息的级别，我们能够更加细致地控制日志的生成过程。这些可以通过一个配置文件来灵活地进行配置，而不需要修改应用的代码。</p>
-<p>此外，通过 Log4j 其他语言接口，您可以在 C 、 C+ + 、 .Net 、 PL/SQL 程序中使用 Log4j ，其语法和用法与在 Java 程序中一样，使得多语言分布式系统得到一个统一一致的日志组件模块。而且，通 过使用各种第三方扩展，您可以很方便地将 Log4j 集成到 J2EE 、 JINI 甚至是 SNMP 应用中。</p>
-</blockquote>
-<hr>
-<h2 id="Log4j三大类构成">Log4j三大类构成</h2><h3 id="Logger">Logger</h3><p>负责输出日志信息，并能够对日志信息进行分类筛选，即决定哪些日志信息应该被输出，哪些该被忽略。Loggers组件输出日志信息时分为5个级别：DEBUG、INFO、WARN、ERROR、FATAL。这五个级别的顺序是：DEBUG&lt;INFO&lt;WARN&lt;ERROR&lt;FATAL。如果设置某个Logger组件的级别是P，则只有级别比P高的日志信息才能输出。Logger是有继承关系的，最上层是rootLogger，定义的其他Logger都会继承rootLogger。</p>
-<h3 id="Appender">Appender</h3><p>定义了日志输出目的地，指定日志信息应该被输出到什么地方。输出的目的地可以是控制台、文件或网络设备。<br>格式为：log4j.appender.appenderName =  其中， Log4j提供的appender有以下几种:</p>
-<blockquote>
-<ol>
-<li>org.apache.log4j.ConsoleAppender （控制台）</li>
-<li>org.apache.log4j.FileAppender （文件）</li>
-<li>org.apache.log4j.DailyRollingFileAppender （每天产生一个日志文件）， </li>
-<li>org.apache.log4j.RollingFileAppender （文件大小到达指定尺寸的时候产生一个新的文件） </li>
-<li>org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）</li>
-<li>org.apache.log4j.JdbcAppender(将日志讯息保存到数据库中) </li>
+<li><p>第二个与MyISAM索引的不同是InnoDB的辅助索引data域存储相应记录主键的值而不是地址。换句话说，InnoDB的所有辅助索引都引用主键作为data域。例如，图11为定义在Col3上的一个辅助索引：</p>
+</li>
 </ol>
-</blockquote>
-<p>此外还可以自己定义</p>
-<h3 id="Layout">Layout</h3><p>通过在Appender的后面附加Layout来实现格式化输出。</p>
-<p>一个Logger可以有多个Appender，每个Appender对应一个Layout。<br>配置日志信息的格式（布局），其语法为：<br>log4j.appender.appenderName.layout = 其中， Log4j 提供的 layout 有以几种：</p>
+<p><img src="/img/InnoDB2.png" alt=""></p>
+<p>这里以英文字符的ASCII码作为比较准则。聚集索引这种实现方式使得按主键的搜索十分高效，但是辅助索引搜索需要检索两遍索引：首先检索辅助索引获得主键，然后用主键到主索引中检索获得记录。</p>
 <blockquote>
-<ol>
-<li>org.apache.log4j.HTMLLayout （以 HTML 表格形式布局）</li>
-<li>org.apache.log4j.SimpleLayout （包含日志信息的级别和信息字符串）</li>
-<li>org.apache.log4j.TTCCLayout （包含日志产生的时间、线程、类别等等信息） </li>
-<li>org.apache.log4j.PatternLayout （可以灵活地指定布局模式）</li>
-</ol>
+<p>总结：就是说InnoDB中必须包含主键索引，但是MyISAM可以没有主键索引<br>InnoDB中查找的时候先按照辅助索引查找，然后找到主键，然后再在主键索引中去找相关的记录，也就是辅助索引叶子节点中不包含整个记录的完全信息。只有主键索引中才包含所有的整个记录的信息，所以一般在InnoDB实现的时候主键一般不要太长，否则将占用大量的内存.</p>
 </blockquote>
-<p><code>org.apache.log4j.PatternLayout （可以灵活地指定布局模式）</code></p>
-<blockquote>
-<p>Log4J 采用类似 C 语言中的 printf 函数的打印格式格式化日志信息，打印参数如下：<br>%m 输出代码中指定的消息<br>%p 输出优先级，即 DEBUG ， INFO ， WARN ， ERROR ， FATAL<br>%r 输出自应用启动到输出该 log 信息耗费的毫秒数<br>%c 输出所属的类目，通常就是所在类的全名<br>%t 输出产生该日志事件的线程名<br>%n 输出一个回车换行符， Windows 平台为 “rn” ， Unix 平台为 “n”<br>%d 输出日志时间点的日期或时间，默认格式为 ISO8601，也可以在其后指定格式，比如： %d{yyy MMM dd HH:mm:ss,SSS} </p>
-</blockquote>
+<p>了解不同存储引擎的索引实现方式对于正确使用和优化索引都非常有帮助，例如知道了InnoDB的索引实现后，就很容易明白为什么不建议使用过长的字段作为主键，因为所有辅助索引都引用主索引，过长的主索引会令辅助索引变得过大。再例如，用非单调的字段作为主键在InnoDB中不是个好主意，因为InnoDB数据文件本身是一颗B+Tree，非单调的主键会造成在插入新记录时数据文件为了维持B+Tree的特性而频繁的分裂调整，十分低效，而使用自增字段作为主键则是一个很好的选择。</p>
 <hr>
-<h2 id="常见优秀配置配置">常见优秀配置配置</h2><p>详见博文，<a href="http://donahue-ldz.github.io/2015/01/15/log4j%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/" target="_blank" rel="external">log4j常见配置</a></p>
+<p>为了更好的学习索引相关的只是，让我一起来学习什么时候用索引，以及一些索引的注意事项，<a href="">点这里</a></p>
+<h2 id="参考资料">参考资料</h2><p><a href="http://blog.jobbole.com/24006/" target="_blank" rel="external">http://blog.jobbole.com/24006/</a></p>
+<p><a href="http://www.mb5u.com/biancheng/mssql/mssql_97413.html" target="_blank" rel="external">http://blog.jobbole.com/24006/</a></p>
+<h2 id="鸣谢">鸣谢</h2><p>感谢两篇文章的作者的努力，才是我现在能较清楚的学习到相关的知识，也顺便引入作者的图片和文章，加上自己的理解</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/log4j/">log4j</a><a href="/tags/日志记录/">日志记录</a>
+  <span></span> <a href="/tags/InnoDB/">InnoDB</a><a href="/tags/MyISAM/">MyISAM</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/log/">log</a>
+  <a class="article-category-link" href="/categories/数据库/">数据库</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://donahue-ldz.github.io/2015/01/05/日志记录/" data-title="日志记录 | 心缘冰河" data-tsina="null" class="share clearfix">
+  <div data-url="http://donahue-ldz.github.io/2015/04/05/mysql索引实现/" data-title="mysql索引实现 | 心缘冰河" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -328,19 +310,11 @@ Log4j是Apache的一个开放源代码项目，通过使用Log4j，我们可">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/01/15/log4j常见配置/" title="log4j常见配置">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  log4j常见配置</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/09/28/finalize理解/"  title="finalize理解">
+<a href="/2015/04/05/mysql索引数据结构/"  title="mysql索引数据结构">
  <strong>NEXT:</strong><br/> 
- <span>finalize理解
+ <span>mysql索引数据结构
 </span>
 </a>
 </div>
@@ -350,7 +324,7 @@ Log4j是Apache的一个开放源代码项目，通过使用Log4j，我们可">
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="日志记录" data-thread-key="日志记录" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/日志记录"></div>
+	<div class="ds-thread" data-title="mysql索引实现" data-thread-key="mysql索引实现" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/mysql索引实现"></div>
 	
 </section>
 
@@ -360,7 +334,7 @@ Log4j是Apache的一个开放源代码项目，通过使用Log4j，我们可">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#日志服务"><span class="toc-number">1.</span> <span class="toc-text">日志服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#log4j简介"><span class="toc-number">2.</span> <span class="toc-text">log4j简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Log4j三大类构成"><span class="toc-number">3.</span> <span class="toc-text">Log4j三大类构成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Logger"><span class="toc-number">3.1.</span> <span class="toc-text">Logger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Appender"><span class="toc-number">3.2.</span> <span class="toc-text">Appender</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layout"><span class="toc-number">3.3.</span> <span class="toc-text">Layout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见优秀配置配置"><span class="toc-number">4.</span> <span class="toc-text">常见优秀配置配置</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#MyISAM索引实现"><span class="toc-number">1.</span> <span class="toc-text">MyISAM索引实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#InnoDB索引实现"><span class="toc-number">2.</span> <span class="toc-text">InnoDB索引实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MyISAM_和_InnoDB区别"><span class="toc-number">3.</span> <span class="toc-text">MyISAM 和 InnoDB区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number"></span> <span class="toc-text">参考资料</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#鸣谢"><span class="toc-number"></span> <span class="toc-text">鸣谢</span></a>
   </div>
 
 <div id="asidepart">

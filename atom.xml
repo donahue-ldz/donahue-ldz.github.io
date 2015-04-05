@@ -4,7 +4,7 @@
   <subtitle><![CDATA[写出我人生,coding]]></subtitle>
   <link href="//atom.xml" rel="self"/>
   <link href="http://donahue-ldz.github.io/"/>
-  <updated>2015-04-05T12:01:08.000Z</updated>
+  <updated>2015-04-05T12:19:24.000Z</updated>
   <id>http://donahue-ldz.github.io/</id>
   
   <author>
@@ -15,21 +15,71 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[mysql索引实现]]></title>
+    <link href="http://donahue-ldz.github.io/2015/04/05/mysql%E7%B4%A2%E5%BC%95%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://donahue-ldz.github.io/2015/04/05/mysql索引实现/</id>
+    <published>2015-04-05T15:15:41.000Z</published>
+    <updated>2015-04-05T12:19:24.000Z</updated>
+    <content type="html"><![CDATA[<p>在MySQL中，索引属于存储引擎级别的概念，不同存储引擎对索引的实现方式是不同的，本文主要讨论MyISAM和InnoDB两个存储引擎的索引实现方式。</p>
+<h3 id="MyISAM索引实现">MyISAM索引实现</h3><p>MyISAM引擎使用B+Tree作为索引结构，叶节点的data域存放的是数据记录的地址。下图是MyISAM索引的原理图：</p>
+<p><img src="/img/MyISAM.png" alt=""></p>
+<p>这里设表一共有三列，假设我们以Col1为主键，则图是一个MyISAM表的主索引（Primary key）示意。可以看出MyISAM的索引文件仅仅保存数据记录的地址。在MyISAM中，主索引和辅助索引（Secondary key）在结构上没有任何区别，只是主索引要求key是唯一的，而辅助索引的key可以重复。如果我们在Col2上建立一个辅助索引，则此索引的结构如下图所示：<br><img src="/img/MyISAM2.png" alt=""></p>
+<p>同样也是一颗B+Tree，data域保存数据记录的地址。因此，MyISAM中索引检索的算法为首先按照B+Tree搜索算法搜索索引，如果指定的Key存在，则取出其data域的值，然后以data域的值为地址，读取相应数据记录。</p>
+<p>MyISAM的索引方式也叫做<code>非聚集</code>的，之所以这么称呼是为了与InnoDB的聚集索引区分。</p>
+<blockquote>
+<p>只是存储地址，这样就能将数据和存储分开了，这样的话就算update数据（不是索引部分），索引可能就没有必要改变了，加快了速度呀</p>
+</blockquote>
+<h3 id="InnoDB索引实现">InnoDB索引实现</h3><p>虽然InnoDB也使用B+Tree作为索引结构，但具体实现方式却与MyISAM截然不同。</p>
+<p>第一个重大区别是InnoDB的数据文件本身就是索引文件。从上文知道，MyISAM索引文件和数据文件是分离的，索引文件仅保存数据记录的地址。而在InnoDB中，表数据文件本身就是按B+Tree组织的一个索引结构，这棵树的叶节点data域保存了完整的数据记录。这个索引的key是数据表的主键，因此InnoDB表数据文件本身就是主索引。</p>
+<p><img src="/img/InnoDB.png" alt=""></p>
+<p>图是InnoDB主索引（同时也是数据文件）的示意图，可以看到叶节点包含了完整的数据记录。这种索引叫做<code>聚集索引</code>。</p>
+<h3 id="MyISAM_和_InnoDB区别">MyISAM 和 InnoDB区别</h3><ol>
+<li><p>因为InnoDB的数据文件本身要按主键聚集，所以InnoDB要求表必须有主键（MyISAM可以没有），如果没有显式指定，则MySQL系统会自动选择一个可以唯一标识数据记录的列作为主键，如果不存在这种列，则MySQL自动为InnoDB表生成一个隐含字段作为主键，这个字段长度为6个字节，类型为长整形。</p>
+</li>
+<li><p>第二个与MyISAM索引的不同是InnoDB的辅助索引data域存储相应记录主键的值而不是地址。换句话说，InnoDB的所有辅助索引都引用主键作为data域。例如，图11为定义在Col3上的一个辅助索引：</p>
+</li>
+</ol>
+<p><img src="/img/InnoDB2.png" alt=""></p>
+<p>这里以英文字符的ASCII码作为比较准则。聚集索引这种实现方式使得按主键的搜索十分高效，但是辅助索引搜索需要检索两遍索引：首先检索辅助索引获得主键，然后用主键到主索引中检索获得记录。</p>
+<blockquote>
+<p>总结：就是说InnoDB中必须包含主键索引，但是MyISAM可以没有主键索引<br>InnoDB中查找的时候先按照辅助索引查找，然后找到主键，然后再在主键索引中去找相关的记录，也就是辅助索引叶子节点中不包含整个记录的完全信息。只有主键索引中才包含所有的整个记录的信息，所以一般在InnoDB实现的时候主键一般不要太长，否则将占用大量的内存.</p>
+</blockquote>
+<p>了解不同存储引擎的索引实现方式对于正确使用和优化索引都非常有帮助，例如知道了InnoDB的索引实现后，就很容易明白为什么不建议使用过长的字段作为主键，因为所有辅助索引都引用主索引，过长的主索引会令辅助索引变得过大。再例如，用非单调的字段作为主键在InnoDB中不是个好主意，因为InnoDB数据文件本身是一颗B+Tree，非单调的主键会造成在插入新记录时数据文件为了维持B+Tree的特性而频繁的分裂调整，十分低效，而使用自增字段作为主键则是一个很好的选择。</p>
+<hr>
+<p>为了更好的学习索引相关的只是，让我一起来学习什么时候用索引，以及一些索引的注意事项，<a href="">点这里</a></p>
+<h2 id="参考资料">参考资料</h2><p><a href="http://blog.jobbole.com/24006/" target="_blank" rel="external">http://blog.jobbole.com/24006/</a></p>
+<p><a href="http://www.mb5u.com/biancheng/mssql/mssql_97413.html" target="_blank" rel="external">http://blog.jobbole.com/24006/</a></p>
+<h2 id="鸣谢">鸣谢</h2><p>感谢两篇文章的作者的努力，才是我现在能较清楚的学习到相关的知识，也顺便引入作者的图片和文章，加上自己的理解</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在MySQL中，索引属于存储引擎级别的概念，不同存储引擎对索引的实现方式是不同的，本文主要讨论MyISAM和InnoDB两个存储引擎的索引实现方式。</p>
+<h3 id="MyISAM索引实现">MyISAM索引实现</h3><p>MyISAM引擎使用B+Tree作为索引]]>
+    </summary>
+    
+      <category term="InnoDB" scheme="http://donahue-ldz.github.io/tags/InnoDB/"/>
+    
+      <category term="MyISAM" scheme="http://donahue-ldz.github.io/tags/MyISAM/"/>
+    
+      <category term="数据库" scheme="http://donahue-ldz.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[mysql索引数据结构]]></title>
     <link href="http://donahue-ldz.github.io/2015/04/05/mysql%E7%B4%A2%E5%BC%95%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     <id>http://donahue-ldz.github.io/2015/04/05/mysql索引数据结构/</id>
     <published>2015-04-05T09:16:33.000Z</published>
-    <updated>2015-04-05T12:01:08.000Z</updated>
+    <updated>2015-04-05T12:17:53.000Z</updated>
     <content type="html"><![CDATA[<p>MySQL支持诸多存储引擎，而各种存储引擎对索引的支持也各不相同，因此MySQL数据库支持多种索引类型，如BTree索引，哈希索引，全文索引等等，本文只是学习B*索引相关的知识。</p>
 <hr>
 <h3 id="索引的本质">索引的本质</h3><p>MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取数据的数据结构。提取句子主干，就可以得到索引的本质：<font color="red">索引是数据结构</font>.</p>
 <p>我们都希望查询数据的速度能尽可能的快，因此数据库系统的设计者会从查询算法的角度进行优化。最基本的查询算法当然是顺序查找（linear search），这种复杂度为O(n)的算法在数据量很大时显然是糟糕的，好在计算机科学的发展提供了很多更优秀的查找算法，例如二分查找（binary search）、二叉树查找（binary tree search）等。</p>
 <p>每种查找算法都只能应用于特定的数据结构之上，例如二分查找要求被检索数据有序，而二叉树查找只能应用于二叉查找树上，但是数据本身的组织结构不可能完全满足各种数据结构（例如，理论上不可能同时将两列都按顺序进行组织），所以，<font color="red">在数据之外，数据库系统还维护着满足特定查找算法的数据结构，这些数据结构以某种方式引用（指向）数据，这样就可以在这些数据结构上实现高级查找算法。这种数据结构，就是索引。</font></p>
-<p><a href="/img/image2.png"></a></p>
+<p><img src="/img/image2.png" alt=""></p>
 <p>图1展示了一种可能的索引方式。左边是数据表，一共有两列七条记录，最左边的是数据记录的物理地址（注意逻辑上相邻的记录在磁盘上也并不是一定物理相邻的）。为了加快Col2的查找，可以维护一个右边所示的二叉查找树，每个节点分别包含索引键值和一个指向对应数据记录物理地址的指针，这样就可以运用二叉查找在O(log2n)的复杂度内获取到相应数据。</p>
 <p>虽然这是一个货真价实的索引，但是实际的数据库系统几乎没有使用二叉查找树或其进化品种红黑树（red-black tree）实现的，原因会在下文介绍。</p>
 <h3 id="B-Tree">B-Tree</h3><p>目前大部分数据库系统及文件系统都采用B-Tree或其变种B+Tree作为索引结构</p>
-<h4 id="B-Tree-1">B-Tree</h4><p>B-树是一种平衡的多路查找树，它在文件系统中很有用。</p>
+<p>B-树是一种平衡的多路查找树，它在文件系统中很有用。</p>
 <p>定义：一棵m 阶的B-树，或者为空树，或为满足下列特性的m 叉树：</p>
 <ul>
 <li>树中每个结点至多有m 棵子树；</li>
@@ -494,6 +544,34 @@ Catalina  Shared
   </entry>
   
   <entry>
+    <title><![CDATA[java序列化]]></title>
+    <link href="http://donahue-ldz.github.io/2015/03/13/java%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    <id>http://donahue-ldz.github.io/2015/03/13/java序列化/</id>
+    <published>2015-03-13T12:29:02.000Z</published>
+    <updated>2015-04-01T08:18:58.000Z</updated>
+    <content type="html"><![CDATA[<p>Java 提供了一种对象序列化的机制，该机制中，一个对象可以被表示为一个字节序列，该字节序列包括该对象的数据、有关对象的类型的信息和存储在对象中数据的类型。</p>
+<p>将序列化对象写入文件之后，可以从文件中读取出来，并且对它进行反序列化，也就是说，对象的类型信息、对象的数据，还有对象中的数据类型可以用来在内存中新建对象。</p>
+<p><span style="color: #ff00ff;">由于序列化都是由jvm实现 所以可以跨平台在不同的地点序列化</span></p>
+<p>java的序列化有两种方法</p>
+<h2 id="Serializable达到自动序列化">Serializable达到自动序列化</h2><p>记住有些东西是不能或者不方便实例话的（密码，银行卡等敏感信息），此时要是自动序列化的话将是不安全的表现，但是java提供了一个关键字transient，<code>`被transient修饰的变量将不会被序列话，也就不能被反序列化</code>。</p>
+<p><code>被static修饰的变量也不会被序列化</code>，但是反序列化时候，如果当前内存中存在静态变量的值的时候，反序列化的时候被修饰的类成员将还是会看见值，此时的值就是现在内存中的值</p>
+<hr>
+<h2 id="Externalizable手动序列化">Externalizable手动序列化</h2><p>在里面重写相关的方法实现自定义序列化，此时不管是否被transient修饰都使可以哦～～～</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeExternal</span><span class="params">(ObjectOutput <span class="keyword">out</span>)</span> throws IOException </span>&#123;</span><br><span class="line">        <span class="keyword">out</span>.writeObject(content);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="function">Override</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readExternal</span><span class="params">(ObjectInput <span class="keyword">in</span>)</span> throws IOException,</span><br><span class="line">            ClassNotFoundException </span>&#123;</span><br><span class="line">        content = (String) <span class="keyword">in</span>.readObject();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>本文只是介绍jdk自带的序列化，还有更多更好的序列化方法将比jdk带的更加方便和效率高</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Java 提供了一种对象序列化的机制，该机制中，一个对象可以被表示为一个字节序列，该字节序列包括该对象的数据、有关对象的类型的信息和存储在对象中数据的类型。</p>
+<p>将序列化对象写入文件之后，可以从文件中读取出来，并且对它进行反序列化，也就是说，对象的类型信息、对象的]]>
+    </summary>
+    
+      <category term="序列化" scheme="http://donahue-ldz.github.io/tags/%E5%BA%8F%E5%88%97%E5%8C%96/"/>
+    
+      <category term="java" scheme="http://donahue-ldz.github.io/categories/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[lucene基础]]></title>
     <link href="http://donahue-ldz.github.io/2015/03/13/lucene%E5%9F%BA%E7%A1%80/"/>
     <id>http://donahue-ldz.github.io/2015/03/13/lucene基础/</id>
@@ -525,34 +603,6 @@ Catalina  Shared
       <category term="lucene，搜索" scheme="http://donahue-ldz.github.io/tags/lucene%EF%BC%8C%E6%90%9C%E7%B4%A2/"/>
     
       <category term="lucene" scheme="http://donahue-ldz.github.io/categories/lucene/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[java序列化]]></title>
-    <link href="http://donahue-ldz.github.io/2015/03/13/java%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    <id>http://donahue-ldz.github.io/2015/03/13/java序列化/</id>
-    <published>2015-03-13T12:29:02.000Z</published>
-    <updated>2015-04-01T08:18:58.000Z</updated>
-    <content type="html"><![CDATA[<p>Java 提供了一种对象序列化的机制，该机制中，一个对象可以被表示为一个字节序列，该字节序列包括该对象的数据、有关对象的类型的信息和存储在对象中数据的类型。</p>
-<p>将序列化对象写入文件之后，可以从文件中读取出来，并且对它进行反序列化，也就是说，对象的类型信息、对象的数据，还有对象中的数据类型可以用来在内存中新建对象。</p>
-<p><span style="color: #ff00ff;">由于序列化都是由jvm实现 所以可以跨平台在不同的地点序列化</span></p>
-<p>java的序列化有两种方法</p>
-<h2 id="Serializable达到自动序列化">Serializable达到自动序列化</h2><p>记住有些东西是不能或者不方便实例话的（密码，银行卡等敏感信息），此时要是自动序列化的话将是不安全的表现，但是java提供了一个关键字transient，<code>`被transient修饰的变量将不会被序列话，也就不能被反序列化</code>。</p>
-<p><code>被static修饰的变量也不会被序列化</code>，但是反序列化时候，如果当前内存中存在静态变量的值的时候，反序列化的时候被修饰的类成员将还是会看见值，此时的值就是现在内存中的值</p>
-<hr>
-<h2 id="Externalizable手动序列化">Externalizable手动序列化</h2><p>在里面重写相关的方法实现自定义序列化，此时不管是否被transient修饰都使可以哦～～～</p>
-<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeExternal</span><span class="params">(ObjectOutput <span class="keyword">out</span>)</span> throws IOException </span>&#123;</span><br><span class="line">        <span class="keyword">out</span>.writeObject(content);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="function">Override</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readExternal</span><span class="params">(ObjectInput <span class="keyword">in</span>)</span> throws IOException,</span><br><span class="line">            ClassNotFoundException </span>&#123;</span><br><span class="line">        content = (String) <span class="keyword">in</span>.readObject();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>本文只是介绍jdk自带的序列化，还有更多更好的序列化方法将比jdk带的更加方便和效率高</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>Java 提供了一种对象序列化的机制，该机制中，一个对象可以被表示为一个字节序列，该字节序列包括该对象的数据、有关对象的类型的信息和存储在对象中数据的类型。</p>
-<p>将序列化对象写入文件之后，可以从文件中读取出来，并且对它进行反序列化，也就是说，对象的类型信息、对象的]]>
-    </summary>
-    
-      <category term="序列化" scheme="http://donahue-ldz.github.io/tags/%E5%BA%8F%E5%88%97%E5%8C%96/"/>
-    
-      <category term="java" scheme="http://donahue-ldz.github.io/categories/java/"/>
     
   </entry>
   
