@@ -1060,6 +1060,56 @@ article .article-content .right {
   margin-left: 1em;
   float: right;
 }
+#menu-nav {
+  position: fixed;
+  display: none;
+  cursor: pointer;
+  z-index: 150;
+  right: 0;
+  top: 20%;
+  -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.15);
+  box-shadow: 0 0 5px rgba(0,0,0,0.15);
+  color: #fff;
+  background: rgba(100,100,100,0.74);
+}
+#menu-nav #title-nav {
+  display: inline-block;
+  vertical-align: middle;
+  width: 30px;
+  height: 100%;
+  font-size: 16px;
+  text-align: center;
+  padding: 10px 0;
+}
+#menu-nav #content-nav {
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+  border-left: 1px dashed #ccc;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 15px;
+  line-height: 18px;
+  font-size: 10px;
+}
+#menu-nav #content-nav li {
+  list-style-type: none;
+  width: 100%;
+}
+#menu-nav #content-nav li a {
+  display: block;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #fff;
+}
+#menu-nav #content-nav li a:hover {
+  background: #646464;
+}
+#menu-nav #content-nav li .toc-child a {
+  padding-left: 20px;
+}
 footer.article-footer {
   background: #fafafa;
   padding: 0 4%;
