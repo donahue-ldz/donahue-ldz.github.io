@@ -4,7 +4,7 @@
   <subtitle><![CDATA[写出我人生,coding]]></subtitle>
   <link href="//atom.xml" rel="self"/>
   <link href="http://donahue-ldz.github.io/"/>
-  <updated>2015-04-06T03:22:01.000Z</updated>
+  <updated>2015-04-07T13:42:14.000Z</updated>
   <id>http://donahue-ldz.github.io/</id>
   
   <author>
@@ -13,6 +13,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[enum 单例]]></title>
+    <link href="http://donahue-ldz.github.io/2015/04/07/enum-%E5%8D%95%E4%BE%8B/"/>
+    <id>http://donahue-ldz.github.io/2015/04/07/enum-单例/</id>
+    <published>2015-04-07T08:42:37.000Z</published>
+    <updated>2015-04-07T13:42:14.000Z</updated>
+    <content type="html"><![CDATA[<p>实现单例方法很多，为什么enum实现是比较好的选择呢</p>
+<ol>
+<li>Enum 构造函数是私用的，外部不能随意调用</li>
+<li>Enum 对象是线程安全的</li>
+<li>原生态的序列化有jDK保证，一般方法实现单例模式的时候如果要出现序列化的需求的时候将调用对象的构造函数去反序列化，这个就打破了单例的初衷<br>但是可以重写</li>
+</ol>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function">Object <span class="title">readResolve</span><span class="params">()</span> <span class="keyword">throws</span> ObjectStreamException </span>&#123;      </span><br><span class="line">   <span class="keyword">return</span> INSTANCE; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>实现单例方法很多，为什么enum实现是比较好的选择呢</p>
+<ol>
+<li>Enum 构造函数是私用的，外部不能随意调用</li>
+<li>Enum 对象是线程安全的</li>
+<li>原生态的序列化有jDK保证，一般方法实现单例模式的时候如果要出现序列化的需求的时候将]]>
+    </summary>
+    
+      <category term="java" scheme="http://donahue-ldz.github.io/tags/java/"/>
+    
+      <category term="java" scheme="http://donahue-ldz.github.io/categories/java/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[java内存模型]]></title>

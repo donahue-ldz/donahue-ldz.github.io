@@ -229,6 +229,26 @@
 
   <section class="post" itemscope itemprop="blogPost">
   
+    <a href="/2015/04/07/enum-单例/" title="enum 单例" itemprop="url">
+  
+      <time datetime="2015-04-07T08:42:37.000Z" itemprop="datePublished">Apr 7 2015</time>
+    <h1 itemprop="name">enum 单例</h1>
+    
+     
+           <p itemprop="description" >实现单例方法很多，为什么enum实现是比较好的选择呢
+
+Enum 构造函数是私用的，外部不能随意调用
+Enum 对象是线程安全的
+原生态的序列化有jDK保证，一般方法实现单例模式的时候如果要出现序列化的需求的时候将调用对象的构造函数去反序列化，这个就打破了单例的初衷但是可以重写
+</p>
+        
+    
+  </a>
+</section>
+
+
+  <section class="post" itemscope itemprop="blogPost">
+  
     <a href="/2015/04/06/java内存模型/" title="java内存模型" itemprop="url">
   
       <time datetime="2015-04-06T02:55:35.000Z" itemprop="datePublished">Apr 6 2015</time>
@@ -381,22 +401,6 @@ Spring抽象的DAO体系兼容多种数据访问技术，它们各有特色，�
 </section>
 
 
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2015/03/13/java序列化/" title="java序列化" itemprop="url">
-  
-      <time datetime="2015-03-13T12:29:02.000Z" itemprop="datePublished">Mar 13 2015</time>
-    <h1 itemprop="name">java序列化</h1>
-    
-     
-           <p itemprop="description" >Java 提供了一种对象序列化的机制，该机制中，一个对象可以被表示为一个字节序列，该字节序列包括该对象的数据、有关对象的类型的信息和存储在对象中数据的类型。
-将序列化对象写入文件之后，可以从文件中读取出来，并且对它进行反序列化，也就是说，对象的类型信息、对象的数据，还有对象中的数</p>
-        
-    
-  </a>
-</section>
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -442,7 +446,7 @@ Spring抽象的DAO体系兼容多种数据访问技术，它们各有特色，�
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/java/" title="java">java<sup>6</sup></a></li>
+			<li><a href="/categories/java/" title="java">java<sup>7</sup></a></li>
 		
 			<li><a href="/categories/log/" title="log">log<sup>3</sup></a></li>
 		
@@ -472,7 +476,7 @@ Spring抽象的DAO体系兼容多种数据访问技术，它们各有特色，�
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/Buffer/" style="font-size: 10px;">Buffer</a><a href="/tags/Channel/" style="font-size: 10px;">Channel</a><a href="/tags/ClassLoader，类加载器/" style="font-size: 10px;">ClassLoader，类加载器</a><a href="/tags/CyclicBarrier/" style="font-size: 10px;">CyclicBarrier</a><a href="/tags/InnoDB/" style="font-size: 10px;">InnoDB</a><a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a><a href="/tags/MyISAM/" style="font-size: 10px;">MyISAM</a><a href="/tags/NIO/" style="font-size: 10px;">NIO</a><a href="/tags/finalize/" style="font-size: 10px;">finalize</a><a href="/tags/jvm/" style="font-size: 10px;">jvm</a><a href="/tags/log4j/" style="font-size: 20px;">log4j</a><a href="/tags/log4j配置/" style="font-size: 10px;">log4j配置</a><a href="/tags/lucene，搜索/" style="font-size: 10px;">lucene，搜索</a><a href="/tags/mysql/" style="font-size: 10px;">mysql</a><a href="/tags/redis/" style="font-size: 10px;">redis</a><a href="/tags/spring/" style="font-size: 10px;">spring</a><a href="/tags/vim/" style="font-size: 10px;">vim</a><a href="/tags/事务管理/" style="font-size: 10px;">事务管理</a><a href="/tags/内存回收/" style="font-size: 10px;">内存回收</a><a href="/tags/序列化/" style="font-size: 10px;">序列化</a><a href="/tags/日志/" style="font-size: 10px;">日志</a><a href="/tags/日志记录/" style="font-size: 10px;">日志记录</a><a href="/tags/索引/" style="font-size: 10px;">索引</a><a href="/tags/线程/" style="font-size: 10px;">线程</a><a href="/tags/线程等待，CountDownLatch/" style="font-size: 10px;">线程等待，CountDownLatch</a><a href="/tags/静态内部类/" style="font-size: 10px;">静态内部类</a>
+       <a href="/tags/Buffer/" style="font-size: 10px;">Buffer</a><a href="/tags/Channel/" style="font-size: 10px;">Channel</a><a href="/tags/ClassLoader，类加载器/" style="font-size: 10px;">ClassLoader，类加载器</a><a href="/tags/CyclicBarrier/" style="font-size: 10px;">CyclicBarrier</a><a href="/tags/InnoDB/" style="font-size: 10px;">InnoDB</a><a href="/tags/MarkDown/" style="font-size: 10px;">MarkDown</a><a href="/tags/MyISAM/" style="font-size: 10px;">MyISAM</a><a href="/tags/NIO/" style="font-size: 10px;">NIO</a><a href="/tags/finalize/" style="font-size: 10px;">finalize</a><a href="/tags/java/" style="font-size: 10px;">java</a><a href="/tags/jvm/" style="font-size: 10px;">jvm</a><a href="/tags/log4j/" style="font-size: 20px;">log4j</a><a href="/tags/log4j配置/" style="font-size: 10px;">log4j配置</a><a href="/tags/lucene，搜索/" style="font-size: 10px;">lucene，搜索</a><a href="/tags/mysql/" style="font-size: 10px;">mysql</a><a href="/tags/redis/" style="font-size: 10px;">redis</a><a href="/tags/spring/" style="font-size: 10px;">spring</a><a href="/tags/vim/" style="font-size: 10px;">vim</a><a href="/tags/事务管理/" style="font-size: 10px;">事务管理</a><a href="/tags/内存回收/" style="font-size: 10px;">内存回收</a><a href="/tags/序列化/" style="font-size: 10px;">序列化</a><a href="/tags/日志/" style="font-size: 10px;">日志</a><a href="/tags/日志记录/" style="font-size: 10px;">日志记录</a><a href="/tags/索引/" style="font-size: 10px;">索引</a><a href="/tags/线程/" style="font-size: 10px;">线程</a><a href="/tags/线程等待，CountDownLatch/" style="font-size: 10px;">线程等待，CountDownLatch</a><a href="/tags/静态内部类/" style="font-size: 10px;">静态内部类</a>
     </div>
   </div>
 
