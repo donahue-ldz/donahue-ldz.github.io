@@ -4,7 +4,7 @@
   <subtitle><![CDATA[写出我人生,coding]]></subtitle>
   <link href="//atom.xml" rel="self"/>
   <link href="http://donahue-ldz.github.io/"/>
-  <updated>2015-04-07T13:42:14.000Z</updated>
+  <updated>2015-04-10T04:03:49.000Z</updated>
   <id>http://donahue-ldz.github.io/</id>
   
   <author>
@@ -13,6 +13,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[数据库表之间连接]]></title>
+    <link href="http://donahue-ldz.github.io/2015/04/10/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E4%B9%8B%E9%97%B4%E8%BF%9E%E6%8E%A5/"/>
+    <id>http://donahue-ldz.github.io/2015/04/10/数据库表之间连接/</id>
+    <published>2015-04-10T04:02:18.000Z</published>
+    <updated>2015-04-10T04:03:49.000Z</updated>
+    <content type="html"><![CDATA[<p>关于多表之间的连接我是这样理解的，做个简单的记录吧,连接有2种.</p>
+<h2 id="内连接">内连接</h2><p>满足连接条件在指定属性列上值相等时候才连接  </p>
+<h3 id="等值连接">等值连接</h3><p>就是指定连接在某个/某些属性上值相等的连接<br><code>select * from a ,b where a.column = b.column</code>(在笛卡尔乘积上筛选)<br><code>select * from a join b on a.column = b.column</code> (只有在相同的时候才执行连接操作)</p>
+<h3 id="自然连接">自然连接</h3><p>由系统判断属性名字，然后对所有属性名字上相同的字段上面进行等值连接。就是说此时的连接是所有相同的字段上的相同的值才能连接<br><code>select * from a natural join b</code> </p>
+<h2 id="外连接">外连接</h2><p>外连接是对于内连接而言的，它在连接属性上即使值不想同的时候也能参与连接</p>
+<h3 id="左外连接">左外连接</h3><p>位于左边的表中的每一行，去找右边的表的每一行，如果在指定属性上的值是相等的话进行连接，如果在右边中找不到和左边表中的某一行的指定属性列值不相等，此时任然将左边的列连接，但是参与连接的右边的列全部属性值都是空<br><code>select * from a left join b on</code></p>
+<h3 id="右外连接">右外连接</h3><p>位于右边的表中的每一行，去找左边边的表的每一行，如果在指定属性上的值是相等的话进行连接，如果在左边中找不到和右边表中的某一行的指定属性列值不相等，此时任然将右边的列连接，但是参与连接的左边的列全部属性值都是空<br><code>select * from a right join b on</code></p>
+<h3 id="全外连接">全外连接</h3><p>也就是综合前面两种左右外连接。当左边表值在右边中没有匹配的时候将右边属性列全部设置为空，当右边表值在左边中没有匹配的时候将左边属性列全部设置为空<br><code>select * from a full join b on</code><br>具体的应用就是：</p>
+<blockquote>
+<p>如果想让左边表全部参与进去的话就左外连接<br>如果想让右边表全部参与进去的话就右外连接<br>如果想让左右边表全部参与进去的话就全外连接</p>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>关于多表之间的连接我是这样理解的，做个简单的记录吧,连接有2种.</p>
+<h2 id="内连接">内连接</h2><p>满足连接条件在指定属性列上值相等时候才连接  </p>
+<h3 id="等值连接">等值连接</h3><p>就是指定连接在某个/某些属性上值相等的连接<]]>
+    </summary>
+    
+      <category term="表连接" scheme="http://donahue-ldz.github.io/tags/%E8%A1%A8%E8%BF%9E%E6%8E%A5/"/>
+    
+      <category term="数据库" scheme="http://donahue-ldz.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[enum 单例]]></title>

@@ -8,21 +8,14 @@
   <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
 <meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
   
-    <title>日志记录 | 心缘冰河</title>
+    <title>数据库表之间连接 | 心缘冰河</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="donahue">
     
-    <meta name="description" content="日志服务三个目的 ：
-
-监视代码中变量的变化情况，周期性的记录到文件中供其他应用进行统计分析工作
-跟踪代码运行时轨迹，作为日后审计的依据
-担当集成开发环境中的调试器的作用，向文件或控制台打印代码的调试信息
-
-
-
-log4j简介
-Log4j是Apache的一个开放源代码项目，通过使用Log4j，我们可">
+    <meta name="description" content="关于多表之间的连接我是这样理解的，做个简单的记录吧,连接有2种.
+内连接满足连接条件在指定属性列上值相等时候才连接  
+等值连接就是指定连接在某个/某些属性上值相等的连接select * from a ,b where a.column = b.column(在笛卡尔乘积上筛选)select * f">
     
     
     
@@ -238,15 +231,15 @@ Log4j是Apache的一个开放源代码项目，通过使用Log4j，我们可">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/01/05/日志记录/" title="日志记录" itemprop="url">日志记录</a>
+      <a href="/2015/04/10/数据库表之间连接/" title="数据库表之间连接" itemprop="url">数据库表之间连接</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://donahue-ldz.github.io" title="donahue">donahue</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-01-05T06:42:11.000Z" itemprop="datePublished">Jan 5 2015</time>
-    更新日期:<time datetime="2015-03-15T05:30:37.000Z" itemprop="dateModified">Mar 15 2015</time>
+    <time datetime="2015-04-10T04:02:18.000Z" itemprop="datePublished">Apr 10 2015</time>
+    更新日期:<time datetime="2015-04-10T04:03:49.000Z" itemprop="dateModified">Apr 10 2015</time>
     
   </p>
 </header>
@@ -255,71 +248,40 @@ Log4j是Apache的一个开放源代码项目，通过使用Log4j，我们可">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#日志服务"><span class="toc-number">1.</span> <span class="toc-text">日志服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#log4j简介"><span class="toc-number">2.</span> <span class="toc-text">log4j简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Log4j三大类构成"><span class="toc-number">3.</span> <span class="toc-text">Log4j三大类构成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Logger"><span class="toc-number">3.1.</span> <span class="toc-text">Logger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Appender"><span class="toc-number">3.2.</span> <span class="toc-text">Appender</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layout"><span class="toc-number">3.3.</span> <span class="toc-text">Layout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见优秀配置配置"><span class="toc-number">4.</span> <span class="toc-text">常见优秀配置配置</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#内连接"><span class="toc-number">1.</span> <span class="toc-text">内连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#等值连接"><span class="toc-number">1.1.</span> <span class="toc-text">等值连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自然连接"><span class="toc-number">1.2.</span> <span class="toc-text">自然连接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#外连接"><span class="toc-number">2.</span> <span class="toc-text">外连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#左外连接"><span class="toc-number">2.1.</span> <span class="toc-text">左外连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#右外连接"><span class="toc-number">2.2.</span> <span class="toc-text">右外连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全外连接"><span class="toc-number">2.3.</span> <span class="toc-text">全外连接</span></a></li></ol></li></ol>
 		</div>
 		
-		<h2 id="日志服务">日志服务</h2><p>三个目的 ：</p>
-<ul>
-<li>监视代码中变量的变化情况，周期性的记录到文件中供其他应用进行统计分析工作</li>
-<li>跟踪代码运行时轨迹，作为日后审计的依据</li>
-<li><p>担当集成开发环境中的调试器的作用，向文件或控制台打印代码的调试信息</p>
-<hr>
-</li>
-</ul>
-<h2 id="log4j简介">log4j简介</h2><blockquote>
-<p>Log4j是Apache的一个开放源代码项目，通过使用Log4j，我们可以控制日志信息输送的目的地为控制台、文件、GUI组件、甚至可以为套接口服务器、NT的事件记录器、UNIX Syslog守护进程等；我们也可以控制每一条日志的输出格式；通过定义每一条日志信息的级别，我们能够更加细致地控制日志的生成过程。这些可以通过一个配置文件来灵活地进行配置，而不需要修改应用的代码。</p>
-<p>此外，通过 Log4j 其他语言接口，您可以在 C 、 C+ + 、 .Net 、 PL/SQL 程序中使用 Log4j ，其语法和用法与在 Java 程序中一样，使得多语言分布式系统得到一个统一一致的日志组件模块。而且，通 过使用各种第三方扩展，您可以很方便地将 Log4j 集成到 J2EE 、 JINI 甚至是 SNMP 应用中。</p>
-</blockquote>
-<hr>
-<h2 id="Log4j三大类构成">Log4j三大类构成</h2><h3 id="Logger">Logger</h3><p>负责输出日志信息，并能够对日志信息进行分类筛选，即决定哪些日志信息应该被输出，哪些该被忽略。Loggers组件输出日志信息时分为5个级别：DEBUG、INFO、WARN、ERROR、FATAL。这五个级别的顺序是：DEBUG&lt;INFO&lt;WARN&lt;ERROR&lt;FATAL。如果设置某个Logger组件的级别是P，则只有级别比P高的日志信息才能输出。Logger是有继承关系的，最上层是rootLogger，定义的其他Logger都会继承rootLogger。</p>
-<h3 id="Appender">Appender</h3><p>定义了日志输出目的地，指定日志信息应该被输出到什么地方。输出的目的地可以是控制台、文件或网络设备。<br>格式为：log4j.appender.appenderName =  其中， Log4j提供的appender有以下几种:</p>
+		<p>关于多表之间的连接我是这样理解的，做个简单的记录吧,连接有2种.</p>
+<h2 id="内连接">内连接</h2><p>满足连接条件在指定属性列上值相等时候才连接  </p>
+<h3 id="等值连接">等值连接</h3><p>就是指定连接在某个/某些属性上值相等的连接<br><code>select * from a ,b where a.column = b.column</code>(在笛卡尔乘积上筛选)<br><code>select * from a join b on a.column = b.column</code> (只有在相同的时候才执行连接操作)</p>
+<h3 id="自然连接">自然连接</h3><p>由系统判断属性名字，然后对所有属性名字上相同的字段上面进行等值连接。就是说此时的连接是所有相同的字段上的相同的值才能连接<br><code>select * from a natural join b</code> </p>
+<h2 id="外连接">外连接</h2><p>外连接是对于内连接而言的，它在连接属性上即使值不想同的时候也能参与连接</p>
+<h3 id="左外连接">左外连接</h3><p>位于左边的表中的每一行，去找右边的表的每一行，如果在指定属性上的值是相等的话进行连接，如果在右边中找不到和左边表中的某一行的指定属性列值不相等，此时任然将左边的列连接，但是参与连接的右边的列全部属性值都是空<br><code>select * from a left join b on</code></p>
+<h3 id="右外连接">右外连接</h3><p>位于右边的表中的每一行，去找左边边的表的每一行，如果在指定属性上的值是相等的话进行连接，如果在左边中找不到和右边表中的某一行的指定属性列值不相等，此时任然将右边的列连接，但是参与连接的左边的列全部属性值都是空<br><code>select * from a right join b on</code></p>
+<h3 id="全外连接">全外连接</h3><p>也就是综合前面两种左右外连接。当左边表值在右边中没有匹配的时候将右边属性列全部设置为空，当右边表值在左边中没有匹配的时候将左边属性列全部设置为空<br><code>select * from a full join b on</code><br>具体的应用就是：</p>
 <blockquote>
-<ol>
-<li>org.apache.log4j.ConsoleAppender （控制台）</li>
-<li>org.apache.log4j.FileAppender （文件）</li>
-<li>org.apache.log4j.DailyRollingFileAppender （每天产生一个日志文件）， </li>
-<li>org.apache.log4j.RollingFileAppender （文件大小到达指定尺寸的时候产生一个新的文件） </li>
-<li>org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）</li>
-<li>org.apache.log4j.JdbcAppender(将日志讯息保存到数据库中) </li>
-</ol>
+<p>如果想让左边表全部参与进去的话就左外连接<br>如果想让右边表全部参与进去的话就右外连接<br>如果想让左右边表全部参与进去的话就全外连接</p>
 </blockquote>
-<p>此外还可以自己定义</p>
-<h3 id="Layout">Layout</h3><p>通过在Appender的后面附加Layout来实现格式化输出。</p>
-<p>一个Logger可以有多个Appender，每个Appender对应一个Layout。<br>配置日志信息的格式（布局），其语法为：<br>log4j.appender.appenderName.layout = 其中， Log4j 提供的 layout 有以几种：</p>
-<blockquote>
-<ol>
-<li>org.apache.log4j.HTMLLayout （以 HTML 表格形式布局）</li>
-<li>org.apache.log4j.SimpleLayout （包含日志信息的级别和信息字符串）</li>
-<li>org.apache.log4j.TTCCLayout （包含日志产生的时间、线程、类别等等信息） </li>
-<li>org.apache.log4j.PatternLayout （可以灵活地指定布局模式）</li>
-</ol>
-</blockquote>
-<p><code>org.apache.log4j.PatternLayout （可以灵活地指定布局模式）</code></p>
-<blockquote>
-<p>Log4J 采用类似 C 语言中的 printf 函数的打印格式格式化日志信息，打印参数如下：<br>%m 输出代码中指定的消息<br>%p 输出优先级，即 DEBUG ， INFO ， WARN ， ERROR ， FATAL<br>%r 输出自应用启动到输出该 log 信息耗费的毫秒数<br>%c 输出所属的类目，通常就是所在类的全名<br>%t 输出产生该日志事件的线程名<br>%n 输出一个回车换行符， Windows 平台为 “rn” ， Unix 平台为 “n”<br>%d 输出日志时间点的日期或时间，默认格式为 ISO8601，也可以在其后指定格式，比如： %d{yyy MMM dd HH:mm:ss,SSS} </p>
-</blockquote>
-<hr>
-<h2 id="常见优秀配置配置">常见优秀配置配置</h2><p>详见博文，<a href="http://donahue-ldz.github.io/2015/01/15/log4j%E5%B8%B8%E8%A7%81%E9%85%8D%E7%BD%AE/" target="_blank" rel="external">log4j常见配置</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/log4j/">log4j</a><a href="/tags/日志记录/">日志记录</a>
+  <span></span> <a href="/tags/表连接/">表连接</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/log/">log</a>
+  <a class="article-category-link" href="/categories/数据库/">数据库</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://donahue-ldz.github.io/2015/01/05/日志记录/" data-title="日志记录 | 心缘冰河" data-tsina="null" class="share clearfix">
+  <div data-url="http://donahue-ldz.github.io/2015/04/10/数据库表之间连接/" data-title="数据库表之间连接 | 心缘冰河" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -328,19 +290,11 @@ Log4j是Apache的一个开放源代码项目，通过使用Log4j，我们可">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/01/15/log4j常见配置/" title="log4j常见配置">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  log4j常见配置</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/09/28/finalize理解/"  title="finalize理解">
+<a href="/2015/04/07/enum-单例/"  title="enum 单例">
  <strong>NEXT:</strong><br/> 
- <span>finalize理解
+ <span>enum 单例
 </span>
 </a>
 </div>
@@ -350,7 +304,7 @@ Log4j是Apache的一个开放源代码项目，通过使用Log4j，我们可">
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="日志记录" data-thread-key="日志记录" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/日志记录"></div>
+	<div class="ds-thread" data-title="数据库表之间连接" data-thread-key="数据库表之间连接" data-author-key="donahue" data-url="http://donahue-ldz.github.io/post/数据库表之间连接"></div>
 	
 </section>
 
@@ -360,7 +314,7 @@ Log4j是Apache的一个开放源代码项目，通过使用Log4j，我们可">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#日志服务"><span class="toc-number">1.</span> <span class="toc-text">日志服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#log4j简介"><span class="toc-number">2.</span> <span class="toc-text">log4j简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Log4j三大类构成"><span class="toc-number">3.</span> <span class="toc-text">Log4j三大类构成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Logger"><span class="toc-number">3.1.</span> <span class="toc-text">Logger</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Appender"><span class="toc-number">3.2.</span> <span class="toc-text">Appender</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layout"><span class="toc-number">3.3.</span> <span class="toc-text">Layout</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见优秀配置配置"><span class="toc-number">4.</span> <span class="toc-text">常见优秀配置配置</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#内连接"><span class="toc-number">1.</span> <span class="toc-text">内连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#等值连接"><span class="toc-number">1.1.</span> <span class="toc-text">等值连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自然连接"><span class="toc-number">1.2.</span> <span class="toc-text">自然连接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#外连接"><span class="toc-number">2.</span> <span class="toc-text">外连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#左外连接"><span class="toc-number">2.1.</span> <span class="toc-text">左外连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#右外连接"><span class="toc-number">2.2.</span> <span class="toc-text">右外连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全外连接"><span class="toc-number">2.3.</span> <span class="toc-text">全外连接</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
