@@ -4,7 +4,7 @@
   <subtitle><![CDATA[写出我人生,coding]]></subtitle>
   <link href="//atom.xml" rel="self"/>
   <link href="http://donahue-ldz.github.io/"/>
-  <updated>2015-04-13T08:32:16.000Z</updated>
+  <updated>2015-04-14T11:32:04.000Z</updated>
   <id>http://donahue-ldz.github.io/</id>
   
   <author>
@@ -13,6 +13,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Spring JMS 三种监听器]]></title>
+    <link href="http://donahue-ldz.github.io/2015/04/14/Spring-JMS-%E4%B8%89%E7%A7%8D%E7%9B%91%E5%90%AC%E5%99%A8/"/>
+    <id>http://donahue-ldz.github.io/2015/04/14/Spring-JMS-三种监听器/</id>
+    <published>2015-04-14T11:25:48.000Z</published>
+    <updated>2015-04-14T11:32:04.000Z</updated>
+    <content type="html"><![CDATA[<p>前一文中说了简单的JMS的结构，选择了一种监听器的结构，但是真的只有一种监听器吗？<br>本文讲述的是三种监听器，用来消费生产者发送的Destination的消息</p>
+<h2 id="消息监听器">消息监听器</h2><h3 id="MessageListener">MessageListener</h3><p>MessageListener是最原始的消息监听器，它是JMS规范中定义的一个接口。<br>其中定义了一个用于处理接收到的消息的onMessage方法，该方法只接收一个Message参数。<br>我们前面在讲配置消费者的时候用的消息监听器就是MessageListener，此处不再赘述！但是我们这就很快发现有一个弊端就是，当消息监听者接收到这个消息的时候，如何告诉发送者，我已经接收到这个消息呢？</p>
+<hr>
+<h3 id="SessionAwareMessageListener">SessionAwareMessageListener</h3><p><strong>SessionAwareMessageListener是Spring为我们提供的，它不是标准的JMS MessageListener</strong>.<br>MessageListener的设计只是纯粹用来接收消息的，假如我们在使用MessageListener处理接收到的消息时我们需要发送一个消息通知对方我们已经收到这个消息了，那么这个时候我们就需要在代码里面去重新获取一个Connection或Session。SessionAwareMessageListener的设计就是为了方便我们在接收到消息后发送一个回复的消息，它同样为我们提供了一个处理接收到的消息的onMessage方法，但是这个方法可以同时接收两个参数，一个是表示当前接收到的消息Message，另一个就是可以用来发送消息的Session对象,我们就直接利用该Session对象创建相关对象发送就可以了。</p>
+<hr>
+<h3 id="MessageListenerAdapter">MessageListenerAdapter</h3><p>MessageListenerAdapter类实现了MessageListener接口和SessionAwareMessageListener接口，它的主要作用是将接收到的消息进行类型转换，然后通过反射的形式把它交给一个<code>普通的Java类进行处理</code>。MessageListenerAdapter会把接收到的消息做如下转换：</p>
+<blockquote>
+<p>TextMessage转换为String对象；<br>BytesMessage转换为byte数组；<br>MapMessage转换为Map对象；<br>ObjectMessage转换为对应的Serializable对象。</p>
+</blockquote>
+<p>既然前面说了MessageListenerAdapter会把接收到的消息做一个类型转换，然后利用反射把它交给真正的目标处理器——一个普通的Java类进行处理（如果真正的目标处理器是一个MessageListener或者是一个SessionAwareMessageListener，那么Spring将直接使用接收到的Message对象作为参数调用它们的onMessage方法，而不会再利用反射去进行调用），那么我们在定义一个MessageListenerAdapter的时候就需要为它指定这样一个目标类。这个目标类我们可以通过MessageListenerAdapter的构造方法参数指定，如<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 消息监听适配器 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"messageListenerAdapter"</span> <span class="attribute">class</span>=<span class="value">"org.springframework.jms.listener.adapter.MessageListenerAdapter"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"delegate"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="title">bean</span> <span class="attribute">class</span>=<span class="value">"com.xxx.ConsumerListener"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">property</span> <span class="attribute">name</span>=<span class="value">"defaultListenerMethod"</span> <span class="attribute">value</span>=<span class="value">"receiveMessage"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这样进行配置的时候在消息来的时候，将自动调用delegate指定的类的和defaultListenerMethod指定的方法<br>defaultListenerMethod当我们没有指定该属性时，Spring会默认调用目标处理器的handleMessage方法</p>
+<p><font color="red">MessageListenerAdapter除了会自动的把一个普通Java类当做MessageListener来处理接收到的消息之外，其另外一个主要的功能是可以自动的发送返回消息。</font><br>     当我们用于处理接收到的消息的方法的返回值不为空的时候，Spring会自动将它封装为一个JMS Message，然后自动进行回复。那么这个时候这个回复消息将发送到哪里呢？这主要有两种方式可以指定。</p>
+<ul>
+<li>可以通过发送的Message的setJMSReplyTo方法指定该消息对应的回复消息的目的地。这里我们把我们的生产者发送消息的代码做一下修改，在发送消息之前先指定该消息对应的回复目的地为一个叫responseQueue的队列目的地</li>
+<li>通过MessageListenerAdapter的defaultResponseDestination属性来指定。</li>
+</ul>
+<p>MessageListenerAdapter会自动把真正的消息处理器返回的非空内容封装成一个Message发送回复消息到通过defaultResponseDestination属性指定的默认消息回复目的地。当两种方法都指定的时候，setJMSReplyTo指定的队列的优先级将要高点</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>前一文中说了简单的JMS的结构，选择了一种监听器的结构，但是真的只有一种监听器吗？<br>本文讲述的是三种监听器，用来消费生产者发送的Destination的消息</p>
+<h2 id="消息监听器">消息监听器</h2><h3 id="MessageListener">M]]>
+    </summary>
+    
+      <category term="Jms,ActiveMQ" scheme="http://donahue-ldz.github.io/tags/Jms-ActiveMQ/"/>
+    
+      <category term="java" scheme="http://donahue-ldz.github.io/categories/java/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Spring整合ActiveMQ]]></title>
@@ -1189,152 +1224,6 @@ log4j<span class="class">.appender</span><span class="class">.im</span><span cla
       <category term="finalize" scheme="http://donahue-ldz.github.io/tags/finalize/"/>
     
       <category term="内存回收" scheme="http://donahue-ldz.github.io/tags/%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6/"/>
-    
-      <category term="java" scheme="http://donahue-ldz.github.io/categories/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[线程等待]]></title>
-    <link href="http://donahue-ldz.github.io/2014/09/15/%E7%BA%BF%E7%A8%8B%E7%AD%89%E5%BE%85/"/>
-    <id>http://donahue-ldz.github.io/2014/09/15/线程等待/</id>
-    <published>2014-09-15T02:32:21.000Z</published>
-    <updated>2015-03-07T05:15:56.000Z</updated>
-    <content type="html"><![CDATA[<p><strong>在多线程程序设计中，经常会遇到一个线程等待一个或多个线程的场景<br>遇到这样的场景应该如何解决？</strong></p>
-<blockquote>
-<ul>
-<li>如果是一个线程等待一个线程，则可以通过await()和notify()来实现；</li>
-<li>如果是一个线程等待多个线程，则就可以使用CountDownLatch和CyclicBarrier来实现比较好的控制。</li>
-</ul>
-</blockquote>
-<hr>
-<h2 id="CountDownLatch应用">CountDownLatch应用</h2><p><code>场景：主要是:一个线程等待多个其他线程</code></p>
-<p>例如：百米赛跑：8名运动员同时起跑，由于速度的快慢，肯定有会出现先到终点和晚到终点的情况，而终点有个统计成绩的仪器，当所有选手到达终点时，它会统计所有人的成绩并进行排序，然后把结果发送到汇报成绩的系统。</p>
-<p>其实这就是一个CountDownLatch的应用场景：一个线程或多个线程等待其他线程运行达到某一目标后进行自己的下一步工作，而被等待的“其他线程”达到这个目标后继续自己下面的任务。</p>
-<p>这个场景中：</p>
-<p>被等待的“其他线程”——&gt;8名运动员<br>等待“其他线程”的这个线程——&gt;终点统计成绩的仪器<br>那么，如何来通过CountDownLatch来实现上述场景的线程控制和调度呢？</p>
-<blockquote>
-<p>jdk中CountDownLatch类有一个常用的构造方法：CountDownLatch(int count)<br>两个常用的方法：await()和countdown()</p>
-</blockquote>
-<p>其中count是一个计数器中的初始化数字，比如初始化的数字是2，当一个线程里调用了countdown()，则这个计数器就减一，当线程调用了await()，则这个线程就等待这个计数器变为0，当这个计数器变为0时，这个线程继续自己下面的工作。下面是上述CountDownLatch场景的实现：</p>
-<p>Work类（运动员）：</p>
-<pre><code><span class="keyword">import</span> java.util.concurrent.CountDownLatch;
-
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Work</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>{
-    <span class="keyword">private</span> <span class="keyword">int</span> id;
-    <span class="keyword">private</span> CountDownLatch beginSignal;
-    <span class="keyword">private</span> CountDownLatch endSignal;
-
-    <span class="function"><span class="keyword">public</span> <span class="title">Work</span><span class="params">(<span class="keyword">int</span> id, CountDownLatch begin, CountDownLatch end)</span> </span>{
-        <span class="keyword">this</span>.id = id;
-        <span class="keyword">this</span>.beginSignal = begin;
-        <span class="keyword">this</span>.endSignal = end;
-    }
-
-    <span class="annotation">@Override</span>
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>{
-        <span class="keyword">try</span> {
-              beginSignal.await();
-              System.out.println(<span class="string">"起跑..."</span>);
-              System.out.println(<span class="string">"work"</span> + id + <span class="string">"到达终点"</span>);
-              endSignal.countDown();
-              System.out.println(<span class="string">"work"</span> + id + <span class="string">"继续干其他事情"</span>);
-            } <span class="keyword">catch</span> (InterruptedException e) {
-                <span class="comment">// TODO Auto-generated catch block</span>
-                e.printStackTrace();
-            }
-    }
-</code></pre><p>}<br>Main类（终点统计仪器）：</p>
-<pre><code>import java.util.concurrent.CountDownLatch;
-<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Main</span> {
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-        CountDownLatch begSignal = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);
-        CountDownLatch endSignal = <span class="keyword">new</span> CountDownLatch(<span class="number">8</span>);
-        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++) {
-            <span class="keyword">new</span> Thread(<span class="keyword">new</span> Work(i, begSignal, endSignal)).start();
-        }
-
-    <span class="keyword">try</span> {
-        begSignal.countDown();  <span class="comment">//统一起跑</span>
-        endSignal.await();      <span class="comment">//等待运动员到达终点</span>
-        System.<span class="keyword">out</span>.println(<span class="string">"结果发送到汇报成绩的系统"</span>);
-        } <span class="keyword">catch</span> (InterruptedException e) {
-            e.printStackTrace();
-        }
-     }
-</code></pre><p>}</p>
-<hr>
-<h2 id="CyclicBarrier的应用">CyclicBarrier的应用</h2><p><code>场景：主要是多个线程之间相互等待，循环等待</code></p>
-<p> 例如：有四个游戏玩家玩游戏，游戏有三个关卡，每个关卡必须要所有玩家都到达后才能允许通关。</p>
-<p>其实这个场景里的玩家中如果有玩家A先到了关卡1，他必须等待其他所有玩家都到达关卡1时才能通过，也就是说：<br><code>线程之间需要互相等待，这和CountDownLatch的应用场景有区别。</code><br><code>CountDownLatch里的线程是到了运行的目标后继续干自己的其他事情</code><br><code>而这里的线程需要等待其他线程后才能继续完成下面的工作</code>。   </p>
-<blockquote>
-<p>jdk中CyclicBarrier类有两个常用的构造方法：</p>
-<ol>
-<li>CyclicBarrier(int parties)<br>这里的parties也是一个计数器，例如，初始化时parties里的计数是3，于是拥有该CyclicBarrier对象的线程当parties的计数为3时就唤醒，注：这里parties里的计数在运行时当调用CyclicBarrier:await()时,计数就加1，一直加到初始的值。</li>
-<li>CyclicBarrier(int parties, Runnable barrierAction)<br>这里的parties与上一个构造方法的解释是一样的，这里需要解释的是第二个入参（Runnable barrierAction）,这个参数是一个实现Runnable接口的类的对象，也就是说当parties加到初始值时就出发barrierAction的内容。</li>
-</ol>
-</blockquote>
-<p>下面来实现上述的应用场景：</p>
-<p>Player类（玩家类）</p>
-<pre><code><span class="keyword">import</span> java.util.concurrent.BrokenBarrierException;
-<span class="keyword">import</span> java.util.concurrent.CyclicBarrier;
-
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Player</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>{
-
-    <span class="keyword">private</span> CyclicBarrier cyclicBarrier;
-    <span class="keyword">private</span> <span class="keyword">int</span> id;
-
-    <span class="function"><span class="keyword">public</span> <span class="title">Player</span><span class="params">(<span class="keyword">int</span> id, CyclicBarrier cyclicBarrier)</span> </span>{
-        <span class="keyword">this</span>.cyclicBarrier = cyclicBarrier;
-        <span class="keyword">this</span>.id = id;
-    }
-
-    <span class="annotation">@Override</span>
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>{
-        <span class="keyword">try</span> {
-            System.out.println(<span class="string">"玩家"</span> + id + <span class="string">"正在玩第一关..."</span>);
-            cyclicBarrier.await();
-            System.out.println(<span class="string">"玩家"</span> + id + <span class="string">"进入第二关..."</span>);
-            } <span class="keyword">catch</span> (InterruptedException e) {
-              e.printStackTrace();
-        } <span class="keyword">catch</span> (BrokenBarrierException e) {
-             e.printStackTrace();
-    }
-  }
-}
-</code></pre><p>GameBarrier类（关卡类，这里控制玩家必须全部到达第一关结束的关口才能进入第二关）</p>
-<pre><code><span class="keyword">import</span> java.util.concurrent.CyclicBarrier;
-
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GameBarrier</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-    CyclicBarrier cyclicBarrier = <span class="keyword">new</span> CyclicBarrier(<span class="number">4</span>, <span class="keyword">new</span> Runnable() {
-
-        <span class="annotation">@Override</span>
-        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>{
-             System.out.println(<span class="string">"所有玩家进入第二关！"</span>);
-        }
-     });
-
-    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) {
-        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Player(i, cyclicBarrier)).start();
-     }
-  }
-}
-</code></pre>]]></content>
-    <summary type="html">
-    <![CDATA[<p><strong>在多线程程序设计中，经常会遇到一个线程等待一个或多个线程的场景<br>遇到这样的场景应该如何解决？</strong></p>
-<blockquote>
-<ul>
-<li>如果是一个线程等待一个线程，则可以通过await()和notify()来实现；</li>]]>
-    </summary>
-    
-      <category term="CyclicBarrier" scheme="http://donahue-ldz.github.io/tags/CyclicBarrier/"/>
-    
-      <category term="线程" scheme="http://donahue-ldz.github.io/tags/%E7%BA%BF%E7%A8%8B/"/>
-    
-      <category term="线程等待，CountDownLatch" scheme="http://donahue-ldz.github.io/tags/%E7%BA%BF%E7%A8%8B%E7%AD%89%E5%BE%85%EF%BC%8CCountDownLatch/"/>
     
       <category term="java" scheme="http://donahue-ldz.github.io/categories/java/"/>
     
