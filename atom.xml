@@ -4,7 +4,7 @@
   <subtitle><![CDATA[写出我人生,coding]]></subtitle>
   <link href="//atom.xml" rel="self"/>
   <link href="http://donahue-ldz.github.io/"/>
-  <updated>2015-04-14T11:32:04.000Z</updated>
+  <updated>2015-04-17T13:17:54.000Z</updated>
   <id>http://donahue-ldz.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://donahue-ldz.github.io/2015/04/14/Spring-JMS-%E4%B8%89%E7%A7%8D%E7%9B%91%E5%90%AC%E5%99%A8/"/>
     <id>http://donahue-ldz.github.io/2015/04/14/Spring-JMS-三种监听器/</id>
     <published>2015-04-14T11:25:48.000Z</published>
-    <updated>2015-04-14T11:32:04.000Z</updated>
+    <updated>2015-04-17T13:17:54.000Z</updated>
     <content type="html"><![CDATA[<p>前一文中说了简单的JMS的结构，选择了一种监听器的结构，但是真的只有一种监听器吗？<br>本文讲述的是三种监听器，用来消费生产者发送的Destination的消息</p>
 <h2 id="消息监听器">消息监听器</h2><h3 id="MessageListener">MessageListener</h3><p>MessageListener是最原始的消息监听器，它是JMS规范中定义的一个接口。<br>其中定义了一个用于处理接收到的消息的onMessage方法，该方法只接收一个Message参数。<br>我们前面在讲配置消费者的时候用的消息监听器就是MessageListener，此处不再赘述！但是我们这就很快发现有一个弊端就是，当消息监听者接收到这个消息的时候，如何告诉发送者，我已经接收到这个消息呢？</p>
 <hr>
@@ -36,7 +36,9 @@
 <li>可以通过发送的Message的setJMSReplyTo方法指定该消息对应的回复消息的目的地。这里我们把我们的生产者发送消息的代码做一下修改，在发送消息之前先指定该消息对应的回复目的地为一个叫responseQueue的队列目的地</li>
 <li>通过MessageListenerAdapter的defaultResponseDestination属性来指定。</li>
 </ul>
-<p>MessageListenerAdapter会自动把真正的消息处理器返回的非空内容封装成一个Message发送回复消息到通过defaultResponseDestination属性指定的默认消息回复目的地。当两种方法都指定的时候，setJMSReplyTo指定的队列的优先级将要高点</p>
+<p>MessageListenerAdapter会自动把真正的消息处理器返回的非空内容封装成一个Message发送回复消息到通过defaultResponseDestination属性指定的默认消息回复目的地。当两种方法都指定的时候，setJMSReplyTo指定的队列的优先级将要高点。</p>
+<hr>
+<p><a href="https://github.com/donahue-ldz/components/tree/master/emailQueue" target="_blank" rel="external">参考代码</a>这是一个多线程异步邮件队列实现</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p>前一文中说了简单的JMS的结构，选择了一种监听器的结构，但是真的只有一种监听器吗？<br>本文讲述的是三种监听器，用来消费生产者发送的Destination的消息</p>

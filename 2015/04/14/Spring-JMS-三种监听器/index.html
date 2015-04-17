@@ -238,7 +238,7 @@
     </p>
   <p class="article-time">
     <time datetime="2015-04-14T11:25:48.000Z" itemprop="datePublished">Apr 14 2015</time>
-    更新日期:<time datetime="2015-04-14T11:32:04.000Z" itemprop="dateModified">Apr 14 2015</time>
+    更新日期:<time datetime="2015-04-17T13:17:54.000Z" itemprop="dateModified">Apr 17 2015</time>
     
   </p>
 </header>
@@ -266,7 +266,9 @@
 <li>可以通过发送的Message的setJMSReplyTo方法指定该消息对应的回复消息的目的地。这里我们把我们的生产者发送消息的代码做一下修改，在发送消息之前先指定该消息对应的回复目的地为一个叫responseQueue的队列目的地</li>
 <li>通过MessageListenerAdapter的defaultResponseDestination属性来指定。</li>
 </ul>
-<p>MessageListenerAdapter会自动把真正的消息处理器返回的非空内容封装成一个Message发送回复消息到通过defaultResponseDestination属性指定的默认消息回复目的地。当两种方法都指定的时候，setJMSReplyTo指定的队列的优先级将要高点</p>
+<p>MessageListenerAdapter会自动把真正的消息处理器返回的非空内容封装成一个Message发送回复消息到通过defaultResponseDestination属性指定的默认消息回复目的地。当两种方法都指定的时候，setJMSReplyTo指定的队列的优先级将要高点。</p>
+<hr>
+<p><a href="https://github.com/donahue-ldz/components/tree/master/emailQueue" target="_blank" rel="external">参考代码</a>这是一个多线程异步邮件队列实现</p>
   
 	</div>
 		<footer class="article-footer clearfix">
