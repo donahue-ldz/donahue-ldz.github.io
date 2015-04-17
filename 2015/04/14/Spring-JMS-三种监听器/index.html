@@ -238,7 +238,7 @@
     </p>
   <p class="article-time">
     <time datetime="2015-04-14T11:25:48.000Z" itemprop="datePublished">Apr 14 2015</time>
-    更新日期:<time datetime="2015-04-17T13:17:54.000Z" itemprop="dateModified">Apr 17 2015</time>
+    更新日期:<time datetime="2015-04-17T13:19:22.000Z" itemprop="dateModified">Apr 17 2015</time>
     
   </p>
 </header>
@@ -247,7 +247,7 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#消息监听器"><span class="toc-number">1.</span> <span class="toc-text">消息监听器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MessageListener"><span class="toc-number">1.1.</span> <span class="toc-text">MessageListener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SessionAwareMessageListener"><span class="toc-number">1.2.</span> <span class="toc-text">SessionAwareMessageListener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MessageListenerAdapter"><span class="toc-number">1.3.</span> <span class="toc-text">MessageListenerAdapter</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#消息监听器"><span class="toc-number">1.</span> <span class="toc-text">消息监听器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MessageListener"><span class="toc-number">1.1.</span> <span class="toc-text">MessageListener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SessionAwareMessageListener"><span class="toc-number">1.2.</span> <span class="toc-text">SessionAwareMessageListener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MessageListenerAdapter"><span class="toc-number">1.3.</span> <span class="toc-text">MessageListenerAdapter</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考代码"><span class="toc-number">2.</span> <span class="toc-text">参考代码</span></a></li></ol>
 		</div>
 		
 		<p>前一文中说了简单的JMS的结构，选择了一种监听器的结构，但是真的只有一种监听器吗？<br>本文讲述的是三种监听器，用来消费生产者发送的Destination的消息</p>
@@ -268,7 +268,7 @@
 </ul>
 <p>MessageListenerAdapter会自动把真正的消息处理器返回的非空内容封装成一个Message发送回复消息到通过defaultResponseDestination属性指定的默认消息回复目的地。当两种方法都指定的时候，setJMSReplyTo指定的队列的优先级将要高点。</p>
 <hr>
-<p><a href="https://github.com/donahue-ldz/components/tree/master/emailQueue" target="_blank" rel="external">参考代码</a>这是一个多线程异步邮件队列实现</p>
+<h2 id="参考代码">参考代码</h2><p><a href="https://github.com/donahue-ldz/components/tree/master/emailQueue" target="_blank" rel="external">参考代码</a>这是一个多线程异步邮件队列实现</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -321,7 +321,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#消息监听器"><span class="toc-number">1.</span> <span class="toc-text">消息监听器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MessageListener"><span class="toc-number">1.1.</span> <span class="toc-text">MessageListener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SessionAwareMessageListener"><span class="toc-number">1.2.</span> <span class="toc-text">SessionAwareMessageListener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MessageListenerAdapter"><span class="toc-number">1.3.</span> <span class="toc-text">MessageListenerAdapter</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#消息监听器"><span class="toc-number">1.</span> <span class="toc-text">消息监听器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MessageListener"><span class="toc-number">1.1.</span> <span class="toc-text">MessageListener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SessionAwareMessageListener"><span class="toc-number">1.2.</span> <span class="toc-text">SessionAwareMessageListener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MessageListenerAdapter"><span class="toc-number">1.3.</span> <span class="toc-text">MessageListenerAdapter</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考代码"><span class="toc-number">2.</span> <span class="toc-text">参考代码</span></a></li></ol>
   </div>
 
 <div id="asidepart">

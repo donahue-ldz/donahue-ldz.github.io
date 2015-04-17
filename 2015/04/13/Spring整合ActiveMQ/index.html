@@ -237,7 +237,7 @@
     </p>
   <p class="article-time">
     <time datetime="2015-04-13T08:30:59.000Z" itemprop="datePublished">Apr 13 2015</time>
-    更新日期:<time datetime="2015-04-17T13:16:36.000Z" itemprop="dateModified">Apr 17 2015</time>
+    更新日期:<time datetime="2015-04-17T13:19:48.000Z" itemprop="dateModified">Apr 17 2015</time>
     
   </p>
 </header>
@@ -246,7 +246,7 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JMS"><span class="toc-number">1.</span> <span class="toc-text">JMS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">2.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置connectionFactory"><span class="toc-number">2.1.</span> <span class="toc-text">配置connectionFactory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置生产者"><span class="toc-number">2.2.</span> <span class="toc-text">配置生产者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置消费者"><span class="toc-number">2.3.</span> <span class="toc-text">配置消费者</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JMS"><span class="toc-number">1.</span> <span class="toc-text">JMS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">2.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置connectionFactory"><span class="toc-number">2.1.</span> <span class="toc-text">配置connectionFactory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置生产者"><span class="toc-number">2.2.</span> <span class="toc-text">配置生产者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置消费者"><span class="toc-number">2.3.</span> <span class="toc-text">配置消费者</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考代码"><span class="toc-number">3.</span> <span class="toc-text">参考代码</span></a></li></ol>
 		</div>
 		
 		<h2 id="JMS">JMS</h2><p>JMS的全称是Java Message Service，即Java消息服务。<br>它主要用于在生产者和消费者之间进行消息传递，生产者负责产生消息，而消费者负责接收消息。<br>把它应用到实际的业务需求中的话我们可以在特定的时候利用生产者生成一消息，并进行发送，对应的消费者在接收到对应的消息后去完成对应的业务逻辑。<br>对于消息的传递有两种类型，一种是点对点的，即一个生产者和一个消费者一一对应；另一种是发布/订阅模式，即一个生产者产生消息并进行发送后，可以由多个消费者进行接收。<br>JMS只是一个规范的定义，实际的实现还要依靠相关的JMS provider 这里以activeMQ为例。</p>
@@ -277,7 +277,7 @@
 </blockquote>
 <p>当然这前面只是简单的介绍如何实现一个消费者和生产者之间的通信。</p>
 <hr>
-<p><a href="https://github.com/donahue-ldz/components/tree/master/emailQueue" target="_blank" rel="external">参考代码</a>这是一个多线程异步邮件队列实现</p>
+<h2 id="参考代码">参考代码</h2><p><a href="https://github.com/donahue-ldz/components/tree/master/emailQueue" target="_blank" rel="external">参考代码</a>这是一个多线程异步邮件队列实现</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -338,7 +338,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JMS"><span class="toc-number">1.</span> <span class="toc-text">JMS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">2.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置connectionFactory"><span class="toc-number">2.1.</span> <span class="toc-text">配置connectionFactory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置生产者"><span class="toc-number">2.2.</span> <span class="toc-text">配置生产者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置消费者"><span class="toc-number">2.3.</span> <span class="toc-text">配置消费者</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JMS"><span class="toc-number">1.</span> <span class="toc-text">JMS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">2.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置connectionFactory"><span class="toc-number">2.1.</span> <span class="toc-text">配置connectionFactory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置生产者"><span class="toc-number">2.2.</span> <span class="toc-text">配置生产者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置消费者"><span class="toc-number">2.3.</span> <span class="toc-text">配置消费者</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考代码"><span class="toc-number">3.</span> <span class="toc-text">参考代码</span></a></li></ol>
   </div>
 
 <div id="asidepart">
